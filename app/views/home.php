@@ -1,7 +1,11 @@
-<?php include '../app/views/includes/header.php'; ?>
+<?php
+$title = "Home";
+require_once 'includes/header.php';
+?>
 
-<h1>Welcome to the Dashboard</h1>
-<p>You are logged in.</p>
-<a href="logout.php">Logout</a>
+<h1>Home</h1>
+<p>Welcome to the home page.</p>
 
-<?php include '../app/views/includes/footer.php'; ?>
+<?php
+require_once 'includes/footer.php';
+?>

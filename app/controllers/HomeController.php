@@ -1,10 +1,22 @@
 <?php
-
-require_once '../core/Auth.php';
-
-class HomeController extends Controller {
+class HomeController {
     public function index() {
-        Auth::check(); // Verificar si el usuario está autenticado
-        $this->view('home');
+        require_once '../app/views/home.php';
+    }
+
+    public function dashboard() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+        require_once '../app/views/dashboard.php';
+    }
+
+    public function products() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+        require_once '../app/views/products.php';
     }
 }

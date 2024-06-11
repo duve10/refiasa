@@ -1,23 +1,58 @@
 <?php
+require_once '../app/models/User.php';
 
-class AuthController extends Controller {
-    public function login() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+class AuthController
+{
+    public function login()
+    {
+        if (isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/dashboard");
+            exit();
+        }
+
+        $response = "";
+        $username = "";
+        $password = "";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $username = $_POST['username'];
             $password = $_POST['password'];
             
-            $user = $this->model('User');
-            $user_data = $user->getUserByUsernameAndPassword($username, $password);
-            
-            if ($user_data) {
-                Auth::login($user_data['id']);
-                header('Location: ' . BASE_URL . 'public/index.php');
-                exit();
+
+            if(trim($username) == '' || trim($password) == '') {
+                $response = 'LLenar los campos';
+                
             } else {
-                $this->view('login', ['error' => 'Invalid username or password']);
+
+                $result = User::authenticate($username, $password);
+    
+    
+                if ($result === User::USER_NOT_FOUND) {
+                    $response = "Usuario no encontrado";
+                } elseif ($result === User::WRONG_PASSWORD) {
+                    $response = "Contraseña incorrecta";
+                } elseif (is_string($result)) {
+                    // Hubo un error en la autenticación
+                    $response = $result;
+                } else {
+                    // Autenticación exitosa, redirigir al dashboard
+                    $_SESSION['user_id'] = $result->id;
+                    $_SESSION['name'] = $result->name;
+                    $_SESSION['lastname'] = $result->lastname;
+                    header("Location: " . BASE_URL . "/dashboard");
+                    exit();
+                }
             }
-        } else {
-            $this->view('login');
+
         }
+        require_once '../app/views/login.php';
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['user_id']);
+        session_destroy();
+        header("Location: " . BASE_URL . "/login");
+        exit();
     }
 }
