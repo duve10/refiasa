@@ -12,19 +12,19 @@ try {
 
 
 // Datos del nuevo usuario
-$usuario = 'admin';
+$usuario = 'vet1';
 $password = password_hash('1234', PASSWORD_BCRYPT); // Encriptar la contraseña
 $estado = 1; // Estado activo, por ejemplo
-$name = 'Anderson';
-$lastname = 'Romero';
+$name = 'Ronald';
+$lastname = 'Mancilla';
 $phone = '123456789';
-$mail = 'andersonromeroloarte@gmail.com';
+$mail = 'ronald@gmail.com';
 $document = '12345678';
 $typedoc = '1';
 
 try {
     // Preparar la sentencia SQL
-    $stmt = $pdo->prepare('INSERT INTO user (username, password, status, name,lastname,phone,mail,document,type_doc) VALUES (:usuario, :password, :estado,:name,:lastname,:phone,:mail,:document,:typedoc)');
+    $stmt = $pdo->prepare('INSERT INTO user (username, password, status, name,lastname,phone,mail,document,type_doc,id_perfil) VALUES (:usuario, :password, :estado,:name,:lastname,:phone,:mail,:document,:typedoc,2)');
    
     // Vincular los parámetros
     $stmt->bindParam(':usuario', $usuario);

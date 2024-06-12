@@ -59,7 +59,7 @@
                                                 <?php endif; ?>
                                             </div>
                                             <small>
-                                                <a class="colorText2" href="password.cfm">Forgot password?</a>
+                                                <a class="colorText2" href="password.cfm">¿Olvidaste tu contraseña?</a>
                                             </small>
                                         </div>
 

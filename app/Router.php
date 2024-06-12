@@ -11,8 +11,8 @@ class Router {
             $handler = $this->routes[$requestUri];
             $this->callHandler($handler);
         } else {
-            http_response_code(404);
-            echo "404 Not Found";
+             // Si la ruta no coincide con ninguna de las rutas definidas, mostrar error 404
+             $this->callHandler('ErrorController@notFound');
         }
     }
 

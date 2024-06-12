@@ -1,7 +1,7 @@
 <?php
 
 class Database {
-    private static $dsn = 'mysql:host=localhost;dbname=refiasa';
+    private static $dsn = 'mysql:host=localhost;dbname=refiasa;charset=utf8mb4';
     private static $username = 'root';
     private static $password = '';
 

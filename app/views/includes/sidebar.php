@@ -6,29 +6,101 @@
 
         <ul class="sidebar-nav pb-5">
             <li class='sidebar-header'>Veterinaria</li>
-            <li class='sidebar-item active'>
+            <li class='sidebar-item <?= $active == '1'? 'active': '' ?>'>
                 <a class='sidebar-link' href="/">
                     <i class='align-middle' data-feather='sliders'></i>
                     <span class='align-middle'>Dashboard</span>
                 </a>
             </li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link' href="information.cfm">
-                    <i class='align-middle' data-feather='heart'></i>
-                    <span class='align-middle'>Citas</span>
+   
+            <li class='sidebar-item <?= $active == '2' || $active == '3'? 'active': '' ?>'>
+                <a data-bs-target="#s26" data-bs-toggle="collapse" class="sidebar-link <?= $active == '2' || $active == '3'? '': 'collapsed' ?>" aria-expanded="false">
+                    <i class="align-middle" data-feather="zap"></i>
+                    <span class="align-middle">Citas</span>
                 </a>
+                <ul id="s26" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class='sidebar-item <?= $active == '2'? 'active': '' ?>'>
+                        <a class="sidebar-link" href="citas">
+                            <!---<i class="align-middle" data-feather="#icon#"></i>--->
+                            <span class="align-middle">Citas Editar / Lista</span>
+                        </a>
+                    </li>
+                    <li class='sidebar-item <?= $active == '3'? 'active': '' ?>'>
+                        <a class="sidebar-link" href="citas/registro">
+                            <!---<i class="align-middle" data-feather="#icon#"></i>--->
+                            <span class="align-middle">Citas Registro</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link' href="informationStaff.cfm">
-                    <i class='align-middle' data-feather='briefcase'></i>
-                    <span class='align-middle'>Atenciones</span>
+
+            <li class='sidebar-item <?= $active == '6' || $active == '7'? 'active': '' ?>'>
+                <a data-bs-target="#s27" data-bs-toggle="collapse" class="sidebar-link <?= $active == '6' || $active == '7'? '': 'collapsed' ?>" aria-expanded="false">
+                    <i class="align-middle" data-feather="activity"></i>
+                    <span class="align-middle">Atenciones</span>
                 </a>
+                <ul id="s27" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
+                        <a class="sidebar-link" href="atenciones">
+                            <!---<i class="align-middle" data-feather="#icon#"></i>--->
+                            <span class="align-middle">Atenciones Editar / Lista</span>
+                        </a>
+                    </li>
+                    <li class='sidebar-item <?= $active == '7'? 'active': '' ?>'>
+                        <a class="sidebar-link" href="atenciones/registro">
+                            <!---<i class="align-middle" data-feather="#icon#"></i>--->
+                            <span class="align-middle">Atenciones Registro</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
+
+    
             <li class="sidebar-header">Administracion</li>
+            <li class='sidebar-item <?= $active == '4'? 'active': '' ?>'>
+                <a class='sidebar-link' href="clientes">
+                    <i class='align-middle' data-feather='smile'></i>
+                    <span class='align-middle'>Clientes</span>
+                </a>
+            </li>
+
+            
+            <li class='sidebar-item <?= $active == '5'? 'active': '' ?>'>
+                <a class='sidebar-link' href="mascotas">
+                    <i class='align-middle' data-feather='github'></i>
+                    <span class='align-middle'>Mascotas</span>
+                </a>
+            </li>
             <li class='sidebar-item'>
                 <a class='sidebar-link'>
                     <i class='align-middle' data-feather='users'></i>
-                    <span class='align-middle'>Recorded Users</span>
+                    <span class='align-middle'>Usuarios</span>
+                </a>
+            </li>
+            <li class='sidebar-item'>
+                <a class='sidebar-link'>
+                    <i class='align-middle' data-feather='book'></i>
+                    <span class='align-middle'>Perfiles</span>
+                </a>
+            </li>
+            <li class='sidebar-item'>
+                <a class='sidebar-link'>
+                    <i class='align-middle' data-feather='wind'></i>
+                    <span class='align-middle'>Servicios</span>
+                </a>
+            </li>
+            <li class="sidebar-header">Inventario</li>
+            <li class='sidebar-item'>
+                <a class='sidebar-link'>
+                    <i class='align-middle' data-feather='box'></i>
+                    <span class='align-middle'>Productos</span>
+                </a>
+            </li>
+            <li class='sidebar-item'>
+                <a class='sidebar-link'>
+                    <i class='align-middle' data-feather='heart'></i>
+                    <span class='align-middle'>Vacunas</span>
                 </a>
             </li>
             <li class="sidebar-header">Reportes</li>
@@ -39,11 +111,11 @@
                 </a>
             </li>
             <li class='sidebar-item'>
-                <a data-bs-target="#s26" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                <a data-bs-target="#s28" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                     <i class="align-middle" data-feather="folder"></i>
                     <span class="align-middle">Report</span>
                 </a>
-                <ul id="s26" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="s28" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class='sidebar-item'>
                         <a class="sidebar-link" href="/">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
