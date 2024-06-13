@@ -1,6 +1,6 @@
 <?php
-$active = "4";
-$title = "Clientes | Refiasa";
+$active = "9";
+$title = "Usuarios | Refiasa";
 
 include "includes/header.php";
 ?>
@@ -14,12 +14,12 @@ include "includes/header.php";
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">
                         <div class="col-auto d-sm-block">
-                            <h1 class="h3 mb-3"><strong>Clientes</strong></h1>
+                            <h1 class="h3 mb-3"><strong>Usuarios</strong></h1>
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
                             <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
-                                + Agregar Cliente
+                                + Agregar Usuario
                             </a>
                         </div>
                     </div>
@@ -38,15 +38,15 @@ include "includes/header.php";
                         <div class="col-12">
                             <div class="card table-responsive viewZoom">
                                 <div class="card-body">
-                                    <table id="tableClientes" class="table table-bordered table-hover w-100">
+                                    <table id="tableUsuarios" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
+                                                <th>Foto</th>
+                                                <th>Usuario</th>
                                                 <th>Nombre</th>
-                                                <th>Apellidos</th>
-                                                <th>Tipo Doc.</th>
-                                                <th>Num. Doc.</th>
+                                                <th>Apellido</th>
                                                 <th>Celular</th>
-                                                <th>Usuario Creador</th>
+                                                <th>Correo</th>
                                                 <th class="text-center">Acciones</th>
                                             </tr>
                                         </thead>
@@ -66,5 +66,5 @@ include "includes/header.php";
     </div>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
-    <script src="js/clientes/clientes.js"></script>
+    <script src="js/usuarios/usuarios.js"></script>
 </body>

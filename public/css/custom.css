@@ -149,3 +149,8 @@
       transform: rotate(360deg);
     }
   }
+
+  .borderCard {
+    border: 1px solid rgba(126, 98, 87, 0.2);
+    border-radius: 20px;
+}

@@ -1,6 +1,6 @@
 <?php
-$active = "4";
-$title = "Clientes | Refiasa";
+$active = "2";
+$title = "Citas | Refiasa";
 
 include "includes/header.php";
 ?>
@@ -14,12 +14,12 @@ include "includes/header.php";
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">
                         <div class="col-auto d-sm-block">
-                            <h1 class="h3 mb-3"><strong>Clientes</strong></h1>
+                            <h1 class="h3 mb-3"><strong>Citas</strong></h1>
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
                             <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
-                                + Agregar Cliente
+                                + Agregar Cita
                             </a>
                         </div>
                     </div>
@@ -38,15 +38,16 @@ include "includes/header.php";
                         <div class="col-12">
                             <div class="card table-responsive viewZoom">
                                 <div class="card-body">
-                                    <table id="tableClientes" class="table table-bordered table-hover w-100">
+                                    <table id="tableCitas" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
-                                                <th>Nombre</th>
-                                                <th>Apellidos</th>
-                                                <th>Tipo Doc.</th>
-                                                <th>Num. Doc.</th>
-                                                <th>Celular</th>
-                                                <th>Usuario Creador</th>
+                                                <th>Fecha</th>
+                                                <th>Hora</th>
+                                                <th>Mascota</th>
+                                                <th>Especie</th>
+                                                <th>Descripcion</th>
+                                                <th>Cliente</th>
+                                                <th>Estado</th>
                                                 <th class="text-center">Acciones</th>
                                             </tr>
                                         </thead>
@@ -66,5 +67,5 @@ include "includes/header.php";
     </div>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
-    <script src="js/clientes/clientes.js"></script>
+    <script src="js/citas/citas.js"></script>
 </body>
