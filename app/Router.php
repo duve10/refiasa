@@ -7,12 +7,15 @@ class Router {
     }
 
     public function dispatch($requestUri) {
-        if (array_key_exists($requestUri, $this->routes)) {
-            $handler = $this->routes[$requestUri];
+        $parsedUrl = parse_url($requestUri);
+        $path = $parsedUrl['path'];
+
+        if (array_key_exists($path, $this->routes)) {
+            $handler = $this->routes[$path];
             $this->callHandler($handler);
         } else {
-             // Si la ruta no coincide con ninguna de las rutas definidas, mostrar error 404
-             $this->callHandler('ErrorController@notFound');
+            http_response_code(404);
+            require_once "../app/views/404.php";
         }
     }
 

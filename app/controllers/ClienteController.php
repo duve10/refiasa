@@ -45,10 +45,28 @@ class ClienteController {
             ];
 
             header('Content-Type: application/json');
-            echo json_encode($response);
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
         } else {
             http_response_code(405);
             echo "405 Method Not Allowed";
+        }
+    }
+
+    public function apiGetClientesSelect() {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $nameDoc = $_GET['q'];
+            $clienteData = [];
+            $filterClientes  = Cliente::getClienteByNameDoc($nameDoc);
+            
+            foreach ($filterClientes as $filterCliente) {
+
+                $data['id'] = $filterCliente['id'];  
+                $data['text'] = $filterCliente['nombre'].' '.$filterCliente['apellido_paterno']; 
+                array_push($clienteData, $data);  
+                
+            }
+            
+            echo json_encode($clienteData, JSON_UNESCAPED_UNICODE); 
         }
     }
 }

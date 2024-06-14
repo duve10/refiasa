@@ -2,8 +2,13 @@
 require_once '../app/models/Cita.php';
 
 class CitaController {
+    
     public function index() {
         require_once '../app/views/citas/index.php';
+    }
+
+    public function registro() {
+        require_once '../app/views/citas/registro.php';
     }
 
     public function apiGetCitas() {
@@ -57,11 +62,47 @@ class CitaController {
     }
 
     public function registrar() {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $mascota_id = $_POST['mascota_id'];
+
+            $id_mascota = $_POST['id_mascota'];
+            $creado_por = $_SESSION['id'];
+            $id_hora = $_POST['id_hora'];
             $fecha = $_POST['fecha'];
-            $hora = $_POST['hora'];
             $descripcion = $_POST['descripcion'];
+            $estado = 1;
+            $id_estadocita = $_POST['id_estadocita'];
+            $comentario = $_POST['comentario'];
+            $id_tipocita = 1;
+
+            
+            if (!$id_mascota || !$id_hora || !$descripcion || !$comentario) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response);
+                return;
+            }
+
+            $cita = new Cita(null,$id_mascota, $creado_por, $id_hora, $fecha, $descripcion,$estado, null, $id_estadocita, $comentario, $id_tipocita);
+
+            if ($cita->guardar()) {
+                $response['error'] = false;
+                $response['message'] = 'Cita registrada correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar la cita.';
+            }
+
+            
+        }  else {
+            $response['message'] = 'Método no permitido.';
         }
+
+        echo json_encode($response);
+        return;
     }
 }

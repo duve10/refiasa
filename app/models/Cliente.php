@@ -50,4 +50,28 @@ class Cliente {
         $stmt = $db->query($sql);
         return $stmt->fetchColumn(); // Devolver el total de registros
     }
+
+    public static function getClienteByNameDoc($nameDoc) {
+        $db = Database::getConnection();
+      
+        $nameDoc = '%' . $nameDoc . '%'; 
+        $sql = "SELECT 
+                    t1.id,
+                    t1.nombre,
+                    t1.apellido_paterno,
+                    t1.apellido_materno,
+                    t1.documento
+                FROM cliente t1
+                WHERE 1=1 AND estado = 1
+                AND (t1.nombre LIKE :nameDoc OR t1.apellido_paterno LIKE :nameDoc OR t1.apellido_materno LIKE :nameDoc OR t1.documento LIKE :nameDoc)
+                LIMIT 10";
+
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':nameDoc', $nameDoc, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
