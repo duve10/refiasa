@@ -38,6 +38,7 @@ $router->add('/citas/apiGetCitas', 'CitaController@apiGetCitas');
 $router->add('/citas/apiRegistrar', 'CitaController@apiRegistrar');
 
 $router->add('/calendario', 'CalendarioController@index');
+$router->add('/calendario/apiGetCitasAtenciones', 'CalendarioController@apiGetCitasAtenciones');
 
 $router->add('/atenciones', 'AtencionController@index');
 $router->add('/atenciones/apiGetAtenciones', 'AtencionController@apiGetAtenciones');

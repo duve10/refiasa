@@ -8,9 +8,9 @@ function getCalendar() {
     initialView: "dayGridMonth",
     locale: "es",
     headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      left: "prev,next today",
+      center: "title",
+      right: "dayGridMonth,timeGridWeek,timeGridDay",
     },
     buttonText: {
       today: "Hoy",
@@ -18,21 +18,31 @@ function getCalendar() {
       week: "Semana",
       day: "Día",
     },
-    events: [
-      // Aquí puedes cargar eventos desde tu base de datos u otra fuente
-      {
-        title: "Evento 1",
-        start: "2024-06-10",
-      },
-      {
-        title: "Evento 2",
-        start: "2024-06-15",
-        end: "2024-06-17",
-      },
-      // Agrega más eventos según sea necesario
-    ],
+    events: function (fetchInfo, successCallback, failureCallback) {
+      let start = fetchInfo.startStr;
+      let end = fetchInfo.endStr;
+      fetch("/calendario/apiGetCitasAtenciones?start=" + start + "&end=" + end)
+        .then((response) => response.json())
+        .then((data) => {
+          let events = data.data.map(function (event) {
+            return {
+              id: event.id,
+              title: event.descripcion,
+              start: event.start,
+              end: event.end, // Ajusta esto según tus datos
+              color: event.color, 
+              //extendedProps: {
+                //tipo: event.tipo, // Si tienes un campo tipo para diferenciar entre cita y atención
+              //},
+            };
+          });
+          successCallback(events);
+        })
+        .catch((error) => {
+          console.error("Error fetching events:", error);
+          failureCallback(error);
+        });
+    },
   });
   calendar.render();
 }
-
-
