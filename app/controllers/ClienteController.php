@@ -3,7 +3,7 @@ require_once '../app/models/Cliente.php';
 
 class ClienteController {
     public function index() {
-        require_once '../app/views/clientes.php';
+        require_once '../app/views/clientes/index.php';
     }
 
     public function apiGetClientes() {

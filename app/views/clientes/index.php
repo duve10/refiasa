@@ -2,14 +2,14 @@
 $active = "4";
 $title = "Clientes | Refiasa";
 
-include "includes/header.php";
+include "../app/views/includes/header.php";
 ?>
 
 <body>
     <div class='wrapper'>
-        <?php include "includes/sidebar.php";?>
+        <?php include "../app/views/includes/sidebar.php";?>
         <div class='main'>
-            <?php include "includes/navBar.php";?>
+            <?php include "../app/views/includes/navBar.php";?>
             <main class='content'>
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">

@@ -3,7 +3,7 @@ require_once '../app/models/Usuario.php';
 
 class UsuarioController {
     public function index() {
-        require_once '../app/views/usuarios.php';
+        require_once '../app/views/usuarios/index.php';
     }
 
     public function apiGetUsuarios() {
@@ -32,9 +32,11 @@ class UsuarioController {
                     'lastname' => $usuario['lastname'],
                     'phone' => $usuario['phone'],
                     'mail' => $usuario['mail'],
-                    'imagen' => BASE_URL.'/'.$usuario['imagen'],
+                    'imagen' => '<img src="'.BASE_URL.'/'.$usuario['imagen'].'" width="48" height="48" class="rounded-circle me-2" alt="Avatar">',
                     'perfil' => $usuario['perfil'],
-                    'acciones' => '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                    'acciones' => '
+                    <a class="text-info" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye align-middle me-2"><path d="M1     12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
+                    <a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
                     <a class="text-danger ms-3"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
                 ];
             }

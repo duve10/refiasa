@@ -3,7 +3,7 @@ require_once '../app/models/Cita.php';
 
 class CitaController {
     public function index() {
-        require_once '../app/views/citas.php';
+        require_once '../app/views/citas/index.php';
     }
 
     public function apiGetCitas() {
@@ -53,6 +53,15 @@ class CitaController {
         } else {
             http_response_code(405);
             echo "405 Method Not Allowed";
+        }
+    }
+
+    public function registrar() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mascota_id = $_POST['mascota_id'];
+            $fecha = $_POST['fecha'];
+            $hora = $_POST['hora'];
+            $descripcion = $_POST['descripcion'];
         }
     }
 }

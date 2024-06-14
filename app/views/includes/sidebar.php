@@ -83,14 +83,14 @@
                     <span class='align-middle'>Usuarios</span>
                 </a>
             </li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link'>
+            <li class='sidebar-item <?= $active == '10'? 'active': '' ?>'>
+                <a class='sidebar-link' href="perfiles">
                     <i class='align-middle' data-feather='book'></i>
                     <span class='align-middle'>Perfiles</span>
                 </a>
             </li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link'>
+            <li class='sidebar-item <?= $active == '11'? 'active': '' ?>'>
+                <a class='sidebar-link' href="servicios">
                     <i class='align-middle' data-feather='wind'></i>
                     <span class='align-middle'>Servicios</span>
                 </a>

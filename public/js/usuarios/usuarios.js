@@ -89,13 +89,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
           },
         },
         columns: [
-          { data: "imagen", className: "fw-bold", orderable: false },
+          { data: "imagen", className: "text-center", orderable: false },
           { data: "username", className: "text-start", orderable: false },
-          { data: "name", className: "text-center", orderable: false },
-          { data: "documento", className: "text-center", orderable: false },
-          { data: "lastname", className: "text-center", orderable: false },
+          { data: "name", className: "text-start", orderable: false },
+          { data: "lastname", className: "text-start", orderable: false },
           { data: "phone", className: "text-center", orderable: false },
-          { data: "mail", className: "text-center", orderable: false },
+          { data: "mail", className: "text-start", orderable: false },
+          { data: "perfil", className: "text-start", orderable: false },
           { data: "acciones", className: "text-center", orderable: false },
         ],
       })

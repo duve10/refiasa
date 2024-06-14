@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
   
   function getDataTable() {
-    let tableReport = $("#tableCitas")
+    let tableReport = $("#tablePerfiles")
       .DataTable({
         searching: false,
         ordering: false,
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         serverSide: true,
         responsive: false,
         ajax: {
-          url: "citas/apiGetCitas",
+          url: "perfiles/apiGetPerfiles",
           type: "POST",
           data: function (data) {
             /*let yearGroup = $("#yearGroup").val();
@@ -89,13 +89,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
           },
         },
         columns: [
-          { data: "fecha", className: "fw-bold", orderable: false },
-          { data: "hora", className: "text-start fw-bold", orderable: false },
-          { data: "mascota", className: "text-center", orderable: false },
-          { data: "especie", className: "text-center", orderable: false },
-          { data: "descripcion", className: "text-start", orderable: false },
-          { data: "nombreCliente", className: "text-start", orderable: false },
-          { data: "estadocita", className: "text-center", orderable: false },
+          { data: "nombre", className: "text-center", orderable: false },
           { data: "acciones", className: "text-center", orderable: false },
         ],
       })

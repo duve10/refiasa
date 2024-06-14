@@ -3,7 +3,7 @@ require_once '../app/models/Atencion.php';
 
 class AtencionController {
     public function index() {
-        require_once '../app/views/atenciones.php';
+        require_once '../app/views/atenciones/index.php';
     }
 
     public function apiGetAtenciones() {
