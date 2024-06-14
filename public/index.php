@@ -30,6 +30,7 @@ $router->add('/servicios/apiGetServicios', 'ServicioController@apiGetServicios')
 
 $router->add('/mascotas', 'MascotaController@index');
 $router->add('/mascotas/apiGetMascotas', 'MascotaController@apiGetMascotas');
+$router->add('/mascotas/apiGetMascotasByCliente', 'MascotaController@apiGetMascotasByCliente');
 
 $router->add('/citas', 'CitaController@index');
 $router->add('/citas/registro', 'CitaController@registro');

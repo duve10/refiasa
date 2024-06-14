@@ -30,6 +30,26 @@ include "../app/views/includes/header.php";
                                                     <select class="form-control id_cliente" name="id_cliente" id="id_cliente"></select>
                                                 </div>
                                             </div>
+                                            <div class="mb-3 row">
+                                                <label for="id_mascota" class="col-md-3 col-xl-2 col-form-label fw-bold">Mascota <span class="text-danger">*</span></label>
+                                                <div id="divMascotas" class="col-md-9 col-xl-10">
+                                                    <div class="w-100 h-100  d-flex align-items-center justify-content-center border border-dotted">
+                                                        <h5 class="fw-bold m-0 text-muted">Seleccionar Cliente</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="descripcion" class="col-md-3 col-xl-2 col-form-label fw-bold">Descripcion <span class="text-danger">*</span></label>
+                                                <div class="col-md-9 col-xl-10">
+                                                    <textarea class="form-control validate" placeholder="Escribe una descripcion"  id="descripcion" name="descripcion" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="comentario" class="col-md-3 col-xl-2 col-form-label fw-bold">Comentario </label>
+                                                <div class="col-md-9 col-xl-10">
+                                                    <textarea class="form-control validate" placeholder="Escribe un comentario" id="comentario" name="comentario" rows="3"></textarea>
+                                                </div>
+                                            </div>
                                             <div class="col-12">
                                                 <button class="btn btn-primary btnColorGeneral" id="crearCita" type="submit">Crear Cita</button>
                                             </div>

@@ -51,4 +51,40 @@ class MascotaController {
             echo "405 Method Not Allowed";
         }
     }
+
+    public function apiGetMascotasByCliente() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idCliente = $_POST['idCliente'] ?? '';
+
+            $response = [
+                'error' => true,
+                'message' => 'Error desconocido.',
+                'data' => []
+            ];
+
+            $mascotas = Mascota::getMascotasByCliente($idCliente);
+
+            if ($mascotas) {
+
+                $response['error'] = false;
+
+                foreach ($mascotas as $mascota) {
+                    $response['data'][] = [
+                        'id' => $mascota['id'],
+                        'nombre' => $mascota['nombre'],
+                        'peso' => $mascota['peso'],
+                        'edad' => $mascota['edad'],
+                    ];
+                }
+            } else {
+                $response['message'] = 'Ocurrio un Error';
+            }
+
+            echo json_encode($response);
+            return;
+        }  else {
+            http_response_code(405);
+            echo "405 Method Not Allowed";
+        }
+    }
 }
