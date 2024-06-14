@@ -156,3 +156,13 @@
 .select2-container {
   width: 100% !important;
 }
+
+
+.alturaCalendarioGeneral {
+  height: 80vh;
+}
+.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

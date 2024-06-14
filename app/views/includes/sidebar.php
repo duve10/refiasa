@@ -35,13 +35,6 @@
                 </ul>
             </li>
 
-            <li class='sidebar-item <?= $active == '8'? 'active': '' ?>'>
-                <a class='sidebar-link' href="/calendario">
-                    <i class='align-middle' data-feather='calendar'></i>
-                    <span class='align-middle'>Calendario</span>
-                </a>
-            </li>
-
             <li class='sidebar-item <?= $active == '6' || $active == '7'? 'active': '' ?>'>
                 <a data-bs-target="#s27" data-bs-toggle="collapse" class="sidebar-link <?= $active == '6' || $active == '7'? '': 'collapsed' ?>" aria-expanded="false">
                     <i class="align-middle" data-feather="activity"></i>
@@ -61,6 +54,13 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+
+            <li class='sidebar-item <?= $active == '8'? 'active': '' ?>'>
+                <a class='sidebar-link' href="/calendario">
+                    <i class='align-middle' data-feather='calendar'></i>
+                    <span class='align-middle'>Calendario</span>
+                </a>
             </li>
 
 

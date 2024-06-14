@@ -24,8 +24,8 @@ include "../app/views/includes/header.php";
                         <div class="d-flex">
                             <div class="w-100">
                                 <div class="row">
-                                    <div class="col-12 bg-white content">
-                                        <div id="calendarAll">
+                                    <div class="col-12 bg-white content d-flex justify-content-center">
+                                        <div id="calendarAll" class="w-100 alturaCalendarioGeneral">
 
                                         </div>
                                     </div>
@@ -38,6 +38,11 @@ include "../app/views/includes/header.php";
 
                 </div>
             </main>
+            <?php
+
+            include "../app/views/includes/footer.php";
+
+            ?>
         </div>
     </div>
     <div class="loading d-none">Loading&#8230;</div>
