@@ -3,6 +3,7 @@ $active = "2";
 $title = "Citas | Refiasa";
 
 include "../app/views/includes/header.php";
+
 ?>
 
 <body>
@@ -39,9 +40,24 @@ include "../app/views/includes/header.php";
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
+                                                <label for="fecha" class="col-md-3 col-xl-2 col-form-label fw-bold">Fecha <span class="text-danger">*</span></label>
+                                                <div class="col-md-6 col-xl-4">
+                                                    <input type="text" class="form-control" name="fecha" id="fecha" value="<?= date("d-m-Y")  ?>">
+                                                </div>
+                                                <label for="id_hora" class="col-md-1 col-xl-2 col-form-label fw-bold">Hora <span class="text-danger">*</span></label>
+                                                <div class="col-md-2 col-xl-4">
+                                                    <select class="form-select form-control id_hora" name="id_hora" id="id_hora">
+                                                            <option value="">Selecciona una hora</option>
+                                                        <?php  foreach ($horas as $hora) {  ?>
+                                                            <option value="<?= $hora['id'] ?>"><?= $hora['hora'] ?></option>
+                                                        <?php }  ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
                                                 <label for="descripcion" class="col-md-3 col-xl-2 col-form-label fw-bold">Descripcion <span class="text-danger">*</span></label>
                                                 <div class="col-md-9 col-xl-10">
-                                                    <textarea class="form-control validate" placeholder="Escribe una descripcion"  id="descripcion" name="descripcion" rows="3"></textarea>
+                                                    <textarea class="form-control validate" placeholder="Escribe una descripcion" id="descripcion" name="descripcion" rows="3"></textarea>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">

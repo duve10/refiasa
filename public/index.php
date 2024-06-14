@@ -35,6 +35,9 @@ $router->add('/mascotas/apiGetMascotasByCliente', 'MascotaController@apiGetMasco
 $router->add('/citas', 'CitaController@index');
 $router->add('/citas/registro', 'CitaController@registro');
 $router->add('/citas/apiGetCitas', 'CitaController@apiGetCitas');
+$router->add('/citas/apiRegistrar', 'CitaController@apiRegistrar');
+
+$router->add('/calendario', 'CalendarioController@index');
 
 $router->add('/atenciones', 'AtencionController@index');
 $router->add('/atenciones/apiGetAtenciones', 'AtencionController@apiGetAtenciones');

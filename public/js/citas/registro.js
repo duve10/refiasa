@@ -2,10 +2,47 @@ document.addEventListener("DOMContentLoaded", (e) => {
   guardarCita();
   selectCliente();
   focusSelect2();
+  iniciarFecha("fecha");
 });
 
 function guardarCita() {
-  console.log(11);
+  let formCita = document.getElementById("formCita");
+
+  formCita.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let datos = new FormData(formCita);
+    //datos.append("idCliente", idCliente);
+    try {
+      mostrarLoading();
+      let response = await fetch("../citas/apiRegistrar", {
+        method: "POST",
+        body: datos,
+      });
+
+      let data = await response.json();
+
+      if (!data.error) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: data.message,
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+        }).then(() => {
+          window.location.href = "/citas";
+        });
+      } else {
+        ocultarLoading();
+        Swal.fire({
+          icon: "error",
+          text: data.message,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 }
 
 function selectCliente() {
@@ -59,7 +96,7 @@ async function getMascotas(idCliente) {
 
     if (!data.error) {
       let mascotas = data.data;
-      let divMascotas = document.getElementById('divMascotas')
+      let divMascotas = document.getElementById("divMascotas");
 
       let htmlMascotas = "";
       mascotas.forEach((mascota) => {
@@ -68,7 +105,7 @@ async function getMascotas(idCliente) {
           `
             <div class="col">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="radio" name="id_mascota" role="switch" id="mascota${mascota.id}">
+                    <input class="form-check-input" type="radio" name="id_mascota" value="${mascota.id}" role="switch" id="mascota${mascota.id}">
                     <label class="form-check-label" for="mascota${mascota.id}">${mascota.nombre}</label>
                 </div>
             </div>

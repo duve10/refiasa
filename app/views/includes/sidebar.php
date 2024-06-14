@@ -13,12 +13,12 @@
                 </a>
             </li>
    
-            <li class='sidebar-item <?= $active == '2' || $active == '3' || $active == '8'? 'active': '' ?>'>
-                <a data-bs-target="#s26" data-bs-toggle="collapse" class="sidebar-link <?= $active == '2' || $active == '3' || $active == '8'? '': 'collapsed' ?>" aria-expanded="false">
+            <li class='sidebar-item <?= $active == '2' || $active == '3'? 'active': '' ?>'>
+                <a data-bs-target="#s26" data-bs-toggle="collapse" class="sidebar-link <?= $active == '2' || $active == '3'? '': 'collapsed' ?>" aria-expanded="false">
                     <i class="align-middle" data-feather="zap"></i>
                     <span class="align-middle">Citas</span>
                 </a>
-                <ul id="s26" class="sidebar-dropdown list-unstyled collapse <?= $active == '2' || $active == '3' || $active == '8'? 'show': '' ?>" data-bs-parent="#sidebar">
+                <ul id="s26" class="sidebar-dropdown list-unstyled collapse <?= $active == '2' || $active == '3'? 'show': '' ?>" data-bs-parent="#sidebar">
                     <li class='sidebar-item <?= $active == '2'? 'active': '' ?>'>
                         <a class="sidebar-link" href="citas">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
@@ -31,12 +31,15 @@
                             <span class="align-middle">Registro</span>
                         </a>
                     </li>
-                    <li class='sidebar-item <?= $active == '8'? 'active': '' ?>'>
-                        <a class="sidebar-link" href="citas/calendario">
-                            <span class="align-middle">Calendario</span>
-                        </a>
-                    </li>
+                
                 </ul>
+            </li>
+
+            <li class='sidebar-item <?= $active == '8'? 'active': '' ?>'>
+                <a class='sidebar-link' href="/calendario">
+                    <i class='align-middle' data-feather='calendar'></i>
+                    <span class='align-middle'>Calendario</span>
+                </a>
             </li>
 
             <li class='sidebar-item <?= $active == '6' || $active == '7'? 'active': '' ?>'>
@@ -112,19 +115,19 @@
             <li class='sidebar-item'>
                 <a class='sidebar-link'>
                     <i class='align-middle' data-feather='users'></i>
-                    <span class='align-middle'>Recorded Users</span>
+                    <span class='align-middle'>Reporte de Usuarios</span>
                 </a>
             </li>
             <li class='sidebar-item'>
                 <a data-bs-target="#s28" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                     <i class="align-middle" data-feather="folder"></i>
-                    <span class="align-middle">Report</span>
+                    <span class="align-middle">Reportes</span>
                 </a>
                 <ul id="s28" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class='sidebar-item'>
                         <a class="sidebar-link" href="/">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
-                            <span class="align-middle">Report 1</span>
+                            <span class="align-middle">Reporte 1</span>
                         </a>
                     </li>
                 </ul>

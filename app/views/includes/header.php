@@ -39,6 +39,7 @@
 
     <!--- full calendar --->
     <script src='<?= BASE_URL ?>/libs/fullcalendar-6.0.3/dist/index.global.js'></script>
+    
     <!--- MOMENT JS --->
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <!--- DATA TABLES --->
@@ -65,4 +66,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="<?= BASE_URL ?>/js/general.js"></script>
 </head>
