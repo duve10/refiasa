@@ -13,6 +13,12 @@ function iniciarFechaChange(idInput) {
     minDate: "today",
     time_24hr: true,
     disableMobile: true,
+    disable: [
+      function (date) {
+        // Devolver true para deshabilitar domingos (0 = domingo, 1 = lunes, ..., 6 = sábado)
+        return date.getDay() === 0; // 0 es domingo
+      },
+    ],
     onChange: async function (selectedDates, dateStr, instance) {
       let fechaSelected = dateStr;
       try {
@@ -41,9 +47,8 @@ function iniciarFechaChange(idInput) {
           option.textContent = hora.hora;
 
           if (hora.idCita != null) {
-            option.classList.add('optionColor');
+            option.classList.add("optionColor");
           }
-           
 
           selectHoras.appendChild(option);
         });
