@@ -9,10 +9,7 @@ require_once '../app/models/Cliente.php';
 class HomeController {
     public function index() {
         
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
 
 
         $totalAtenciones = Atencion::getTotal();
@@ -23,10 +20,7 @@ class HomeController {
     }
 
     public function dashboard() {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
 
 
         $totalAtenciones = Atencion::getTotal();

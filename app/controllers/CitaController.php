@@ -10,20 +10,14 @@ class CitaController
 
     public function index()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
 
         require_once '../app/views/citas/index.php';
     }
 
     public function registro()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
         $servicios = Servicio::getAllServicios();
         $horas = Horas::obtenerListaHorasPorFecha(date("Y-m-d"));
         require_once '../app/views/citas/registro.php';
@@ -32,10 +26,7 @@ class CitaController
 
     public function apiGetCitas()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
@@ -92,10 +83,7 @@ class CitaController
 
     public function apiRegistrar()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
         header('Content-Type: application/json');
 
         $response = [
@@ -154,10 +142,7 @@ class CitaController
 
     public function getApiListaHorasPorFecha()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $fechaSelected = $_GET['fechaSelected'];

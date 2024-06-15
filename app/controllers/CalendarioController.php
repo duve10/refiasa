@@ -7,19 +7,13 @@ class CalendarioController
 {
     public function index()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+       
         require_once '../app/views/calendario/index.php';
     }
 
     public function apiGetCitasAtenciones()
     {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+       
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $start = $_GET['start'];
             $end = $_GET['end'];

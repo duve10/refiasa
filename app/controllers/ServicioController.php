@@ -4,18 +4,12 @@ require_once '../app/models/Servicio.php';
 class ServicioController {
     
     public function index() {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
         require_once '../app/views/servicios/index.php';
     }
 
     public function apiGetServicios() {
-        if (!isset($_SESSION['user_id'])) {
-            header("Location: " . BASE_URL . "/login");
-            exit();
-        }
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
                 'drawn' => $_POST['drawn'] ?? '',
