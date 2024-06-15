@@ -35,7 +35,7 @@ include "../app/views/includes/header.php";
                                                 <label for="id_mascota" class="col-md-3 col-xl-2 col-form-label fw-bold">Mascota <span class="text-danger">*</span></label>
                                                 <div id="divMascotas" class="col-md-9 col-xl-10">
                                                     <div class="w-100 h-100  d-flex align-items-center justify-content-center border border-dotted">
-                                                        <h5 class="fw-bold m-0 text-muted">Seleccionar Cliente</h5>
+                                                        <h5 class="fw-bold m-0 text-muted p-2">Seleccionar Cliente</h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -48,8 +48,12 @@ include "../app/views/includes/header.php";
                                                 <div class="col-md-2 col-xl-4">
                                                     <select class="form-select form-control id_hora" name="id_hora" id="id_hora">
                                                         <option value="">Selecciona una hora</option>
-                                                        <?php foreach ($horas as $hora) {  ?>
-                                                            <option value="<?= $hora['id'] ?>"><?= $hora['hora'] ?></option>
+                                                        <?php foreach ($horas as $hora) { 
+                                                             
+                                                                $classColor = $hora['idCita'] != null ? 'optionColor':'';
+                                                                   
+                                                        ?>
+                                                            <option class="<?= $classColor ?>" value="<?= $hora['id'] ?>"><?= $hora['hora'] ?></option>
                                                         <?php }  ?>
                                                     </select>
                                                 </div>

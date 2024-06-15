@@ -44,13 +44,13 @@
                     <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
-                            <span class="align-middle">Atenciones Editar / Lista</span>
+                            <span class="align-middle">Editar / Lista</span>
                         </a>
                     </li>
                     <li class='sidebar-item <?= $active == '7'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones/registro">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
-                            <span class="align-middle">Atenciones Registro</span>
+                            <span class="align-middle">Registro</span>
                         </a>
                     </li>
                 </ul>
