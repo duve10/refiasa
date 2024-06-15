@@ -26,7 +26,7 @@ include "../app/views/includes/header.php";
 
                     <div class="row">
                         <div class="col-12">
-                            <div class="card borderCard">
+                            <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                        

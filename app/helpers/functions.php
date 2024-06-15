@@ -12,3 +12,10 @@ function convertirFechaHtml($fecha) {
     $date = DateTime::createFromFormat('Y-m-d', $fecha);
     return $date->format('d-m-Y');
 }
+
+function verificarSesion() {
+    if (isset($_SESSION['user_id'])) {
+        header("Location: " . BASE_URL . "/dashboard");
+        exit();
+    }
+}

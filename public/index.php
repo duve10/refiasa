@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('UTC');
+date_default_timezone_set("America/Mexico_City");
 session_start();
 
 require_once '../app/config.php'; // Incluir configuración
@@ -36,6 +39,7 @@ $router->add('/citas', 'CitaController@index');
 $router->add('/citas/registro', 'CitaController@registro');
 $router->add('/citas/apiGetCitas', 'CitaController@apiGetCitas');
 $router->add('/citas/apiRegistrar', 'CitaController@apiRegistrar');
+$router->add('/citas/getApiListaHorasPorFecha', 'CitaController@getApiListaHorasPorFecha');
 
 $router->add('/calendario', 'CalendarioController@index');
 $router->add('/calendario/apiGetCitasAtenciones', 'CalendarioController@apiGetCitasAtenciones');

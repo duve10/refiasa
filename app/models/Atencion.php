@@ -92,7 +92,8 @@ class Atencion {
                     'Atención' as descripcion,
                     t1.fecha,
                     'Atención' as type,
-                    '#80DEEA' as color
+                    '#80DEEA' as color,
+                    '' as tipo
 
                 FROM atencion t1
                 LEFT JOIN mascota t2 on t2.id = t1.id_mascota 

@@ -272,7 +272,9 @@ class Cita
                         t5.nombre as especie,
                         t6.hora,
                         t8.nombre AS estadocita,
-                        t8.clasecolor AS estadocitacolor
+                        t8.clasecolor AS estadocitacolor,
+                        t9.nombre as tipocita,
+                        t9.clase as claseCita
                     FROM cita t1
                     LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
                     LEFT JOIN cliente t3 on t3.id = t2.id_cliente
@@ -280,6 +282,7 @@ class Cita
                     LEFT JOIN especie t5 on t5.id = t2.especie_id
                     LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
                     LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
+                    LEFT JOIN tipo_Cita t9 on t9.id = t1.id_tipocita
                     WHERE 1=1 AND t1.estado = 1 ';
 
             $sql .= " ORDER BY t1.fecha DESC, t6.hora DESC";
@@ -364,7 +367,8 @@ class Cita
                         CONCAT('Cita: ', DATE_FORMAT(t6.hora, '%h:%i %p')) as descripcion,
                         t1.fecha,
                         'Cita' as type,
-                        '#FFD54F' as color 
+                        '#FFD54F' as color,
+                        id_tipocita as tipo
     
                     FROM cita t1
                     LEFT JOIN mascota t2 on t2.id = t1.id_mascota 

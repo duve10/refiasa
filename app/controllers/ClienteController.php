@@ -3,10 +3,18 @@ require_once '../app/models/Cliente.php';
 
 class ClienteController {
     public function index() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         require_once '../app/views/clientes/index.php';
     }
 
     public function apiGetClientes() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
                 'drawn' => $_POST['drawn'] ?? '',
@@ -53,6 +61,10 @@ class ClienteController {
     }
 
     public function apiGetClientesSelect() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $nameDoc = $_GET['q'];
             $clienteData = [];

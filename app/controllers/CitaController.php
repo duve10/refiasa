@@ -10,11 +10,20 @@ class CitaController
 
     public function index()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+
         require_once '../app/views/citas/index.php';
     }
 
     public function registro()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         $servicios = Servicio::getAllServicios();
         $horas = Horas::obtenerListaHorasPorFecha(date("Y-m-d"));
         require_once '../app/views/citas/registro.php';
@@ -23,6 +32,11 @@ class CitaController
 
     public function apiGetCitas()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
                 'drawn' => $_POST['drawn'] ?? '',
@@ -39,8 +53,10 @@ class CitaController
 
             $data = [];
             foreach ($citas as $cita) {
-                $data[] = [
+                
+                $citaHtml = '';
 
+                $data[] = [
                     'id' => $cita['id'],
                     'descripcion' => $cita['descripcion'],
                     'fecha' => convertirFechaHtml($cita['fecha']),
@@ -51,6 +67,7 @@ class CitaController
                     'telefono' => $cita['telefono'],
                     'correo' => $cita['correo'],
                     'username' => $cita['username'],
+                    'tipocita' => '<span class="badge '.$cita['claseCita'].' fw-bold">'.$cita['tipocita'].'</span>',
                     'especie' => $cita['especie'],
                     'hora' => $cita['hora'],
                     'estadocita' => '<span class="badge ' . $cita['estadocitacolor'] . ' text-dark">' . $cita['estadocita'] . '</span>',
@@ -75,6 +92,10 @@ class CitaController
 
     public function apiRegistrar()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         header('Content-Type: application/json');
 
         $response = [
@@ -84,17 +105,24 @@ class CitaController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-           
-            $id_mascota = $_POST['id_mascota'] ?? null;
+
+            $id_mascota = trim($_POST['id_mascota']) ?? null;
             $creado_por = $_SESSION['user_id'];
-            $id_hora = $_POST['id_hora'];
+            $id_hora = trim($_POST['id_hora']);
             $fecha = convertirFechaBd($_POST['fecha']);
-            $descripcion = $_POST['descripcion'];
+            $descripcion = trim($_POST['descripcion']);
             $servicios = $_POST['id_servicio'] ?? [];
             $estado = 1;
             $id_estadocita = $_POST['id_estadocita'] ?? 1;
-            $comentario = $_POST['comentario'];
-            $id_tipocita = 1;
+            $comentario = trim($_POST['comentario']);
+
+            $verificarTipo = Horas::verificarHoraOcupada($fecha, $id_hora);
+            if ($verificarTipo > 0) {
+                $id_tipocita = 2;
+            } else {
+                $id_tipocita = 1;
+            }
+            
 
 
             if (!$id_mascota || !$id_hora || !$descripcion || !$comentario || empty($servicios)) {
@@ -122,5 +150,39 @@ class CitaController
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
         return;
+    }
+
+    public function getApiListaHorasPorFecha()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+            $fechaSelected = $_GET['fechaSelected'];
+            $fechaSelectedFormat = convertirFechaBd($fechaSelected);
+            $horas = Horas::obtenerListaHorasPorFecha($fechaSelectedFormat);
+
+            $data = [];
+
+            foreach ($horas as $hora) {
+                $data[] = [
+                    'id' => $hora['id'],
+                    'hora' => $hora['hora'],
+                    'idCita' => $hora['idCita']
+                ];
+            }
+
+            $response = [
+                'data' => $data
+            ];
+
+            header('Content-Type: application/json');
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(405);
+            echo "405 Method Not Allowed";
+        }
     }
 }

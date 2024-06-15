@@ -48,7 +48,7 @@ include "includes/header.php";
                                     <h1 class="mt-1 mb-3 font18"><?= $totalCitas ?> cita(s)</h1>
                                     <div class="mb-0">
                                         <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 citas </span>
-                                        <span class="text-muted">desde el ultimo mes</span>
+                                        <span class="text-muted">mes anterior</span>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ include "includes/header.php";
                                     <h1 class="mt-1 mb-3 font18"><?= $totalAtenciones ?> atenciones</h1>
                                     <div class="mb-0">
                                         <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 atenciones </span>
-                                        <span class="text-muted">desde el ultimo mes</span>
+                                        <span class="text-muted">mes anterior</span>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@ include "includes/header.php";
                                     <h1 class="mt-1 mb-3 font18"><?= $totalClientes ?> clientes</h1>
                                     <div class="mb-0">
                                         <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 Clientes </span>
-                                        <span class="text-muted">el ultimo mes</span>
+                                        <span class="text-muted">mes anterior</span>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ include "includes/header.php";
                                     <h1 class="mt-1 mb-3 font18"><?= $totalMascotas ?> mascota(s)</h1>
                                     <div class="mb-0">
                                         <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 mascotas </span>
-                                        <span class="text-muted">el ultimo mes</span>
+                                        <span class="text-muted">mes anterior</span>
                                     </div>
                                 </div>
                             </div>

@@ -7,11 +7,19 @@ class CalendarioController
 {
     public function index()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         require_once '../app/views/calendario/index.php';
     }
 
     public function apiGetCitasAtenciones()
     {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $start = $_GET['start'];
             $end = $_GET['end'];
@@ -26,6 +34,11 @@ class CalendarioController
 
             $data = [];
             foreach ($eventos as $evento) {
+
+                $color = $evento['color'];
+                if ($evento['tipo'] == 2) {
+                    $color = '#6C757D';
+                }
                 $fecha = $evento['fecha'];
                 $datetime = new DateTime($fecha);
                 $formattedDate = $datetime->format('Y-m-d');
@@ -36,7 +49,7 @@ class CalendarioController
                     'title' => $evento['type'],
                     'descripcion' => $evento['descripcion'],
                     'type' => $evento['type'],
-                    'color' => $evento['color']
+                    'color' => $color
                 ];
             }
 

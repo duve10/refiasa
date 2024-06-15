@@ -41,6 +41,7 @@ include "../app/views/includes/header.php";
                                     <table id="tableCitas" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
+                                                <th>Tipo</th>
                                                 <th>Fecha</th>
                                                 <th>Hora</th>
                                                 <th>Mascota</th>

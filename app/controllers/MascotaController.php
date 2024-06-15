@@ -3,10 +3,18 @@ require_once '../app/models/Mascota.php';
 
 class MascotaController {
     public function index() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         require_once '../app/views/mascotas/index.php';
     }
 
     public function apiGetMascotas() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
                 'drawn' => $_POST['drawn'] ?? '',
@@ -53,6 +61,10 @@ class MascotaController {
     }
 
     public function apiGetMascotasByCliente() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: " . BASE_URL . "/login");
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idCliente = $_POST['idCliente'] ?? '';
 
@@ -63,7 +75,7 @@ class MascotaController {
             ];
 
             $mascotas = Mascota::getMascotasByCliente($idCliente);
-
+            
             if ($mascotas) {
 
                 $response['error'] = false;
@@ -77,6 +89,7 @@ class MascotaController {
                     ];
                 }
             } else {
+                $response['error'] = false;
                 $response['message'] = 'Ocurrio un Error';
             }
 

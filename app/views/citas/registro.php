@@ -4,6 +4,7 @@ $title = "Registro Citas | Refiasa";
 
 include "../app/views/includes/header.php";
 
+
 ?>
 
 <body>
