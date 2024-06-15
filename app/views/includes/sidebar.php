@@ -20,13 +20,13 @@
                 </a>
                 <ul id="s26" class="sidebar-dropdown list-unstyled collapse <?= $active == '2' || $active == '3'? 'show': '' ?>" data-bs-parent="#sidebar">
                     <li class='sidebar-item <?= $active == '2'? 'active': '' ?>'>
-                        <a class="sidebar-link" href="citas">
+                        <a class="sidebar-link" href="/citas">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
                             <span class="align-middle">Editar / Lista</span>
                         </a>
                     </li>
                     <li class='sidebar-item <?= $active == '3'? 'active': '' ?>'>
-                        <a class="sidebar-link" href="citas/registro">
+                        <a class="sidebar-link" href="/citas/registro">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
                             <span class="align-middle">Registro</span>
                         </a>
@@ -42,13 +42,13 @@
                 </a>
                 <ul id="s27" class="sidebar-dropdown list-unstyled collapse <?= $active == '6' || $active == '7' ? 'show': '' ?>" data-bs-parent="#sidebar">
                     <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
-                        <a class="sidebar-link" href="atenciones">
+                        <a class="sidebar-link" href="/atenciones">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
                             <span class="align-middle">Atenciones Editar / Lista</span>
                         </a>
                     </li>
                     <li class='sidebar-item <?= $active == '7'? 'active': '' ?>'>
-                        <a class="sidebar-link" href="atenciones/registro">
+                        <a class="sidebar-link" href="/atenciones/registro">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
                             <span class="align-middle">Atenciones Registro</span>
                         </a>
@@ -67,7 +67,7 @@
     
             <li class="sidebar-header">Administracion</li>
             <li class='sidebar-item <?= $active == '4'? 'active': '' ?>'>
-                <a class='sidebar-link' href="clientes">
+                <a class='sidebar-link' href="/clientes">
                     <i class='align-middle' data-feather='smile'></i>
                     <span class='align-middle'>Clientes</span>
                 </a>
@@ -75,25 +75,25 @@
 
             
             <li class='sidebar-item <?= $active == '5'? 'active': '' ?>'>
-                <a class='sidebar-link' href="mascotas">
+                <a class='sidebar-link' href="/mascotas">
                     <i class='align-middle' data-feather='github'></i>
                     <span class='align-middle'>Mascotas</span>
                 </a>
             </li>
             <li class='sidebar-item <?= $active == '9'? 'active': '' ?>'>
-                <a class='sidebar-link' href="usuarios">
+                <a class='sidebar-link' href="/usuarios">
                     <i class='align-middle' data-feather='users'></i>
                     <span class='align-middle'>Usuarios</span>
                 </a>
             </li>
             <li class='sidebar-item <?= $active == '10'? 'active': '' ?>'>
-                <a class='sidebar-link' href="perfiles">
+                <a class='sidebar-link' href="/perfiles">
                     <i class='align-middle' data-feather='book'></i>
                     <span class='align-middle'>Perfiles</span>
                 </a>
             </li>
             <li class='sidebar-item <?= $active == '11'? 'active': '' ?>'>
-                <a class='sidebar-link' href="servicios">
+                <a class='sidebar-link' href="/servicios">
                     <i class='align-middle' data-feather='wind'></i>
                     <span class='align-middle'>Servicios</span>
                 </a>

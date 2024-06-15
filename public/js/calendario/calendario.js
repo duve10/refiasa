@@ -31,6 +31,8 @@ function getCalendar() {
               start: event.start,
               end: event.end, // Ajusta esto según tus datos
               color: event.color, 
+              textColor: 'black',
+              className: 'fw-bold' 
               //extendedProps: {
                 //tipo: event.tipo, // Si tienes un campo tipo para diferenciar entre cita y atención
               //},

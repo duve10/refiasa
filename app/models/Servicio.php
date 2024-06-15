@@ -35,7 +35,12 @@ class Servicio {
 
         $stmt->execute();
         
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $results;
     }
 
 
@@ -43,6 +48,32 @@ class Servicio {
         $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM servicio where estado = 1";
         $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+        $total = $stmt->fetchColumn();
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $total;
+    }
+
+    public static function getAllServicios() {
+        $db = Database::getConnection();
+        $sql = 'SELECT 
+                    t1.id,
+                    t1.nombre,
+                    t1.descripcion,
+                    t1.precio,
+                    t2.username
+                FROM servicio t1
+                LEFT JOIN user t2 on t2.id = t1.creado_por
+                WHERE 1=1 AND t1.estado = 1';
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $result;
     }
 }

@@ -7,20 +7,27 @@ include "includes/header.php";
 
 <body>
     <div class='wrapper'>
-        <?php include "includes/sidebar.php";?>
+        <?php include "includes/sidebar.php"; ?>
         <div class='main'>
-            <?php include "includes/navBar.php";?>
+            <?php include "includes/navBar.php"; ?>
             <main class='content'>
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">
                         <div class="col-auto d-none d-sm-block">
-                            <h1 class="h3 mb-3"><strong>Bienvenido</strong> <?= $_SESSION['name'] ?>  <?= $_SESSION['lastname'] ?></h1>
+                            <h1 class="h3 mb-3"><strong>Bienvenido</strong> <?= $_SESSION['name'] ?> <?= $_SESSION['lastname'] ?></h1>
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="atencion.php" >
-                                + Crer Atención
-                            </a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Cita || Atención
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/citas/registro">Crear Cita</a>
+                                    <a class="dropdown-item" href="/atenciones/registro">Crear Atención</a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -34,15 +41,15 @@ include "includes/header.php";
                                         </div>
                                         <div class='col-auto'>
                                             <div class="stat text-primary">
-                        		                <i class="align-middle" data-feather="zap"></i>
-											</div>
+                                                <i class="align-middle" data-feather="zap"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3 font18"><?=  $totalCitas ?> cita(s)</h1>
+                                    <h1 class="mt-1 mb-3 font18"><?= $totalCitas ?> cita(s)</h1>
                                     <div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 citas  </span>
-										<span class="text-muted">desde el ultimo mes</span>
-									</div>
+                                        <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 citas </span>
+                                        <span class="text-muted">desde el ultimo mes</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -55,15 +62,15 @@ include "includes/header.php";
                                         </div>
                                         <div class='col-auto'>
                                             <div class="stat text-primary">
-                        		                <i class="align-middle" data-feather="activity"></i>
-											</div>
+                                                <i class="align-middle" data-feather="activity"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3 font18"><?=  $totalAtenciones ?> atenciones</h1>
+                                    <h1 class="mt-1 mb-3 font18"><?= $totalAtenciones ?> atenciones</h1>
                                     <div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 atenciones  </span>
-										<span class="text-muted">desde el ultimo mes</span>
-									</div>
+                                        <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 atenciones </span>
+                                        <span class="text-muted">desde el ultimo mes</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,15 +83,15 @@ include "includes/header.php";
                                         </div>
                                         <div class='col-auto'>
                                             <div class="stat text-primary">
-                        		                <i class="align-middle" data-feather="smile"></i>
-											</div>
+                                                <i class="align-middle" data-feather="smile"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3 font18"><?=  $totalClientes ?> clientes</h1>
+                                    <h1 class="mt-1 mb-3 font18"><?= $totalClientes ?> clientes</h1>
                                     <div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 Clientes  </span>
-										<span class="text-muted">el ultimo mes</span>
-									</div>
+                                        <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 Clientes </span>
+                                        <span class="text-muted">el ultimo mes</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,15 +104,15 @@ include "includes/header.php";
                                         </div>
                                         <div class='col-auto'>
                                             <div class="stat text-primary">
-                        		                <i class="align-middle" data-feather="github"></i>
-											</div>
+                                                <i class="align-middle" data-feather="github"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3 font18"><?=  $totalMascotas ?> mascota(s)</h1>
+                                    <h1 class="mt-1 mb-3 font18"><?= $totalMascotas ?> mascota(s)</h1>
                                     <div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 mascotas  </span>
-										<span class="text-muted">el ultimo mes</span>
-									</div>
+                                        <span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> + 0 mascotas </span>
+                                        <span class="text-muted">el ultimo mes</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +122,7 @@ include "includes/header.php";
                         <div class="col-12 col-lg-6">
                             <div class="card h-100">
                                 <div class="card-header text-center">
-                                    
+
                                     <h2 class="fw-bold">Citas del Mes</h2>
                                 </div>
                                 <div class="card-body">

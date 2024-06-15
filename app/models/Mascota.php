@@ -40,7 +40,12 @@ class Mascota {
 
         $stmt->execute();
     
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión
+        Database::closeConnection();
+
+        return $results;
     }
 
 
@@ -48,7 +53,12 @@ class Mascota {
         $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM mascota where estado = 1";
         $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+        $total = $stmt->fetchColumn();
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $total; // Devolver el total de registros
     }
 
     public static function getMascotasByCliente($idCliente) {
@@ -73,6 +83,10 @@ class Mascota {
         $stmt->bindValue(':idCliente', $idCliente, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $results;
     }
 }

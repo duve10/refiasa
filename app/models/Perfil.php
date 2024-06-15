@@ -31,7 +31,12 @@ class Perfil {
 
         $stmt->execute();
         
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $results;
     }
 
 
@@ -39,6 +44,11 @@ class Perfil {
         $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM perfil where estado = 1";
         $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+        $total = $stmt->fetchColumn();
+
+        // Cerrar la conexión
+        Database::closeConnection($db);
+
+        return $total;
     }
 }

@@ -1,6 +1,8 @@
 <?php
 require_once '../app/models/Cita.php';
 require_once '../app/models/Hora.php';
+require_once '../app/models/Servicio.php';
+require_once '../app/models/CitaServicio.php';
 require_once '../app/helpers/functions.php';
 
 class CitaController
@@ -13,7 +15,8 @@ class CitaController
 
     public function registro()
     {
-        $horas = Horas::obtenerListaHoras();
+        $servicios = Servicio::getAllServicios();
+        $horas = Horas::obtenerListaHorasPorFecha(date("Y-m-d"));
         require_once '../app/views/citas/registro.php';
     }
 
@@ -81,18 +84,20 @@ class CitaController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+           
             $id_mascota = $_POST['id_mascota'] ?? null;
             $creado_por = $_SESSION['user_id'];
             $id_hora = $_POST['id_hora'];
             $fecha = convertirFechaBd($_POST['fecha']);
             $descripcion = $_POST['descripcion'];
+            $servicios = $_POST['id_servicio'] ?? [];
             $estado = 1;
             $id_estadocita = $_POST['id_estadocita'] ?? 1;
             $comentario = $_POST['comentario'];
             $id_tipocita = 1;
 
 
-            if (!$id_mascota || !$id_hora || !$descripcion || !$comentario) {
+            if (!$id_mascota || !$id_hora || !$descripcion || !$comentario || empty($servicios)) {
                 $response['message'] = 'Todos los campos son obligatorios.';
                 echo json_encode($response, JSON_UNESCAPED_UNICODE);
                 return;
@@ -101,6 +106,11 @@ class CitaController
             $cita = new Cita(null, $id_mascota, $creado_por, $id_hora, $fecha, $descripcion, $estado, null, $id_estadocita, $comentario, $id_tipocita);
 
             if ($cita->guardar()) {
+
+                foreach ($servicios as $id_servicio) {
+                    CitaServicio::asignarServicioACita($cita->getId(), $id_servicio);
+                }
+
                 $response['error'] = false;
                 $response['message'] = 'Cita registrada correctamente.';
             } else {

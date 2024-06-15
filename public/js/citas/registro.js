@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   selectCliente();
   focusSelect2();
   iniciarFecha("fecha");
+  selectServicios();
 });
 
 function guardarCita() {
@@ -74,6 +75,17 @@ function selectCliente() {
     let clienteId = $("#id_cliente").val();
     getMascotas(clienteId);
   });
+}
+
+function selectServicios() {
+  $("#id_servicio").select2({
+    
+  });
+
+$("#id_cliente").on("select2:select", function (e) {
+  let clienteId = $("#id_cliente").val();
+  getMascotas(clienteId);
+});
 }
 
 function focusSelect2() {

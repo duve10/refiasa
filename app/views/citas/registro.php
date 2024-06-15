@@ -1,6 +1,6 @@
 <?php
-$active = "2";
-$title = "Citas | Refiasa";
+$active = "3";
+$title = "Registro Citas | Refiasa";
 
 include "../app/views/includes/header.php";
 
@@ -47,13 +47,26 @@ include "../app/views/includes/header.php";
                                                 <label for="id_hora" class="col-md-1 col-xl-2 col-form-label fw-bold">Hora <span class="text-danger">*</span></label>
                                                 <div class="col-md-2 col-xl-4">
                                                     <select class="form-select form-control id_hora" name="id_hora" id="id_hora">
-                                                            <option value="">Selecciona una hora</option>
-                                                        <?php  foreach ($horas as $hora) {  ?>
+                                                        <option value="">Selecciona una hora</option>
+                                                        <?php foreach ($horas as $hora) {  ?>
                                                             <option value="<?= $hora['id'] ?>"><?= $hora['hora'] ?></option>
                                                         <?php }  ?>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="mb-3 row">
+                                                <label for="servicios" class="col-md-3 col-xl-2 col-form-label fw-bold">Servicios <span class="text-danger">*</span></label>
+                                                <div class="col-md-9 col-xl-10">
+                                                    <select class="form-select form-control id_servicio" multiple name="id_servicio[]" id="id_servicio">
+                                                        <option value="">Seleccion de Servicios</option>
+                                                        <?php foreach ($servicios as $servicio) {  ?>
+                                                            <option value="<?= $servicio['id'] ?>"><?= $servicio['nombre'] ?></option>
+                                                        <?php }  ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="mb-3 row">
                                                 <label for="descripcion" class="col-md-3 col-xl-2 col-form-label fw-bold">Descripcion <span class="text-danger">*</span></label>
                                                 <div class="col-md-9 col-xl-10">

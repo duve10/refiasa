@@ -62,8 +62,13 @@ class Atencion {
         $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
 
         $stmt->execute();
-    
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
     }
 
 
@@ -71,7 +76,12 @@ class Atencion {
         $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM atencion where estado = 1";
         $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+        $total = $stmt->fetchColumn(); // Devolver el total de registros
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $total;
     }
 
     public static function getAllAttencionesByDate($filters) {
@@ -79,9 +89,9 @@ class Atencion {
         $db = Database::getConnection();
         $sql = "SELECT 
                     t1.id,
-                    t1.descripcion,
+                    'Atención' as descripcion,
                     t1.fecha,
-                    'Atencion' as type,
+                    'Atención' as type,
                     '#80DEEA' as color
 
                 FROM atencion t1
@@ -113,7 +123,12 @@ class Atencion {
 
         $stmt->execute();
     
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
 
     }
 }

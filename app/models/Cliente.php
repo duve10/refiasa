@@ -40,7 +40,12 @@ class Cliente {
 
         $stmt->execute();
         
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $clientes;
     }
 
 
@@ -48,7 +53,12 @@ class Cliente {
         $db = Database::getConnection();
         $sql = "SELECT COUNT(*) FROM cliente where estado = 1";
         $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+        $total = $stmt->fetchColumn(); // Devolver el total de registros
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $total;
     }
 
     public static function getClienteByNameDoc($nameDoc) {
@@ -72,6 +82,11 @@ class Cliente {
         $stmt->bindValue(':nameDoc', $nameDoc, PDO::PARAM_STR);
         $stmt->execute();
         
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $clientes;
     }
 }

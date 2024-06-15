@@ -20,6 +20,8 @@ class User {
         $stmt->execute(['user' => $user]);
         $user = $stmt->fetch(PDO::FETCH_OBJ);
         
+        // Cerrar la conexión
+        Database::closeConnection($db);
       
         if (!$user) {
             return self::USER_NOT_FOUND;

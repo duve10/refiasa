@@ -254,79 +254,80 @@ class Cita
 
     public static function getAll($filters)
     {
-        $db = Database::getConnection();
-        $sql = 'SELECT 
-                    t1.id,
-                    t1.descripcion,
-                    t1.fecha,
+        try {
+            $db = Database::getConnection();
+            $sql = 'SELECT 
+                        t1.id,
+                        t1.descripcion,
+                        t1.fecha,
+                        t2.nombre as mascota,
+                        t2.peso,
+                        t2.edad,
+                        t3.nombre as cliente,
+                        t3.apellido_paterno,
+                        t3.apellido_materno,
+                        t3.telefono,
+                        t3.correo,
+                        t4.username,
+                        t5.nombre as especie,
+                        t6.hora,
+                        t8.nombre AS estadocita,
+                        t8.clasecolor AS estadocitacolor
+                    FROM cita t1
+                    LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
+                    LEFT JOIN cliente t3 on t3.id = t2.id_cliente
+                    LEFT JOIN user t4 on t4.id = t1.creado_por
+                    LEFT JOIN especie t5 on t5.id = t2.especie_id
+                    LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
+                    LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
+                    WHERE 1=1 AND t1.estado = 1 ';
 
-                    t2.nombre as mascota,
-                    t2.peso,
-                    t2.edad,
+            $sql .= " ORDER BY t1.fecha DESC, t6.hora DESC";
+            $sql .= " LIMIT :limit OFFSET :offset";
 
-                    t3.nombre as cliente,
-                    t3.apellido_paterno,
-                    t3.apellido_materno,
-                    t3.telefono,
-                    t3.correo,
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':limit', $filters['length'], PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
 
-                    t4.username,
+            $stmt->execute();
 
-                    t5.nombre as especie,
-                    t6.hora,
-                    t8.nombre AS estadocita,
-                    t8.clasecolor AS estadocitacolor
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                FROM cita t1
-                LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
-                LEFT JOIN cliente t3 on t3.id = t2.id_cliente
-                LEFT JOIN user t4 on t4.id = t1.creado_por
-                LEFT JOIN especie t5 on t5.id = t2.especie_id
-                LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
-                LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
-                WHERE 1=1 AND t1.estado = 1 ';
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
 
-
-        /*if (!empty($filters['name'])) {
-            $sql .= " AND name LIKE :name";
-            $params[':name'] = '%' . $filters['name'] . '%';
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error al obtener las citas: " . $e->getMessage();
+            return [];
         }
-
-        if (!empty($filters['email'])) {
-            $sql .= " AND email LIKE :email";
-            $params[':email'] = '%' . $filters['email'] . '%';
-        }*/
-        /* AGREGAR EL ORDEN */
-        $sql .= " ORDER BY t1.fecha DESC,t6.hora DESC";
-
-        $sql .= " LIMIT :limit OFFSET :offset";
-
-
-
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':limit', $filters['length'], PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
     public static function getTotal()
     {
-        $db = Database::getConnection();
-        $sql = "SELECT COUNT(*) FROM cita where estado = 1";
-        $stmt = $db->query($sql);
-        return $stmt->fetchColumn(); // Devolver el total de registros
+
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT COUNT(*) FROM cita where estado = 1";
+            $stmt = $db->query($sql);
+            $total = $stmt->fetchColumn(); // Devolver el total de registros
+
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $total;
+        } catch (PDOException $e) {
+            echo "Error al obtener el total de citas: " . $e->getMessage();
+            return 0;
+        }
     }
 
     public function guardar()
     {
         try {
             $db = Database::getConnection();
-            $sql = "INSERT INTO cita (id_mascota, creado_por, id_hora, fecha, descripcion, estado, id_estadocita,comentario,id_tipocita) 
+            $sql = "INSERT INTO cita (id_mascota, creado_por, id_hora, fecha, descripcion, estado, id_estadocita, comentario, id_tipocita) 
                     VALUES (:id_mascota, :creado_por, :id_hora, :fecha, :descripcion, :estado, :id_estadocita, :comentario, :id_tipocita)";
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':id_mascota', $this->id_mascota);
@@ -339,7 +340,14 @@ class Cita
             $stmt->bindValue(':comentario', $this->comentario);
             $stmt->bindValue(':id_tipocita', $this->id_tipocita);
 
-            return $stmt->execute();
+            $result = $stmt->execute();
+
+            $this->id = $db->lastInsertId();
+
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $result;
         } catch (PDOException $e) {
             echo "Error al guardar la cita: " . $e->getMessage();
             return false;
@@ -349,43 +357,41 @@ class Cita
     public static function getAllCitasByDate($filters)
     {
 
-        $db = Database::getConnection();
-        $sql = "SELECT 
-                    t1.id,
-                    t1.descripcion,
-                    t1.fecha,
-                    'Cita' as type,
-                    '#FFD54F' as color 
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT 
+                        t1.id,
+                        CONCAT('Cita: ', DATE_FORMAT(t6.hora, '%h:%i %p')) as descripcion,
+                        t1.fecha,
+                        'Cita' as type,
+                        '#FFD54F' as color 
+    
+                    FROM cita t1
+                    LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
+                    LEFT JOIN cliente t3 on t3.id = t2.id_cliente
+                    LEFT JOIN user t4 on t4.id = t1.creado_por
+                    LEFT JOIN especie t5 on t5.id = t2.especie_id
+                    LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
+                    LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
+                    WHERE 1=1 AND t1.estado = 1 ";
 
-                FROM cita t1
-                LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
-                LEFT JOIN cliente t3 on t3.id = t2.id_cliente
-                LEFT JOIN user t4 on t4.id = t1.creado_por
-                LEFT JOIN especie t5 on t5.id = t2.especie_id
-                LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
-                LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
-                WHERE 1=1 AND t1.estado = 1 ";
+            $sql .= " AND t1.fecha BETWEEN :start AND :end";
 
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':start', $filters['start']);
+            $stmt->bindValue(':end', $filters['end']);
 
-        /*if (!empty($filters['name'])) {
-            $sql .= " AND name LIKE :name";
-            $params[':name'] = '%' . $filters['name'] . '%';
+            $stmt->execute();
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $results;
+        } catch (PDOException $e) {
+            echo "Error al obtener las citas por fecha: " . $e->getMessage();
+            return [];
         }
-
-        if (!empty($filters['email'])) {
-            $sql .= " AND email LIKE :email";
-            $params[':email'] = '%' . $filters['email'] . '%';
-        }*/
-
-        $sql .= " AND t1.fecha between :start and :end";
-
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':start', $filters['start']);
-        $stmt->bindValue(':end', $filters['end']);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
