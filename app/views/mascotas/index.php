@@ -18,9 +18,11 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
-                                + Agregar Mascota
-                            </a>
+                         
+                            <button id="addMascota"  type="button" class="btn btn-primary btnColorGeneral" data-bs-toggle="modal" data-bs-target="#crearMascota">
+                            + Agregar Mascota
+							</button>
+
                         </div>
                     </div>
 
@@ -45,6 +47,7 @@ include "../app/views/includes/header.php";
                                                 <th>Especie</th>
                                                 <th>Raza</th>
                                                 <th>Edad</th>
+                                                <th>Altura</th>
                                                 <th>Peso</th>
                                                 <th>Cliente</th>
                                                 <th>Usuario Creador</th>
@@ -65,6 +68,11 @@ include "../app/views/includes/header.php";
             </main>
         </div>
     </div>
+
+    <!----  MODAL PARA CREAR MASCOTA ---->
+    <?php
+    include "../app/views/mascotas/modalCrear.php";
+    ?>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
     <script src="js/mascotas/mascotas.js"></script>

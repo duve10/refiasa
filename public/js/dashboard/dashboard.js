@@ -8,6 +8,7 @@ function getCalendar() {
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: 'es', 
+    hiddenDays: [0],
     headerToolbar: false,
     buttonText: {
         today: 'Hoy',

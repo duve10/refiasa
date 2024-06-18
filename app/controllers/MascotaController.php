@@ -1,9 +1,10 @@
 <?php
 require_once '../app/models/Mascota.php';
+require_once '../app/models/Especie.php';
 
 class MascotaController {
     public function index() {
-        
+        $especies = Especie::getEspecies();
         require_once '../app/views/mascotas/index.php';
     }
 
@@ -32,6 +33,7 @@ class MascotaController {
                     'raza' => $mascota['raza'],
                     'edad' => $mascota['edad'],
                     'peso' => $mascota['peso'],
+                    'altura' => $mascota['altura'],
                     'nombreCliente' => $mascota['nombreCliente'] . " " . $mascota['apellido_paterno'],
                     'apellido_paterno' => $mascota['apellido_paterno'],
                     'username' => $mascota['username'],
@@ -91,4 +93,60 @@ class MascotaController {
             echo "405 Method Not Allowed";
         }
     }
+
+    public function apiRegistrar()
+    {
+        
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+            $nombre = trim($_POST['nombre']) ?? null;
+            $creado_por = $_SESSION['user_id'];
+            $id_cliente = trim($_POST['id_cliente']);
+            $fecha_nac = convertirFechaBd($_POST['fecha_nac']);
+            $sexo = trim($_POST['sexo']);
+            $id_raza = $_POST['id_raza'];
+            $estado = 1;
+            $foto = $_POST['foto'];
+            $peso = $_POST['peso'];
+            $altura = $_POST['altura'];
+            $comentario = trim($_POST['comentario']);
+
+
+
+            if (!$nombre || !$id_cliente || !$fecha_nac || !$sexo || !$id_raza) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+            $mascota = new Mascota(null, $nombre, $creado_por, $id_cliente, $creado_por, null, $estado, $fecha_nac, $sexo, $id_raza, $comentario, $foto);
+
+            if ($mascota->guardar()) {
+
+           
+                MascotaPeso::registrarPeso($mascota->getId(), $peso, $creado_por);
+                MascotaAltura::registrarAltura($mascota->getId(), $altura, $creado_por);
+               
+
+                $response['error'] = false;
+                $response['message'] = 'Mascota registrada correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar mascota.';
+            }
+        } else {
+            $response['message'] = 'Método no permitido.';
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
 }

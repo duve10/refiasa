@@ -18,6 +18,7 @@ function getCalendar() {
       week: "Semana",
       day: "Día",
     },
+    hiddenDays: [0],
     events: function (fetchInfo, successCallback, failureCallback) {
       let start = fetchInfo.startStr;
       let end = fetchInfo.endStr;
@@ -32,7 +33,7 @@ function getCalendar() {
               end: event.end, // Ajusta esto según tus datos
               color: event.color, 
               textColor: 'black',
-              className: 'fw-bold' 
+              className: '' 
               //extendedProps: {
                 //tipo: event.tipo, // Si tienes un campo tipo para diferenciar entre cita y atención
               //},
@@ -45,6 +46,10 @@ function getCalendar() {
           failureCallback(error);
         });
     },
+    eventContent: function (arg) {
+      let content =  arg.event.title;
+      return { html: content };
+    }
   });
   calendar.render();
 }

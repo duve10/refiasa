@@ -14,9 +14,6 @@ class SessionMiddleware {
     }
 
     private static function isLoginPage() {
-        // Lógica para determinar si la solicitud está en la página de inicio de sesión
-        // Por ejemplo, puedes verificar la URL actual, la ruta o cualquier otro criterio específico
-        // Aquí un ejemplo simple:
         $currentPage = $_SERVER['REQUEST_URI'];
         return strpos($currentPage, '/login') !== false;
     }

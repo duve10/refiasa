@@ -30,8 +30,10 @@ class CalendarioController
             foreach ($eventos as $evento) {
 
                 $color = $evento['color'];
+                $subTitle = '';
                 if ($evento['tipo'] == 2) {
-                    $color = '#6C757D';
+                    /*$color = '#6C757D';*/
+                    $subTitle = '<strong>Intermitente</strong><br>';
                 }
                 $fecha = $evento['fecha'];
                 $datetime = new DateTime($fecha);
@@ -41,7 +43,7 @@ class CalendarioController
                     'start' => $formattedDate,
                     'end' => $formattedDate,
                     'title' => $evento['type'],
-                    'descripcion' => $evento['descripcion'],
+                    'descripcion' => $subTitle.$evento['descripcion'],
                     'type' => $evento['type'],
                     'color' => $color
                 ];
