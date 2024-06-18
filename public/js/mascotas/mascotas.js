@@ -91,26 +91,29 @@ function initFecha() {
 }
 
 function getRazas() {
-  let especie = document.getElementById('especie')
+  let especie = document.getElementById("especie");
+  let razaSelect = document.getElementById("raza");
 
-
-  especie.addEventListener('change', async e => {
-    let id_especie = especie.value
+  especie.addEventListener("change", async (e) => {
+    let id_especie = especie.value;
     try {
       let response = await fetch("/razas/apiGetRaza?id_especie=" + id_especie, {
-        method: 'GET'
-      } )
+        method: "GET",
+      });
 
-      let data = await response.json()
-      console.log(data);
+      let data = await response.json();
+     
       if (!data.error) {
-        
+        razaSelect.innerHTML = '<option value="">Seleccione una raza</option>';
+        data.data.forEach(function(raza) {
+          let option = document.createElement('option');
+          option.value = raza.id;
+          option.textContent = raza.nombre;
+          razaSelect.appendChild(option);
+      });
       }
-
-    } catch (error) {
-      
-    }
-  })
+    } catch (error) {}
+  });
 }
 
 function getExcel() {
