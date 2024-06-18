@@ -8,6 +8,46 @@ document.addEventListener("DOMContentLoaded", (e) => {
     sendAll();*/
 });
 
+function guardarMascota(dataTableMascota) {
+  let formMascota = document.getElementById("formMascota");
+
+  formMascota.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let datos = new FormData(formMascota);
+    //datos.append("idCliente", idCliente);
+    try {
+      mostrarLoading();
+      let response = await fetch("../mascotas/apiRegistrar", {
+        method: "POST",
+        body: datos,
+      });
+
+      let data = await response.json();
+
+      if (!data.error) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: data.message,
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+        }).then(() => {
+          window.location.href = "/citas";
+        });
+      } else {
+        ocultarLoading();
+        Swal.fire({
+          icon: "error",
+          text: data.message,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
 function getDataTable() {
   let tableReport = $("#tableMascotas")
     .DataTable({
@@ -51,6 +91,8 @@ function getDataTable() {
   $("#registered").change(function () {
     tableReport.draw();
   });
+
+  guardarMascota(tableReport);
 }
 
 function selectCliente() {
@@ -102,15 +144,15 @@ function getRazas() {
       });
 
       let data = await response.json();
-     
+
       if (!data.error) {
         razaSelect.innerHTML = '<option value="">Seleccione una raza</option>';
-        data.data.forEach(function(raza) {
-          let option = document.createElement('option');
+        data.data.forEach(function (raza) {
+          let option = document.createElement("option");
           option.value = raza.id;
           option.textContent = raza.nombre;
           razaSelect.appendChild(option);
-      });
+        });
       }
     } catch (error) {}
   });
