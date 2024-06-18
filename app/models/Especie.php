@@ -1,5 +1,6 @@
 <?php
 
+
 class Especie {
     public static function getEspecies() {
         $db = Database::getConnection(); // Asume que tienes una clase Database para la conexión

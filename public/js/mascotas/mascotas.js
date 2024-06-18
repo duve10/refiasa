@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
   selectCliente();
-  modalMascotaAdd();
-  initFecha()
+  initFecha();
+  getRazas();
   /*getExcel();
     sendMail();
     sendAll();*/
@@ -87,11 +87,31 @@ function initFecha() {
     static: true,
     time_24hr: true,
     disableMobile: true,
-  
   });
 }
 
-function modalMascotaAdd() {}
+function getRazas() {
+  let especie = document.getElementById('especie')
+
+
+  especie.addEventListener('change', async e => {
+    let id_especie = especie.value
+    try {
+      let response = await fetch("/razas/apiGetRaza?id_especie=" + id_especie, {
+        method: 'GET'
+      } )
+
+      let data = await response.json()
+      console.log(data);
+      if (!data.error) {
+        
+      }
+
+    } catch (error) {
+      
+    }
+  })
+}
 
 function getExcel() {
   let btnExcel = document.getElementById("btnExcel");

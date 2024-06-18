@@ -1,6 +1,7 @@
 <?php
 require_once '../app/models/Mascota.php';
 require_once '../app/models/Especie.php';
+require_once '../app/models/Raza.php';
 
 class MascotaController {
     public function index() {
@@ -86,7 +87,7 @@ class MascotaController {
                 $response['message'] = 'Ocurrio un Error';
             }
 
-            echo json_encode($response);
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
             return;
         }  else {
             http_response_code(405);

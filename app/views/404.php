@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 || Refiasa</title>
     <link rel="stylesheet" href="<?=BASE_URL?>/css/app.css">
+	
+    <link rel="icon" type="image/jpg" href="<?= BASE_URL ?>/img/pata.ico"/>
 </head>
 <body>
 <main class="d-flex w-100 h-100">
