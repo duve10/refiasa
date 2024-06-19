@@ -19,3 +19,64 @@ function verificarSesion() {
         exit();
     }
 }
+
+
+function handleFileUpload($file, $uploadDir) {
+    // Verificar si se subió el archivo y no hubo errores
+    if ($file && $file['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $file['tmp_name'];
+        $fileName = $file['name'];
+        $fileSize = $file['size'];
+        $fileMimeType = mime_content_type($fileTmpPath);
+
+        // Tipos MIME permitidos
+        $allowedMimeTypes = ['image/jpeg', 'image/png'];
+
+        // Verificar el tipo MIME
+        if (in_array($fileMimeType, $allowedMimeTypes)) {
+            // Restricción de tamaño de archivo (5MB máximo)
+            if ($fileSize < 5000000) { // 5MB máximo
+
+                if (!is_dir($uploadDir)) {
+                    if (!mkdir($uploadDir, 0777, true)) {
+                        return [
+                            'error' => true,
+                            'message' => 'Error al crear la carpeta de destino.'
+                        ];
+                    }
+                }
+                // Generar un nombre de archivo único
+                $fileNameNew = uniqid() . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
+                $destPath = rtrim($uploadDir, '/') . '/' . $fileNameNew;
+
+                // Mover el archivo a la ubicación de destino
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    return [
+                        'error' => false,
+                        'filePath' => $fileNameNew
+                    ];
+                } else {
+                    return [
+                        'error' => true,
+                        'message' => 'Error al mover el archivo subido.'
+                    ];
+                }
+            } else {
+                return [
+                    'error' => true,
+                    'message' => 'El tamaño del archivo es demasiado grande. Máximo 5MB.'
+                ];
+            }
+        } else {
+            return [
+                'error' => true,
+                'message' => 'Solo se permiten archivos JPG y PNG.'
+            ];
+        }
+    } else {
+        return [
+            'error' => true,
+            'message' => 'Error al subir el archivo.'
+        ];
+    }
+}

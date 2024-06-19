@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   selectCliente();
   initFecha();
   getRazas();
+  manejarCierreModal();
   /*getExcel();
     sendMail();
     sendAll();*/
@@ -33,7 +34,10 @@ function guardarMascota(dataTableMascota) {
           timer: 1500,
           timerProgressBar: true,
         }).then(() => {
-          window.location.href = "/citas";
+          ocultarLoading();
+
+          cerrarYResetearModal();
+          dataTableMascota.draw();
         });
       } else {
         ocultarLoading();
@@ -48,13 +52,31 @@ function guardarMascota(dataTableMascota) {
   });
 }
 
+function manejarCierreModal() {
+  $("#crearMascota").on("hidden.bs.modal", function (e) {
+    cerrarYResetearModal();
+  });
+}
+
+function cerrarYResetearModal() {
+  // Cerrar el modal
+  initFecha();
+  $("#crearMascota").modal("hide");
+  $("#id_cliente").val(null).trigger("change.select2");
+
+  let razaSelect = document.getElementById("raza");
+  razaSelect.innerHTML = '<option value="">Seleccione una raza</option>';
+  // Resetear el formulario dentro del modal
+  document.getElementById("formMascota").reset();
+}
+
 function getDataTable() {
   let tableReport = $("#tableMascotas")
     .DataTable({
       searching: false,
       ordering: false,
       dom: "Bfrtip",
-      pageLength: 20,
+      pageLength: 10,
       buttons: [],
       processing: true,
       serverSide: true,
@@ -93,6 +115,7 @@ function getDataTable() {
   });
 
   guardarMascota(tableReport);
+  eliminarMascota(tableReport);
 }
 
 function selectCliente() {
@@ -335,5 +358,58 @@ function sendAll() {
     });
 
     $(".loading").addClass("d-none");
+  });
+}
+
+function eliminarMascota(dataTableMascota) {
+  $("#tableMascotas tbody").on("click", ".deleteMascota", function () {
+    // Aquí manejas la lógica para eliminar el elemento deseado
+    let dataId = $(this).data("id");
+    let nombreMascoda = $(this).data("nombre");
+
+    Swal.fire({
+      title: `¿Esta seguro de eliminar ${nombreMascoda}?`,
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      confirmButtonText: "Save",
+      denyButtonText: `Eliminar`
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isDenied) {
+        let datos = new FormData();
+        datos.append("id", dataId);
+        try {
+          let response = await fetch("mascotas/apiEliminar", {
+            method: "POST",
+            body:datos
+          });
+
+          let data = await response.json();
+
+          if (!data.error) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: data.message,
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            })
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: data.message,
+            });
+          }
+
+          dataTableMascota.draw();
+
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+    
   });
 }

@@ -34,6 +34,8 @@ $router->add('/servicios/apiGetServicios', 'ServicioController@apiGetServicios')
 $router->add('/mascotas', 'MascotaController@index');
 $router->add('/mascotas/apiGetMascotas', 'MascotaController@apiGetMascotas');
 $router->add('/mascotas/apiGetMascotasByCliente', 'MascotaController@apiGetMascotasByCliente');
+$router->add('/mascotas/apiRegistrar', 'MascotaController@apiRegistrar');
+$router->add('/mascotas/apiEliminar', 'MascotaController@apiEliminar');
 
 $router->add('/razas/apiGetRaza', 'RazaController@apiGetRaza');
 

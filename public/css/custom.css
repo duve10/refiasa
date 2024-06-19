@@ -12,7 +12,7 @@
 /* Absolute Center Spinner */
 .loading {
   position: fixed;
-  z-index: 999;
+  z-index: 2000;
   height: 2em;
   width: 2em;
   overflow: show;
@@ -22,7 +22,9 @@
   bottom: 0;
   right: 0;
 }
-
+.swal2-container {
+  z-index: 3000 !important;
+}
 /* Transparent Overlay */
 .loading:before {
   content: "";
@@ -156,7 +158,6 @@
 .select2-container {
   width: 100% !important;
 }
-
 
 .alturaCalendarioGeneral {
   height: 80vh;

@@ -210,6 +210,26 @@ class Mascota {
     }
 
         /**
+     * Get the value of comentario
+     */ 
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    /**
+     * Set the value of comentario
+     *
+     * @return  self
+     */ 
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+        /**
      * Get the value of foto
      */ 
     public function getFoto()
@@ -236,7 +256,7 @@ class Mascota {
                     t1.nombre,
                     t7.nombre as especie,
                     t4.nombre as raza,
-                    t1.edad,
+                    t1.fecha_nac,
                     t5.peso,
                     t2.nombre as nombreCliente,
                     t2.apellido_paterno,
@@ -249,7 +269,7 @@ class Mascota {
                 LEFT JOIN especie t7 on t7.id = t4.id_especie
                 LEFT JOIN (SELECT id_mascota,peso FROM peso WHERE (id_mascota,created_at) in  (SELECT id_mascota,MAX(created_at) FROM peso GROUP BY id_mascota)) T5 ON T5.id_mascota = T1.ID
                 LEFT JOIN (SELECT id_mascota,altura FROM altura WHERE (id_mascota,created_at) in  (SELECT id_mascota,MAX(created_at) FROM altura GROUP BY id_mascota)) T6 ON T6.id_mascota = T1.ID
-                WHERE 1=1 AND t1.estado = 1';
+                WHERE 1=1 AND t1.estado = 1 ORDER BY t1.created_at DESC';
   
 
         /*if (!empty($filters['name'])) {
@@ -328,16 +348,19 @@ class Mascota {
             $db = Database::getConnection();
             $sql = "INSERT INTO mascota (nombre, id_cliente, creado_por, estado, fecha_nac, sexo, id_raza, comentario, foto) 
                     VALUES (:nombre, :id_cliente, :creado_por, :estado, :fecha_nac, :sexo, :id_raza, :comentario, :foto)";
+
             $stmt = $db->prepare($sql);
+            
             $stmt->bindValue(':nombre', $this->nombre);
             $stmt->bindValue(':id_cliente', $this->id_cliente);
             $stmt->bindValue(':estado', $this->estado);
+            $stmt->bindValue(':creado_por', $this->creado_por);
             $stmt->bindValue(':fecha_nac', $this->fecha_nac);
             $stmt->bindValue(':sexo', $this->sexo);
             $stmt->bindValue(':id_raza', $this->id_raza);
             $stmt->bindValue(':comentario', $this->comentario);
             $stmt->bindValue(':foto', $this->foto);
-
+            
             $result = $stmt->execute();
 
             $this->id = $db->lastInsertId();
@@ -351,6 +374,25 @@ class Mascota {
             return false;
         }
     }
+
+
+        // Eliminar una mascota de la base de datos
+        public static function eliminar($id,$userDelete) {
+            $db = Database::getConnection();
+    
+            $sql = 'UPDATE mascota set estado = 0,updated_at = NOW(),actualizado_por=:userDelete WHERE id = :id';
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':userDelete', $userDelete, PDO::PARAM_INT);
+    
+            $result = $stmt->execute();
+                // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $result;
+        }
+
+
 
 
 

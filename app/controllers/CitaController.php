@@ -52,7 +52,6 @@ class CitaController
                     'descripcion' => $cita['descripcion'],
                     'fecha' => convertirFechaHtml($cita['fecha']),
                     'mascota' => $cita['mascota'],
-                    'peso' => $cita['peso'],
                     'edad' => $cita['edad'],
                     'nombreCliente' => $cita['cliente'] . " " . $cita['apellido_paterno'],
                     'telefono' => $cita['telefono'],

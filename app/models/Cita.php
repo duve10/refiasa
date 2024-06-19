@@ -261,7 +261,6 @@ class Cita
                         t1.descripcion,
                         t1.fecha,
                         t2.nombre as mascota,
-                        t2.peso,
                         t2.edad,
                         t3.nombre as cliente,
                         t3.apellido_paterno,
@@ -279,7 +278,8 @@ class Cita
                     LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
                     LEFT JOIN cliente t3 on t3.id = t2.id_cliente
                     LEFT JOIN user t4 on t4.id = t1.creado_por
-                    LEFT JOIN especie t5 on t5.id = t2.especie_id
+                    LEFT JOIN raza t10 on t10.id = t2.id_raza
+                    LEFT JOIN especie t5 on t5.id = t10.id_especie
                     LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
                     LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
                     LEFT JOIN tipo_Cita t9 on t9.id = t1.id_tipocita
@@ -374,7 +374,6 @@ class Cita
                     LEFT JOIN mascota t2 on t2.id = t1.id_mascota 
                     LEFT JOIN cliente t3 on t3.id = t2.id_cliente
                     LEFT JOIN user t4 on t4.id = t1.creado_por
-                    LEFT JOIN especie t5 on t5.id = t2.especie_id
                     LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
                     LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
                     WHERE 1=1 AND t1.estado = 1 ";
