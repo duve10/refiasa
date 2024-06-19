@@ -7,9 +7,9 @@ include "../app/views/includes/header.php";
 
 <body>
     <div class='wrapper'>
-        <?php include "../app/views/includes/sidebar.php";?>
+        <?php include "../app/views/includes/sidebar.php"; ?>
         <div class='main'>
-            <?php include "../app/views/includes/navBar.php";?>
+            <?php include "../app/views/includes/navBar.php"; ?>
             <main class='content'>
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">
@@ -18,10 +18,10 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                         
-                            <button id="addMascota"  type="button" class="btn btn-primary btnColorGeneral" data-bs-toggle="modal" data-bs-target="#crearMascota">
-                            + Agregar Mascota
-							</button>
+
+                            <button id="addMascota" type="button" class="btn btn-primary btnColorGeneral" data-bs-toggle="modal" data-bs-target="#crearMascota">
+                                + Agregar Mascota
+                            </button>
 
                         </div>
                     </div>
@@ -31,7 +31,17 @@ include "../app/views/includes/header.php";
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                       
+                                        <div class="col-md-4">
+                                            <label for="dateFrom" class="fw-bold">Especie:</label>
+                                            <div class="mt-1">
+                                                <select id="filtroEspecie" name="filtroEspecie" class="form-select">
+                                                    <option value="">Selecciona Especie</option>
+                                                    <?php  foreach ($especies as $especie) {  ?>
+                                                        <option value="<?= $especie['id'] ?>"><?= $especie['nombre'] ?></option>
+                                                    <?php   } ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

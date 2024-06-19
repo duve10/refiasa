@@ -21,7 +21,8 @@ class MascotaController {
                 'length' => $_POST['length'] ?? '10',
                 'indexColumn' => $_POST['indexColumn'] ?? '',
                 'orderName' => $_POST['orderName'] ?? '',
-                'columnName' => $_POST['columnName'] ?? ''
+                'columnName' => $_POST['columnName'] ?? '',
+                'filtroEspecie' => $_POST['filtroEspecie'] ?? ''
                 
             ];
 

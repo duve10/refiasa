@@ -269,25 +269,28 @@ class Mascota {
                 LEFT JOIN especie t7 on t7.id = t4.id_especie
                 LEFT JOIN (SELECT id_mascota,peso FROM peso WHERE (id_mascota,created_at) in  (SELECT id_mascota,MAX(created_at) FROM peso GROUP BY id_mascota)) T5 ON T5.id_mascota = T1.ID
                 LEFT JOIN (SELECT id_mascota,altura FROM altura WHERE (id_mascota,created_at) in  (SELECT id_mascota,MAX(created_at) FROM altura GROUP BY id_mascota)) T6 ON T6.id_mascota = T1.ID
-                WHERE 1=1 AND t1.estado = 1 ORDER BY t1.created_at DESC';
+                WHERE 1=1 AND t1.estado = 1 ';
   
 
-        /*if (!empty($filters['name'])) {
-            $sql .= " AND name LIKE :name";
-            $params[':name'] = '%' . $filters['name'] . '%';
+        if (!empty($filters['filtroEspecie'])) {
+            $sql .= " AND t7.id = :idEspecie";
         }
 
-        if (!empty($filters['email'])) {
+        /*if (!empty($filters['email'])) {
             $sql .= " AND email LIKE :email";
             $params[':email'] = '%' . $filters['email'] . '%';
         }*/
 
-        $sql .= " LIMIT :limit OFFSET :offset";
+        $sql .= " ORDER BY t1.created_at DESC LIMIT :limit OFFSET :offset";
 
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':limit', $filters['length'], PDO::PARAM_INT);
         $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
+
+        if (!empty($filters['filtroEspecie'])) {
+            $stmt->bindValue(':idEspecie', $filters['filtroEspecie'], PDO::PARAM_INT);
+        }
 
         $stmt->execute();
     

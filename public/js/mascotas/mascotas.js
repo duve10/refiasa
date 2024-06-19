@@ -85,10 +85,8 @@ function getDataTable() {
         url: "mascotas/apiGetMascotas",
         type: "POST",
         data: function (data) {
-          /*let yearGroup = $("#yearGroup").val();
-            let registered = $("#registered").val();
-            data.yearGroup = yearGroup;
-            data.registered = registered;*/
+            let filtroEspecie = $("#filtroEspecie").val();
+            data.filtroEspecie = filtroEspecie;
         },
       },
       columns: [
@@ -104,16 +102,17 @@ function getDataTable() {
       ],
     })
     .on("preXhr.dt", function (e, settings, data) {
-      $(".loading").removeClass("d-none");
+      //$(".loading").removeClass("d-none");
     })
     .on("xhr.dt", function (e, settings, json, xhr) {
-      $(".loading").addClass("d-none");
+      //$(".loading").addClass("d-none");
     });
 
   $("#registered").change(function () {
     tableReport.draw();
   });
 
+  buscarEspecie(tableReport);
   guardarMascota(tableReport);
   eliminarMascota(tableReport);
 }
@@ -373,7 +372,7 @@ function eliminarMascota(dataTableMascota) {
       showCancelButton: true,
       showConfirmButton: false,
       confirmButtonText: "Save",
-      denyButtonText: `Eliminar`
+      denyButtonText: `Eliminar`,
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isDenied) {
@@ -382,7 +381,7 @@ function eliminarMascota(dataTableMascota) {
         try {
           let response = await fetch("mascotas/apiEliminar", {
             method: "POST",
-            body:datos
+            body: datos,
           });
 
           let data = await response.json();
@@ -395,7 +394,7 @@ function eliminarMascota(dataTableMascota) {
               showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
-            })
+            });
           } else {
             Swal.fire({
               icon: "error",
@@ -404,12 +403,18 @@ function eliminarMascota(dataTableMascota) {
           }
 
           dataTableMascota.draw();
-
         } catch (error) {
           console.log(error);
         }
       }
     });
-    
+  });
+}
+
+function buscarEspecie(dataTableMascota) {
+  let filtroEspecie = document.getElementById("filtroEspecie");
+
+  filtroEspecie.addEventListener("change", (e) => {
+    dataTableMascota.draw();
   });
 }
