@@ -24,6 +24,7 @@
     <script src='<?= BASE_URL ?>/libs/kartik-v/js/fileinput.min.js'></script>
     <script src='<?= BASE_URL ?>/libs/kartik-v/js/locales/LANG.js'></script>
 
+    <link href="<?= BASE_URL ?>/css/light.css" rel="stylesheet" />
     <link href="<?= BASE_URL ?>/css/app.css" rel="stylesheet" />
     <link href="<?= BASE_URL ?>/css/custom.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
