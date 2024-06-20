@@ -18,7 +18,7 @@ class Usuario {
                     t2.nombre as perfil
                 FROM user t1
                 LEFT JOIN perfil t2 on t2.id = t1.id_perfil 
-                WHERE 1=1 AND t1.status = 1';
+                WHERE 1=1 AND t1.status in ( 1, 0)';
       
 
         /*if (!empty($filters['name'])) {
@@ -51,7 +51,7 @@ class Usuario {
 
     public static function getTotal() {
         $db = Database::getConnection();
-        $sql = "SELECT COUNT(*) FROM user where status = 1";
+        $sql = "SELECT COUNT(*) FROM user where status in ( 1, 0)";
         $stmt = $db->query($sql);
         $total = $stmt->fetchColumn();
         
@@ -59,5 +59,20 @@ class Usuario {
         Database::closeConnection($db);
         
         return $total;
+    }
+
+    public static function eliminar($id,$userDelete) {
+        $db = Database::getConnection();
+
+        $sql = 'UPDATE user set status = 0,date_update = NOW(),actualizado_por=:userDelete WHERE id = :id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':userDelete', $userDelete, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+            // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
     }
 }

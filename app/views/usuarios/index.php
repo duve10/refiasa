@@ -48,6 +48,7 @@ include "../app/views/includes/header.php";
                                                 <th>Celular</th>
                                                 <th>Correo</th>
                                                 <th>Perfil</th>
+                                                <th>Estado</th>
                                                 <th class="text-center">Acciones</th>
                                             </tr>
                                         </thead>
