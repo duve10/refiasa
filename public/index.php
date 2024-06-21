@@ -51,8 +51,11 @@ $router->add('/calendario', 'CalendarioController@index');
 $router->add('/calendario/apiGetCitasAtenciones', 'CalendarioController@apiGetCitasAtenciones');
 
 $router->add('/atenciones', 'AtencionController@index');
+$router->add('/atenciones/rtatenciones', 'AtencionController@rtAtenciones');
 $router->add('/atenciones/apiGetAtenciones', 'AtencionController@apiGetAtenciones');
+$router->add('/atenciones/apiGetTodayAtenciones', 'AtencionController@apiGetTodayAtenciones');
 $router->add('/atenciones/registro', 'AtencionController@registro');
+$router->add('/atenciones/apiRegistrar', 'AtencionController@apiRegistrar');
 
 $router->add('/products', 'HomeController@products');
 $router->add('/logout', 'AuthController@logout');

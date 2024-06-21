@@ -13,6 +13,22 @@ function convertirFechaHtml($fecha) {
     return $date->format('d-m-Y');
 }
 
+function convertirFechaHoraHtml($fecha_hora_bd) {
+    try {
+        // Crear un objeto DateTime desde la fecha y hora recibida
+        $date = new DateTime($fecha_hora_bd);
+
+        // Formatear la fecha en dd-mm-yyyy HH:MM:SS
+        $fecha_formateada = $date->format('d-m-Y H:i');
+
+        return $fecha_formateada;
+
+    } catch (Exception $e) {
+        // Manejar la excepción si la fecha no es válida
+        return "Error: " . $e->getMessage();
+    }
+}
+
 function verificarSesion() {
     if (isset($_SESSION['user_id'])) {
         header("Location: " . BASE_URL . "/dashboard");

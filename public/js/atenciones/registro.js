@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 function iniciarFechaChange(idInput) {
   flatpickr("#" + idInput, {
     enableTime: true,
-    dateFormat: "d-m-Y H:i K",
+    dateFormat: "d-m-Y H:i",
     minDate: "today",
     time_24hr: true,
     disableMobile: true,

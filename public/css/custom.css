@@ -176,3 +176,13 @@
 .flatpickr-wrapper {
   width: 100%;
 }
+
+
+.accordion-button:not(.collapsed) {
+  background-color: #222e3c;
+  color: #ffffff;
+}
+
+.accordion-body {
+  background-color: #ffffff;
+}
