@@ -1,5 +1,6 @@
 <?php
 require_once '../app/models/Usuario.php';
+require_once '../app/models/Cliente.php';
 
 class UsuarioController {
     public function index() {
@@ -88,5 +89,24 @@ class UsuarioController {
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
         return;
 
+    }
+
+    public function apiGetVetSelect() {
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $nameDoc = $_GET['q'];
+            $vetData = [];
+            $filterVets  = Cliente::getVetByNameDoc($nameDoc);
+            
+            foreach ($filterVets as $filterVet) {
+
+                $data['id'] = $filterVet['id'];  
+                $data['text'] = $filterVet['username'].' ( '.$filterVet['name'].' )' ; 
+                array_push($vetData, $data);  
+                
+            }
+            
+            echo json_encode($vetData, JSON_UNESCAPED_UNICODE); 
+        }
     }
 }

@@ -25,6 +25,7 @@ $router->add('/clientes/apiGetClientesSelect', 'ClienteController@apiGetClientes
 $router->add('/usuarios', 'UsuarioController@index');
 $router->add('/usuarios/apiGetUsuarios', 'UsuarioController@apiGetUsuarios');
 $router->add('/usuarios/apiEliminar', 'UsuarioController@apiEliminar');
+$router->add('/usuarios/apiGetVetSelect', 'UsuarioController@apiGetVetSelect');
 
 $router->add('/perfiles', 'PerfilController@index');
 $router->add('/perfiles/apiGetPerfiles', 'PerfilController@apiGetPerfiles');
@@ -51,6 +52,7 @@ $router->add('/calendario/apiGetCitasAtenciones', 'CalendarioController@apiGetCi
 
 $router->add('/atenciones', 'AtencionController@index');
 $router->add('/atenciones/apiGetAtenciones', 'AtencionController@apiGetAtenciones');
+$router->add('/atenciones/registro', 'AtencionController@registro');
 
 $router->add('/products', 'HomeController@products');
 $router->add('/logout', 'AuthController@logout');

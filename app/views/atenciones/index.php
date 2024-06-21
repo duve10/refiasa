@@ -18,7 +18,7 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
+                            <a class="btn btn-primary btnColorGeneral" href="/atenciones/registro">
                                 + Agregar Atencion
                             </a>
                         </div>

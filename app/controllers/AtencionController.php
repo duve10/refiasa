@@ -1,10 +1,20 @@
 <?php
 require_once '../app/models/Atencion.php';
+require_once '../app/models/Servicio.php';
+require_once '../app/models/AtencionServicio.php';
+require_once '../app/helpers/functions.php';
 
 class AtencionController {
     public function index() {
         
         require_once '../app/views/atenciones/index.php';
+    }
+
+    public function registro()
+    {
+        
+        $servicios = Servicio::getAllServicios();
+        require_once '../app/views/atenciones/registro.php';
     }
 
     public function apiGetAtenciones() {
@@ -34,7 +44,6 @@ class AtencionController {
                     'tratamiento' => $atencion['tratamiento'],
                     'id_cita' => $atencion['id_cita'],
                     'mascota' => $atencion['mascota'],
-                    'peso' => $atencion['peso'],
                     'edad' => $atencion['edad'],
                     'nombreCliente' => $atencion['cliente'] . " " . $atencion['apellido_paterno'],
                     'telefono' => $atencion['telefono'],
@@ -60,5 +69,66 @@ class AtencionController {
             http_response_code(405);
             echo "405 Method Not Allowed";
         }
+    }
+
+    
+    public function apiRegistrar()
+    {
+        
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+            $id_mascota = isset($_POST['id_mascota']) ?? null;
+            $creado_por = $_SESSION['user_id'];
+            $id_cita = trim($_POST['id_cita']);
+            $veterinario = trim($_POST['veterinario']);
+            $fecha = convertirFechaBd($_POST['fecha']);
+            $descripcion = trim($_POST['descripcion']);
+            $servicios = $_POST['id_servicio'] ?? [];
+            $estado = 1;
+            $id_estadocita = $_POST['id_estadocita'] ?? 1;
+            $comentario = trim($_POST['comentario']);
+
+            $verificarTipo = Horas::verificarHoraOcupada($fecha, $id_hora);
+            if ($verificarTipo > 0) {
+                $id_tipocita = 2;
+            } else {
+                $id_tipocita = 1;
+            }
+            
+
+
+            if (!$id_mascota || !$id_hora || !$descripcion || !$comentario || empty($servicios)) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+            $cita = new Cita(null, $id_mascota, $creado_por, $id_hora, $fecha, $descripcion, $estado, null, $id_estadocita, $comentario, $id_tipocita);
+
+            if ($cita->guardar()) {
+
+                foreach ($servicios as $id_servicio) {
+                    CitaServicio::asignarServicioACita($cita->getId(), $id_servicio);
+                }
+
+                $response['error'] = false;
+                $response['message'] = 'Cita registrada correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar la cita.';
+            }
+        } else {
+            $response['message'] = 'Método no permitido.';
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
     }
 }

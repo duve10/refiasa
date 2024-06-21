@@ -1,16 +1,15 @@
 <?php
-class CitaServicio
+class AtencionServicio
 {
-    public static function asignarServicioACita($idCita, $idServicio)
+    public static function asignarServicioAAtencion($idAtencion, $idServicio)
     {
         $db = Database::getConnection();
-        $sql = 'INSERT INTO cita_servicio (id_cita, id_servicio) VALUES (:idCita, :idServicio)';
+        $sql = 'INSERT INTO cita_atencion (id_atencion, id_servicio) VALUES (:idAtencion, :idServicio)';
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':idCita', $idCita, PDO::PARAM_INT);
+        $stmt->bindValue(':idAtencion', $idAtencion, PDO::PARAM_INT);
         $stmt->bindValue(':idServicio', $idServicio, PDO::PARAM_INT);
 
         $result = $stmt->execute();
-
         // Cerrar la conexión
         Database::closeConnection($db);
 

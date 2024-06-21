@@ -89,4 +89,33 @@ class Cliente {
 
         return $clientes;
     }
+
+    public static function getVetByNameDoc($nameDoc) {
+        $db = Database::getConnection();
+      
+        $nameDoc = '%' . $nameDoc . '%'; 
+        $sql = "SELECT 
+                    t1.id,
+                    t1.username,
+                    t1.name,
+                    t1.lastname,
+                    t1.phone
+                FROM user t1
+                WHERE 1=1 AND status = 1 AND t1.id_perfil = 2
+                AND (t1.name LIKE :nameDoc OR t1.lastname LIKE :nameDoc OR t1.username LIKE :nameDoc OR t1.document LIKE :nameDoc)
+                LIMIT 10";
+
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':nameDoc', $nameDoc, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        $veterinarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $veterinarios;
+    }
 }
