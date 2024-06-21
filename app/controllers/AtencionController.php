@@ -96,24 +96,19 @@ class AtencionController {
             $id_estadocita = $_POST['id_estadocita'] ?? 1;
             $comentario = trim($_POST['comentario']);
 
-            $verificarTipo = Horas::verificarHoraOcupada($fecha, $id_hora);
-            if ($verificarTipo > 0) {
-                $id_tipocita = 2;
-            } else {
-                $id_tipocita = 1;
-            }
+
             
 
 
-            if (!$id_mascota || !$id_hora || !$descripcion || !$comentario || empty($servicios)) {
+            if (!$id_mascota || !$descripcion || !$comentario || empty($servicios)) {
                 $response['message'] = 'Todos los campos son obligatorios.';
                 echo json_encode($response, JSON_UNESCAPED_UNICODE);
                 return;
             }
 
-            $cita = new Cita(null, $id_mascota, $creado_por, $id_hora, $fecha, $descripcion, $estado, null, $id_estadocita, $comentario, $id_tipocita);
+            //$cita = new Cita(null, $id_mascota, $creado_por, $fecha, $descripcion, $estado, null, $id_estadocita, $comentario, $id_tipocita);
 
-            if ($cita->guardar()) {
+            /*if ($cita->guardar()) {
 
                 foreach ($servicios as $id_servicio) {
                     CitaServicio::asignarServicioACita($cita->getId(), $id_servicio);
@@ -123,7 +118,7 @@ class AtencionController {
                 $response['message'] = 'Cita registrada correctamente.';
             } else {
                 $response['message'] = 'Error al registrar la cita.';
-            }
+            }*/
         } else {
             $response['message'] = 'Método no permitido.';
         }

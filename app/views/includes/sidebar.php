@@ -40,7 +40,13 @@
                     <i class="align-middle" data-feather="activity"></i>
                     <span class="align-middle">Atenciones</span>
                 </a>
-                <ul id="s27" class="sidebar-dropdown list-unstyled collapse <?= $active == '6' || $active == '7' ? 'show': '' ?>" data-bs-parent="#sidebar">
+                <ul id="s27" class="sidebar-dropdown list-unstyled collapse <?= $active == '6' || $active == '7' || $active == '12' ? 'show': '' ?>" data-bs-parent="#sidebar">
+                    <li class='sidebar-item <?= $active == '12'? 'active': '' ?>'>
+                        <a class="sidebar-link" href="/atenciones/rtatenciones">
+                            <!---<i class="align-middle" data-feather="#icon#"></i>--->
+                            <span class="align-middle">RT Atenciones</span>
+                        </a>
+                    </li>
                     <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
