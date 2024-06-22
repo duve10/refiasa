@@ -90,6 +90,7 @@ function getDataTable() {
         },
       },
       columns: [
+        { data: "foto", className: "fw-bold", orderable: false },
         { data: "nombre", className: "fw-bold", orderable: false },
         { data: "especie", className: "text-start", orderable: false },
         { data: "raza", className: "text-start", orderable: false },

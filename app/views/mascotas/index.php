@@ -53,6 +53,7 @@ include "../app/views/includes/header.php";
                                     <table id="tableMascotas" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
+                                                <th>Foto</th>
                                                 <th>Nombre</th>
                                                 <th>Especie</th>
                                                 <th>Raza</th>

@@ -31,8 +31,8 @@ include "../app/views/includes/header.php";
                                     <div class="row">
                                             <div class="col-md-4 mb-2">
                                                 <label for="fecha" class="fw-bold">Desde:</label>
-                                                <div class="fecha d-flex">
-                                                    <input readonly type="text" class="form-control flatpickr-input" id="fecha" name="fecha" value="<?= date("d-m-Y")  ?>">
+                                                <div class="d-flex">
+                                                    <input readonly type="text" class="form-control flatpickr-input fecha" id="fecha" name="fecha" value="<?= date("d-m-Y")  ?>">
                                                     <a class="input-button btn btn-outline-secondary" title="toggle" data-toggle="">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle">
                                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>

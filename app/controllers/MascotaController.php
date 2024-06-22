@@ -55,6 +55,7 @@ class MascotaController {
 
                 $data[] = [
                     'id' => $mascota['id'],
+                    'foto' => '<img src="img/mascotas/'.$mascota['foto'].'" class="avatar img-fluid rounded me-1" alt="name">',
                     'nombre' => $mascota['nombre'],
                     'especie' => $mascota['especie'],
                     'raza' => $mascota['raza'],
@@ -137,7 +138,7 @@ class MascotaController {
 
             $nombre = trim($_POST['nombre']) ?? null;
             $creado_por = $_SESSION['user_id'];
-            $id_cliente = trim($_POST['id_cliente']);
+            $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente']??null : null;
             $fecha_nac = convertirFechaBd($_POST['fecha_nac']);
             $sexo = trim($_POST['sexo']);
             $id_raza = $_POST['raza'];

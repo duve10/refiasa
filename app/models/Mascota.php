@@ -256,6 +256,7 @@ class Mascota
         $sql = 'SELECT 
                     t1.id,
                     t1.nombre,
+                    t1.foto,
                     t7.nombre as especie,
                     t4.nombre as raza,
                     t1.fecha_nac,

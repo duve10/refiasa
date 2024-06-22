@@ -46,19 +46,19 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold">User</label>
+                                            <label class="form-label fw-bold">Usuario</label>
                                             <input  class="form-control form-control-lg" type="text" name="username" value="<?= $username ?>" placeholder="Ingresa tu usuario">
                                             
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold">Password</label>
+                                            <label class="form-label fw-bold">Contraseña</label>
                                             <input class="form-control form-control-lg passwordCss" autofocus="" value="<?= $password ?>" required="" type="password" name="password" autocomplete="new-password" placeholder="Ingresa tu contraseña">
                                             <div class="invalid-feedback <?= $response != ''? 'd-flex':'' ?>">
                                                 <?php if (($response) != ''): ?>
                                                     <?php echo $response; ?>
                                                 <?php endif; ?>
                                             </div>
-                                            <small>
+                                            <small class="d-none">
                                                 <a class="colorText2" href="password.cfm">¿Olvidaste tu contraseña?</a>
                                             </small>
                                         </div>
