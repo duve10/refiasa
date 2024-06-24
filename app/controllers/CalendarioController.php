@@ -33,7 +33,9 @@ class CalendarioController
                 $subTitle = '';
                 if ($evento['tipo'] == 2) {
                     /*$color = '#6C757D';*/
-                    $subTitle = '<strong>Intermitente</strong><br>';
+                    $subTitle = '<strong>En Espera</strong><br>';
+                } else {
+                    $subTitle = '<strong>Agendada</strong><br>';
                 }
                 $fecha = $evento['fecha'];
                 $datetime = new DateTime($fecha);
