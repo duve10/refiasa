@@ -3,6 +3,7 @@
 
 class SessionMiddleware {
     public static function handle() {
+
         if (session_status() === PHP_SESSION_NONE && !self::isLoginPage()) {
             session_start();
         }

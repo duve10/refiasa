@@ -93,7 +93,7 @@ class CitaController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
-            $id_mascota = isset($_POST['id_mascota']) ?? null;
+            $id_mascota = ($_POST['id_mascota']) ?? null;
             $creado_por = $_SESSION['user_id'];
             $id_hora = trim($_POST['id_hora']);
             $fecha = convertirFechaBd($_POST['fecha']);

@@ -107,9 +107,9 @@ class AtencionController
             $tratamiento = trim($_POST['tratamiento']);
             $fecha = $fecha_hora_mysql;
             $creado_por = $_SESSION['user_id'];
-            $estado = 1;
+            $estado = 2;
             $servicios = $_POST['id_servicio'] ?? [];
-            $id_estadoatencion = $_POST['id_estadoatencion'] ?? 1;
+            $id_estadoatencion = $_POST['id_estadoatencion'] ?? 2;
             $veterinario = trim($_POST['veterinario']);
 
 

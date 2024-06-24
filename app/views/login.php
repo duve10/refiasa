@@ -65,6 +65,7 @@
 
                                         <div class="text-center mt-3">
                                             <button type="submit" class="btn btn-lg btn-primary bgPrimary1 colorText1 btnColorGeneral">Sign in</button>
+                                            <button type="submit" class="btn btn-lg btn-primary bgPrimary1 colorText1 btnColorGeneral">Acceder por biometria</button>
                                             <!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
                                         </div>
                                     </form>
