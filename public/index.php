@@ -33,6 +33,9 @@ $router->add('/perfiles/apiGetPerfiles', 'PerfilController@apiGetPerfiles');
 $router->add('/servicios', 'ServicioController@index');
 $router->add('/servicios/apiGetServicios', 'ServicioController@apiGetServicios');
 
+$router->add('/productos', 'ProductoController@index');
+$router->add('/productos/apiGetProductos', 'ProductoController@apiGetProductos');
+
 $router->add('/mascotas', 'MascotaController@index');
 $router->add('/mascotas/apiGetMascotas', 'MascotaController@apiGetMascotas');
 $router->add('/mascotas/apiGetMascotasByCliente', 'MascotaController@apiGetMascotasByCliente');

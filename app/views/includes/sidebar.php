@@ -105,8 +105,8 @@
                 </a>
             </li>
             <li class="sidebar-header">Inventario</li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link'>
+            <li class='sidebar-item <?= $active == '13'? 'active': '' ?>'>
+                <a class='sidebar-link' href="/productos">
                     <i class='align-middle' data-feather='box'></i>
                     <span class='align-middle'>Productos</span>
                 </a>

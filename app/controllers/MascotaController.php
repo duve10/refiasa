@@ -148,7 +148,7 @@ class MascotaController {
             $altura = $_POST['altura'];
             $comentario = trim($_POST['comentario'])??'';
 
-            $pathFoto = '';
+            $pathFoto = 'general.jpg';
         
 
             if (!$nombre || !$id_cliente || !$fecha_nac || !$sexo || !$id_raza) {
