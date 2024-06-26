@@ -51,4 +51,66 @@ class ProductoController {
             echo "405 Method Not Allowed";
         }
     }
+
+    public function apiRegistrar()
+    {
+        
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $uploadDir = '../public/img/productos/';
+
+            $nombre = trim($_POST['nombre']) ?? null;
+            $descripcion = trim($_POST['descripcion'])??'';
+            $precio = trim($_POST['precio']);
+            $stock = trim($_POST['stock']);
+            $creado_por = $_SESSION['user_id'];
+            $estado = 1;
+            $imagen = $_FILES['foto'] ?? null;
+            $pathFoto = 'producto.jpg';
+        
+
+            if (!$nombre || !$descripcion || !$precio || !$stock) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+            if ($imagen["tmp_name"] != '') {
+                $uploadResult = handleFileUpload($imagen, $uploadDir);
+                if ($uploadResult['error']) {
+                    $response['message'] = $uploadResult['message'];
+                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                    return;
+                }
+
+                $pathFoto = $uploadResult['filePath'];
+            }
+
+            
+
+            $producto = new Producto(null, $nombre, $descripcion, $precio, $stock, $estado, $creado_por, $estado, $pathFoto);
+
+            if ($producto->guardar()) {
+
+              
+
+                $response['error'] = false;
+                $response['message'] = 'Producto registrado correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar Producto.';
+            }
+        } else {
+            $response['message'] = 'Método no permitido.';
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+    }
 }

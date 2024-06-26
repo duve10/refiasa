@@ -349,7 +349,7 @@ class Atencion {
             $params[':email'] = '%' . $filters['email'] . '%';
         }*/
 
-        $sql .= " LIMIT :limit OFFSET :offset";
+        $sql .= " ORDER BY t1.fecha desc LIMIT :limit OFFSET :offset";
 
         
         $stmt = $db->prepare($sql);

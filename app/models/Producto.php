@@ -3,6 +3,29 @@ require_once '../app/config/Database.php';
 
 class Producto {
 
+    private $id;
+    private $nombre;
+    private $descripcion;
+    private $precio;
+    private $stock;
+    private $creado_por;
+    private $actualizado_por;
+    private $estado;
+    private $foto;
+
+    public function __construct($id, $nombre, $descripcion, $precio, $stock, $creado_por, $actualizado_por, $estado, $foto)
+    {
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->descripcion = $descripcion;
+        $this->precio = $precio;
+        $this->stock = $stock;
+        $this->creado_por = $creado_por;
+        $this->actualizado_por = $actualizado_por;
+        $this->estado = $estado;
+        $this->foto = $foto;
+    }
+
     public static function getAll($filters) {
         $db = Database::getConnection();
         $sql = 'SELECT 
@@ -76,5 +99,36 @@ class Producto {
         Database::closeConnection($db);
 
         return $result;
+    }
+
+    public function guardar()
+    {
+        try {
+            $db = Database::getConnection();
+            $sql = "INSERT INTO producto (nombre, descripcion, precio, stock, creado_por, estado, foto) 
+                    VALUES (:nombre, :descripcion, :precio, :stock, :creado_por, :estado, :foto)";
+
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':nombre', $this->nombre);
+            $stmt->bindValue(':descripcion', $this->descripcion);
+            $stmt->bindValue(':precio', $this->precio);
+            $stmt->bindValue(':stock', $this->stock);
+            $stmt->bindValue(':creado_por', $this->creado_por);
+            $stmt->bindValue(':estado', $this->estado);
+            $stmt->bindValue(':foto', $this->foto);
+
+            $result = $stmt->execute();
+
+            $this->id = $db->lastInsertId();
+
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error al guardar la mascota: " . $e->getMessage();
+            return false;
+        }
     }
 }

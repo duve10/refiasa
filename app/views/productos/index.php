@@ -18,7 +18,7 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
+                            <a class="btn btn-primary btnColorGeneral" href="#" data-bs-toggle="modal" data-bs-target="#crearProducto">
                                 + Agregar Producto
                             </a>
                         </div>
@@ -63,6 +63,11 @@ include "../app/views/includes/header.php";
             </main>
         </div>
     </div>
+
+    <!----  MODAL PARA CREAR MASCOTA ---->
+    <?php
+        include "../app/views/productos/modalCrear.php";
+    ?>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
     <script src="js/productos/productos.js"></script>
