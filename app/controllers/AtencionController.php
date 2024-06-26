@@ -155,7 +155,32 @@ class AtencionController
             $atenciones = Atencion::getAllAttencionesByDateAll($filters);
 
             $data = [];
+            $listId = [];
             foreach ($atenciones as $atencion) {
+                $listId[] =  $atencion['id'];
+
+                $fechaNacimiento = new DateTime($atencion['fecha_nac']); // Crear un objeto DateTime con la fecha de nacimiento
+                $hoy = new DateTime(); // Objeto DateTime para la fecha actual
+
+                // Calcular la diferencia de años
+                $diferencia = $hoy->diff($fechaNacimiento);
+
+                $edadAnios = $diferencia->y; // Obtener los años completos
+                $edadMeses = $diferencia->m; // Obtener los meses
+                $edadDias = $diferencia->d; // Obtener los meses
+
+                $edad = '';
+                if ($edadAnios != 0) {
+                    $edad = $edadAnios . ' años';
+                } else {
+                    if ($edadMeses != 0) {
+                        $edad = $edadMeses . ' meses';
+                    } else {
+                        $edad = $edadDias . ' dias';
+                    }
+                }
+
+
                 $data[] = [
                     'id' => $atencion['id'],
                     'descripcion' => $atencion['descripcion'],
@@ -165,7 +190,9 @@ class AtencionController
                     'tratamiento' => $atencion['tratamiento'],
                     'id_cita' => $atencion['id_cita'],
                     'mascota' => $atencion['mascota'],
-                    'edad' => $atencion['edad'],
+                    'peso' => $atencion['peso'],
+                    'altura' => $atencion['altura'],
+                    'edad' => $edad,
                     'nombreCliente' => $atencion['cliente'] . " " . $atencion['apellido_paterno'],
                     'telefono' => $atencion['telefono'],
                     'correo' => $atencion['correo'],
@@ -179,7 +206,8 @@ class AtencionController
             }
 
             $response = [
-                'data' => $data
+                'data' => $data,
+                'listId' => $listId
             ];
 
             header('Content-Type: application/json');

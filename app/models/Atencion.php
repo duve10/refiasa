@@ -438,6 +438,7 @@ class Atencion {
                     t1.diagnosticos,
                     t1.tratamiento,
                     t1.id_cita,
+                    t2.fecha_nac,
 
 
                     t2.nombre as mascota,
@@ -451,6 +452,9 @@ class Atencion {
                     t3.correo,
 
                     t4.username,
+
+                    t9.peso,
+                    t10.altura,
 
                     t5.nombre as especie,
                     t6.nombre AS estadoatencion,
@@ -468,7 +472,18 @@ class Atencion {
                 LEFT JOIN especie t5 on t5.id = t8.id_especie
                 LEFT JOIN estadoatencion t6 on t6.id = t1.id_estadoatencion
                 LEFT JOIN user t7 on t7.id = t1.veterinario
-                WHERE 1=1 AND t1.estado = 1";
+                LEFT JOIN (
+                    SELECT id_mascota, created_at, peso,
+                        ROW_NUMBER() OVER (PARTITION BY id_mascota ORDER BY created_at DESC) AS rn
+                    FROM peso
+                ) t9 ON t2.id = t9.id_mascota AND t9.rn = 1
+                LEFT JOIN (
+                    SELECT id_mascota, created_at, altura,
+                        ROW_NUMBER() OVER (PARTITION BY id_mascota ORDER BY created_at DESC) AS rn
+                    FROM altura
+                ) t10 ON t2.id = t10.id_mascota AND t10.rn = 1
+
+                WHERE 1=1 AND t1.estado in (1,2)";
   
 
         /*if (!empty($filters['name'])) {

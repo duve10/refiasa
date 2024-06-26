@@ -186,3 +186,12 @@
 .accordion-body {
   background-color: #ffffff;
 }
+
+button.accordion-button.fw-bold.collapsed {
+  background-color: #ffffff;
+}
+
+button.accordion-button.fw-bold.collapsed:hover {
+  background-color: rgba(34,46,60,0.1);
+  color: rgba(34,46,60,1);
+}

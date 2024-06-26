@@ -51,7 +51,7 @@ include "../app/views/includes/header.php";
 
                     <div class="row" id="listaAtenciones">
                         <div class="col-12">
-                            <div class="accordion" id="accordionAtencion">
+                            <div class="accordion decimalInput" id="accordionAtencion">
                                 
 
                             </div>
