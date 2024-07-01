@@ -345,7 +345,7 @@ function returnHtml(dataJson, collapsed, expanded, show, productos) {
                                                         ${productos
                                                           .map(
                                                             (producto) =>
-                                                              `<option value="${producto.id_producto}" >${producto.nombre}</option>`
+                                                              `<option value="${producto.id}" >${producto.nombre}</option>`
                                                           )
                                                           .join("")}
                                                        </select>

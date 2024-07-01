@@ -3,6 +3,7 @@ require_once '../app/models/Atencion.php';
 require_once '../app/models/Producto.php';
 require_once '../app/models/Servicio.php';
 require_once '../app/models/AtencionServicio.php';
+require_once '../app/models/AtencionProducto.php';
 require_once '../app/helpers/functions.php';
 
 class AtencionController
@@ -123,7 +124,7 @@ class AtencionController
             $veterinario = trim($_POST['veterinario']);
 
 
-            if (!$id_mascota || !$descripcion || empty($servicios)) {
+            if (!$veterinario || !$id_mascota || !$descripcion || empty($servicios)) {
                 $response['message'] = 'Todos los campos son obligatorios.';
                 echo json_encode($response, JSON_UNESCAPED_UNICODE);
                 return;
@@ -137,6 +138,7 @@ class AtencionController
                 foreach ($servicios as $id_servicio) {
                     AtencionServicio::asignarServicioAAtencion($atencion->getId(), $id_servicio);
                 }
+              
 
                 $response['error'] = false;
                 $response['message'] = 'Atencion registrada correctamente.';
@@ -173,6 +175,9 @@ class AtencionController
             $tratamiento = trim($_POST['tratamiento']);
             $actualizado_por = $_SESSION['user_id'];
             $servicios = $_POST['id_servicio'] ?? [];
+            $productos = $_POST['id_producto'] ?? [];
+
+
             $estado = 1;
             $id_estadoatencion = 3;
 
@@ -188,6 +193,11 @@ class AtencionController
 
 
             if ($atencion->actualizarRT()) {
+
+                foreach ($productos as $id_producto) {
+                    AtencionProducto::asignarProductoAAtencion($id_atencion, $id_producto);
+                }
+
                 $response['error'] = false;
                 $response['message'] = 'Atencion registrada correctamente.';
             } else {

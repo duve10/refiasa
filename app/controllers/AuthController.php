@@ -40,6 +40,7 @@ class AuthController
                     $_SESSION['name'] = $result->name;
                     $_SESSION['lastname'] = $result->lastname;
                     $_SESSION['imagen'] = $result->imagen;
+                    $_SESSION['user_profile_id'] = $result->id_perfil;
                     header("Location: " . BASE_URL . "/dashboard");
                     exit();
                 }

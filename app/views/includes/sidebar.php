@@ -12,7 +12,8 @@
                     <span class='align-middle'>Dashboard</span>
                 </a>
             </li>
-   
+            <!--- CITAS --->
+            <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
             <li class='sidebar-item <?= $active == '2' || $active == '3'? 'active': '' ?>'>
                 <a data-bs-target="#s26" data-bs-toggle="collapse" class="sidebar-link <?= $active == '2' || $active == '3'? '': 'collapsed' ?>" aria-expanded="false">
                     <i class="align-middle" data-feather="zap"></i>
@@ -34,7 +35,9 @@
                 
                 </ul>
             </li>
-
+            <?php endif; ?>
+            <!--- ATECIONES --->
+            <?php if(in_array($_SESSION['user_profile_id'],[1,2,3])) : ?>
             <li class='sidebar-item <?= $active == '6' || $active == '7'? 'active': '' ?>'>
                 <a data-bs-target="#s27" data-bs-toggle="collapse" class="sidebar-link <?= $active == '6' || $active == '7'? '': 'collapsed' ?>" aria-expanded="false">
                     <i class="align-middle" data-feather="activity"></i>
@@ -47,6 +50,7 @@
                             <span class="align-middle">RT Atenciones</span>
                         </a>
                     </li>
+                    <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
                     <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
@@ -59,9 +63,11 @@
                             <span class="align-middle">Registro</span>
                         </a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </li>
-
+            <?php endif; ?>
+            <!--- CALENDARIO --->
             <li class='sidebar-item <?= $active == '8'? 'active': '' ?>'>
                 <a class='sidebar-link' href="/calendario">
                     <i class='align-middle' data-feather='calendar'></i>
@@ -70,7 +76,7 @@
             </li>
 
 
-    
+            <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
             <li class="sidebar-header">Administracion</li>
             <li class='sidebar-item <?= $active == '4'? 'active': '' ?>'>
                 <a class='sidebar-link' href="/clientes">
@@ -117,6 +123,10 @@
                     <span class='align-middle'>Vacunas</span>
                 </a>
             </li>
+            <?php endif; ?>
+
+
+            <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
             <li class="sidebar-header">Reportes</li>
             <li class='sidebar-item'>
                 <a class='sidebar-link'>
@@ -138,6 +148,7 @@
                     </li>
                 </ul>
             </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
