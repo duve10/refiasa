@@ -62,6 +62,72 @@ class UsuarioController {
         }
     }
 
+    public function apiRegistrar()
+    {
+        
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $uploadDir = '../public/img/usuarios/';
+
+            $usuario = trim($_POST['usuario']) ?? null;
+            $contrasena = trim($_POST['contrasena'])??'';
+            $name = trim($_POST['name']);
+            $lastname = trim($_POST['lastname']);
+            $phone = trim($_POST['phone']);
+            $mail = trim($_POST['mail']);
+            $type_doc = trim($_POST['type_doc']);
+            $document = trim($_POST['document']);
+            $id_perfil = trim($_POST['id_perfil']);
+            $mail = trim($_POST['mail']);
+            $estado = 1;
+            $imagen = $_FILES['foto'] ?? null;
+            $pathFoto = 'general.png';
+            
+            if (!$usuario || !$contrasena || !$id_perfil) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+            if ($imagen["tmp_name"] != '') {
+                $uploadResult = handleFileUpload($imagen, $uploadDir);
+                if ($uploadResult['error']) {
+                    $response['message'] = $uploadResult['message'];
+                    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                    return;
+                }
+
+                $pathFoto = $uploadResult['filePath'];
+            }
+
+      
+
+            $servicio = new Servicio(null, $nombre, $descripcion, $precio, $citas, $creado_por,NULL, $estado, $pathFoto);
+
+            if ($servicio->guardar()) {
+
+              
+
+                $response['error'] = false;
+                $response['message'] = 'Servicio registrado correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar Servicio.';
+            }
+        } else {
+            $response['message'] = 'Método no permitido.';
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
     public function apiEliminar() {
         header('Content-Type: application/json');
 
