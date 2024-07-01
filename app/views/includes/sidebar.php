@@ -92,6 +92,8 @@
                     <span class='align-middle'>Mascotas</span>
                 </a>
             </li>
+
+            <?php if(in_array($_SESSION['user_profile_id'],[1])) : ?>
             <li class='sidebar-item <?= $active == '9'? 'active': '' ?>'>
                 <a class='sidebar-link' href="/usuarios">
                     <i class='align-middle' data-feather='users'></i>
@@ -104,6 +106,8 @@
                     <span class='align-middle'>Perfiles</span>
                 </a>
             </li>
+            <?php endif; ?>
+
             <li class='sidebar-item <?= $active == '11'? 'active': '' ?>'>
                 <a class='sidebar-link' href="/servicios">
                     <i class='align-middle' data-feather='wind'></i>
@@ -126,7 +130,7 @@
             <?php endif; ?>
 
 
-            <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
+            <?php if(in_array($_SESSION['user_profile_id'],[1])) : ?>
             <li class="sidebar-header">Reportes</li>
             <li class='sidebar-item'>
                 <a class='sidebar-link'>

@@ -18,9 +18,11 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
+                            <button id="addUsuario"  type="button"  class="btn btn-primary btnColorGeneral" data-bs-toggle="modal" data-bs-target="#crearUsuario">
                                 + Agregar Usuario
-                            </a>
+                            </button>
+
+                           
                         </div>
                     </div>
 
@@ -66,6 +68,11 @@ include "../app/views/includes/header.php";
             </main>
         </div>
     </div>
+
+    <!----  MODAL PARA CREAR USUARIO ---->
+    <?php
+        include "../app/views/usuarios/modalCrear.php";
+    ?>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
     <script src="js/usuarios/usuarios.js"></script>

@@ -78,7 +78,7 @@ include "../app/views/includes/header.php";
 
     <!----  MODAL PARA CREAR SERVICIO ---->
     <?php
-    include "../app/views/servicios/modalCrear.php";
+        include "../app/views/servicios/modalCrear.php";
     ?>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
