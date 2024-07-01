@@ -26,11 +26,193 @@ class Producto {
         $this->foto = $foto;
     }
 
+    
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of descripcion
+     */ 
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of descripcion
+     *
+     * @return  self
+     */ 
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of precio
+     */ 
+    public function getPrecio()
+    {
+        return $this->precio;
+    }
+
+    /**
+     * Set the value of precio
+     *
+     * @return  self
+     */ 
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of stock
+     */ 
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * Set the value of stock
+     *
+     * @return  self
+     */ 
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of creado_por
+     */ 
+    public function getCreado_por()
+    {
+        return $this->creado_por;
+    }
+
+    /**
+     * Set the value of creado_por
+     *
+     * @return  self
+     */ 
+    public function setCreado_por($creado_por)
+    {
+        $this->creado_por = $creado_por;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of actualizado_por
+     */ 
+    public function getActualizado_por()
+    {
+        return $this->actualizado_por;
+    }
+
+    /**
+     * Set the value of actualizado_por
+     *
+     * @return  self
+     */ 
+    public function setActualizado_por($actualizado_por)
+    {
+        $this->actualizado_por = $actualizado_por;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of estado
+     */ 
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set the value of estado
+     *
+     * @return  self
+     */ 
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of foto
+     */ 
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * Set the value of foto
+     *
+     * @return  self
+     */ 
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
     public static function getAll($filters) {
         $db = Database::getConnection();
         $sql = 'SELECT 
                     t1.id,
                     t1.nombre,
+                    t1.foto,
                     t1.descripcion,
                     t1.precio,
                     t1.stock,
@@ -85,9 +267,10 @@ class Producto {
         $sql = 'SELECT 
                     t1.id,
                     t1.nombre,
+                    t1.foto,
                     t1.descripcion,
                     t1.precio,
-                    t2.stock
+                    t1.stock
                 FROM producto t1
                 LEFT JOIN user t2 on t2.id = t1.creado_por
                 WHERE 1=1 AND t1.estado = 1';
@@ -131,4 +314,22 @@ class Producto {
             return false;
         }
     }
+
+    public static function eliminar($id, $userDelete)
+    {
+        $db = Database::getConnection();
+
+        $sql = 'UPDATE producto set estado = 0,updated_at = NOW(),actualizado_por=:userDelete WHERE id = :id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':userDelete', $userDelete, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
+    }
+
+
 }

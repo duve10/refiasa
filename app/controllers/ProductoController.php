@@ -1,5 +1,6 @@
 <?php
 require_once '../app/models/Producto.php';
+require_once '../app/helpers/functions.php';
 
 class ProductoController {
     
@@ -30,11 +31,12 @@ class ProductoController {
                     'id' => $producto['id'],
                     'nombre' => $producto['nombre'],
                     'descripcion' => $producto['descripcion'],
+                    'foto' => '<img src="img/productos/'.$producto['foto'].'" class="avatar img-fluid rounded me-1" alt="name">',
                     'precio' => $producto['precio'],
                     'stock' => $producto['stock'],
                     'username' => $producto['username'],
                     'acciones' => '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                    <a class="text-danger ms-3"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
+                    <a class="text-danger ms-3 deleteProducto" data-nombre="'.$producto['nombre'].'" data-id="'.$producto['id'].'"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
                 ];
             }
 
@@ -93,9 +95,8 @@ class ProductoController {
                 $pathFoto = $uploadResult['filePath'];
             }
 
-            
 
-            $producto = new Producto(null, $nombre, $descripcion, $precio, $stock, $estado, $creado_por, $estado, $pathFoto);
+            $producto = new Producto(null, $nombre, $descripcion, $precio, $stock, $creado_por,NULL, $estado, $pathFoto);
 
             if ($producto->guardar()) {
 
@@ -112,5 +113,34 @@ class ProductoController {
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
         return;
+    }
+
+    public function apiEliminar() {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $actualizado_por = $_SESSION['user_id'];
+            $id_producto = $_POST['id'];
+
+            $eliminar = Producto::eliminar($id_producto,$actualizado_por);
+
+            if ($eliminar) {
+                $response['message'] = 'Eliminado Correctamente';
+                $response['error'] = false;
+            } else {
+                $response['message'] = 'No se Elimino Error!';
+            }
+            
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+
     }
 }

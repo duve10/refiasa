@@ -10,15 +10,14 @@ class CitaController
 
     public function index()
     {
-        
 
         require_once '../app/views/citas/index.php';
     }
 
     public function registro()
     {
-        
-        $servicios = Servicio::getAllServicios();
+
+        $servicios = Servicio::getAllServicios(true);
         $horas = Horas::obtenerListaHorasPorFecha(date("Y-m-d"));
         require_once '../app/views/citas/registro.php';
     }
@@ -26,7 +25,7 @@ class CitaController
 
     public function apiGetCitas()
     {
-        
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
@@ -44,25 +43,33 @@ class CitaController
 
             $data = [];
             foreach ($citas as $cita) {
-                
+
                 $citaHtml = '';
+                $clienteName = $cita['cliente'] . " " . $cita['apellido_paterno'];
+
+                if ($cita['id_estadocita'] == 2) {
+                    $htmlEstadoCita = '<a class="text-warning " href="#"><span class="badge bg-success"><i class="align-middle fas fa-fw fa-calendar-check"></i></span></a>';
+                } else {
+                    $htmlEstadoCita = '<a class="text-warning modalServicio" data-idmascota="' . $cita['id_mascota'] . '" data-id="' . $cita['id'] . '"  href="#"><span class="badge bg-warning"><i class="align-middle fas fa-fw fa-file-medical"></i></span></a>';
+                }
 
                 $data[] = [
                     'id' => $cita['id'],
                     'descripcion' => $cita['descripcion'],
+                    'atencion' => $htmlEstadoCita,
                     'fecha' => convertirFechaHtml($cita['fecha']),
                     'mascota' => $cita['mascota'],
                     'edad' => $cita['edad'],
-                    'nombreCliente' => $cita['cliente'] . " " . $cita['apellido_paterno'],
+                    'nombreCliente' => $clienteName,
                     'telefono' => $cita['telefono'],
                     'correo' => $cita['correo'],
                     'username' => $cita['username'],
-                    'tipocita' => '<span class="badge '.$cita['claseCita'].' fw-bold">'.$cita['tipocita'].'</span>',
+                    'tipocita' => '<span class="badge ' . $cita['claseCita'] . ' fw-bold">' . $cita['tipocita'] . '</span>',
                     'especie' => $cita['especie'],
                     'hora' => $cita['hora'],
                     'estadocita' => '<span class="badge ' . $cita['estadocitacolor'] . ' text-dark">' . $cita['estadocita'] . '</span>',
-                    'acciones' => '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                    <a class="text-danger ms-3"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
+                    'acciones' => '<a class="text-warning"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                    <a data-nombre = "' . $clienteName . '" data-id = "' . $cita['id'] . '" class="text-danger ms-3 deleteCita"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
                 ];
             }
 
@@ -82,7 +89,7 @@ class CitaController
 
     public function apiRegistrar()
     {
-        
+
         header('Content-Type: application/json');
 
         $response = [
@@ -109,7 +116,7 @@ class CitaController
             } else {
                 $id_tipocita = 1;
             }
-            
+
 
 
             if (!$id_mascota || !$id_hora || !$descripcion || !$comentario || empty($servicios)) {
@@ -141,7 +148,7 @@ class CitaController
 
     public function getApiListaHorasPorFecha()
     {
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $fechaSelected = $_GET['fechaSelected'];
@@ -168,5 +175,87 @@ class CitaController
             http_response_code(405);
             echo "405 Method Not Allowed";
         }
+    }
+
+    public function apiEliminar()
+    {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $actualizado_por = $_SESSION['user_id'];
+            $id_cita = $_POST['id'];
+
+            $eliminar = Cita::eliminar($id_cita, $actualizado_por);
+
+            if ($eliminar) {
+                $response['message'] = 'Eliminado Correctamente';
+                $response['error'] = false;
+            } else {
+                $response['message'] = 'No se Elimino Error!';
+            }
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
+    public function getServiciosCita()
+    {
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_cita = $_GET['id'];
+
+            
+            $citaServicios = CitaServicio::getAllServiciosByCita($id_cita);
+            
+            $data = $citaServicios;
+
+
+            $response = [
+                'data' => $data,
+                'error' => false
+            ];
+
+            header('Content-Type: application/json');
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(405);
+            echo "405 Method Not Allowed";
+        }
+    }
+
+    public function apiUpdateEstadoCita () {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $actualizado_por = $_SESSION['user_id'];
+            $id_cita = $_POST['id'];
+            $id_estadocita = $_POST['id_estadocita'];
+
+            $eliminar = Cita::updateEstado($id_cita,$id_estadocita, $actualizado_por);
+
+            if ($eliminar) {
+                $response['message'] = 'Registrado Correctamente';
+                $response['error'] = false;
+            } else {
+                $response['message'] = 'No se actualizo Error!';
+            }
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
     }
 }

@@ -41,6 +41,7 @@ include "../app/views/includes/header.php";
                                     <table id="tableProductos" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
+                                                <th>Foto</th>
                                                 <th>Producto</th>
                                                 <th>Descripcion</th>
                                                 <th>Precio</th>

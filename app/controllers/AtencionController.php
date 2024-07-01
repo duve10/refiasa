@@ -1,5 +1,6 @@
 <?php
 require_once '../app/models/Atencion.php';
+require_once '../app/models/Producto.php';
 require_once '../app/models/Servicio.php';
 require_once '../app/models/AtencionServicio.php';
 require_once '../app/helpers/functions.php';
@@ -45,6 +46,7 @@ class AtencionController
 
             $data = [];
             foreach ($atenciones as $atencion) {
+                $clienteName = $atencion['cliente'] . " " . $atencion['apellido_paterno'];
                 $data[] = [
                     'id' => $atencion['id'],
                     'descripcion' => $atencion['descripcion'],
@@ -55,7 +57,7 @@ class AtencionController
                     'id_cita' => $atencion['id_cita'],
                     'mascota' => $atencion['mascota'],
                     'edad' => $atencion['edad'],
-                    'nombreCliente' => $atencion['cliente'] . " " . $atencion['apellido_paterno'],
+                    'nombreCliente' => $clienteName,
                     'telefono' => $atencion['telefono'],
                     'correo' => $atencion['correo'],
                     'username' => $atencion['username'],
@@ -63,7 +65,7 @@ class AtencionController
                     'veterinario' => $atencion['veterinarionombre'] . " " . $atencion['veterinarioapellido'],
                     'estadoatencion' => '<span class="badge ' . $atencion['estadoatencioncolor'] . ' text-dark">' . $atencion['estadoatencion'] . '</span>',
                     'acciones' => '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                    <a class="text-danger ms-3"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
+                    <a data-nombre = "'.$clienteName .'" data-id = "'.$atencion['id'] .'" class="text-danger ms-3 deleteAtencion"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
                 ];
             }
 
@@ -95,16 +97,24 @@ class AtencionController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+            $fechaSet =  $_POST['fecha'] ?? '';
+            if ($fechaSet != '') {
+                $dateTime = DateTime::createFromFormat('d-m-Y H:i', $_POST['fecha']);
+    
+                $fecha_hora_mysql = $dateTime->format('Y-m-d H:i');
+                
+            } else {
+                $fecha_hora_mysql = date('Y-m-d H:i');
+            }
 
-            $dateTime = DateTime::createFromFormat('d-m-Y H:i', $_POST['fecha']);
-            $fecha_hora_mysql = $dateTime->format('Y-m-d H:i:s');
-           
             $id_cita =  null;
             $id_mascota = ($_POST['id_mascota']) ?? null;
             $descripcion = trim($_POST['descripcion']);
-            $observacion = trim($_POST['observacion']);
-            $diagnosticos = trim($_POST['diagnosticos']);
-            $tratamiento = trim($_POST['tratamiento']);
+
+            $observacion = $_POST['observacion'] ?? '';
+            $diagnosticos = $_POST['diagnosticos'] ?? '';
+            $tratamiento = $_POST['tratamiento'] ?? '';
+
             $fecha = $fecha_hora_mysql;
             $creado_por = $_SESSION['user_id'];
             $estado = 1;
@@ -113,14 +123,14 @@ class AtencionController
             $veterinario = trim($_POST['veterinario']);
 
 
-            if (!$id_mascota || !$descripcion || !$observacion || empty($servicios)) {
+            if (!$id_mascota || !$descripcion || empty($servicios)) {
                 $response['message'] = 'Todos los campos son obligatorios.';
                 echo json_encode($response, JSON_UNESCAPED_UNICODE);
                 return;
             }
-            
 
-            $atencion = new Atencion(null, $id_cita, $id_mascota, $descripcion, $observacion, $diagnosticos,$tratamiento,$fecha,$creado_por, null, $estado, $id_estadoatencion, $veterinario);
+
+            $atencion = new Atencion(null, $id_cita, $id_mascota, $descripcion, $observacion, $diagnosticos, $tratamiento, $fecha, $creado_por, null, $estado, $id_estadoatencion, $veterinario);
 
             if ($atencion->guardar()) {
 
@@ -141,7 +151,58 @@ class AtencionController
         return;
     }
 
-    public function apiGetTodayAtenciones() {
+    public function apiActualizarRT()
+    {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $id_atencion = trim($_POST['id_atencion']);
+            $id_cita = trim($_POST['id_cita']);
+            $id_mascota = trim($_POST['id_mascota']);
+            $descripcion = trim($_POST['descripcion']);
+            $peso = trim($_POST['peso']);
+            $altura = trim($_POST['altura']);
+            $observaciones = trim($_POST['observaciones']);
+            $diagnosticos = trim($_POST['diagnosticos']);
+            $tratamiento = trim($_POST['tratamiento']);
+            $actualizado_por = $_SESSION['user_id'];
+            $servicios = $_POST['id_servicio'] ?? [];
+            $estado = 1;
+            $id_estadoatencion = 3;
+
+            if (!$tratamiento || !$diagnosticos || !$descripcion || !$observaciones || empty($servicios)) {
+                $response['message'] = 'Todos los campos son obligatorios.';
+                echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                return;
+            }
+
+          
+
+            $atencion = new Atencion($id_atencion, $id_cita , $id_mascota, $descripcion, $observaciones, $diagnosticos, $tratamiento, NULL, NULL, $actualizado_por, $estado, $id_estadoatencion, NULL);
+
+
+            if ($atencion->actualizarRT()) {
+                $response['error'] = false;
+                $response['message'] = 'Atencion registrada correctamente.';
+            } else {
+                $response['message'] = 'Error al registrar la atencion.';
+            }
+        } else {
+            $response['message'] = 'Método no permitido.';
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+    }
+
+    public function apiGetTodayAtenciones()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $fecha = $_GET['fecha'];
@@ -150,14 +211,16 @@ class AtencionController
                 'end' => convertirFechaBd($fecha) . ' 23:59:59'
             ];
 
-          
+
 
             $atenciones = Atencion::getAllAttencionesByDateAll($filters);
-
+            $productos = Producto::getAllProductos();
             $data = [];
             $listId = [];
             foreach ($atenciones as $atencion) {
                 $listId[] =  $atencion['id'];
+
+                $servicios = AtencionServicio::getAllServiciosByAtencion($atencion['id']);
 
                 $fechaNacimiento = new DateTime($atencion['fecha_nac']); // Crear un objeto DateTime con la fecha de nacimiento
                 $hoy = new DateTime(); // Objeto DateTime para la fecha actual
@@ -187,11 +250,13 @@ class AtencionController
                     'fecha' => convertirFechaHoraHtml($atencion['fecha']),
                     'observaciones' => $atencion['observaciones'],
                     'diagnosticos' => $atencion['diagnosticos'],
+                    'id_mascota' => $atencion['id_mascota'],
                     'tratamiento' => $atencion['tratamiento'],
                     'id_cita' => $atencion['id_cita'],
                     'mascota' => $atencion['mascota'],
                     'peso' => $atencion['peso'],
                     'altura' => $atencion['altura'],
+                    'servicios' => $servicios,
                     'edad' => $edad,
                     'nombreCliente' => $atencion['cliente'] . " " . $atencion['apellido_paterno'],
                     'telefono' => $atencion['telefono'],
@@ -207,7 +272,8 @@ class AtencionController
 
             $response = [
                 'data' => $data,
-                'listId' => $listId
+                'listId' => $listId,
+                'productos' => $productos
             ];
 
             header('Content-Type: application/json');
@@ -216,5 +282,34 @@ class AtencionController
             http_response_code(405);
             echo "405 Method Not Allowed";
         }
+    }
+
+    public function apiEliminar() {
+        header('Content-Type: application/json');
+
+        $response = [
+            'error' => true,
+            'message' => 'Error desconocido.'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $actualizado_por = $_SESSION['user_id'];
+            $id_atencion = $_POST['id'];
+
+            $eliminar = Atencion::eliminar($id_atencion,$actualizado_por);
+
+            if ($eliminar) {
+                $response['message'] = 'Eliminado Correctamente';
+                $response['error'] = false;
+            } else {
+                $response['message'] = 'No se Elimino Error!';
+            }
+            
+        }
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        return;
+
     }
 }

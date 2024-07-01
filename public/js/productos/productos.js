@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
-  /*getExcel();
-    sendMail();
-    sendAll();*/
 });
 
 function guardarProducto(dataTableProducto) {
@@ -79,6 +76,7 @@ function getDataTable() {
         },
       },
       columns: [
+        { data: "foto", className: "text-center", orderable: false },
         { data: "nombre", className: "text-start", orderable: false },
         { data: "descripcion", className: "text-start", orderable: false },
         { data: "precio", className: "text-center", orderable: false },
@@ -100,123 +98,60 @@ function getDataTable() {
 
   
   guardarProducto(tableReport);
+  eliminarProducto(tableReport);
 
 }
 
-function sendMail() {
-  let tableSend = document.getElementById("tableReport");
 
-  tableSend.addEventListener("click", (e) => {
-    let btnHtml = e.target;
-    if (btnHtml.tagName == "BUTTON") {
-      let dataId = btnHtml.getAttribute("data-id");
-      let dataName = btnHtml.getAttribute("data-name");
-      let formSend = new FormData();
-      formSend.append("dataId", dataId);
+function eliminarProducto(dataTableProducto) {
+  $("#tableProductos tbody").on("click", ".deleteProducto", function () {
+    // Aquí manejas la lógica para eliminar el elemento deseado
+    let dataId = $(this).data("id");
+    let nombre = $(this).data("nombre");
 
-      Swal.fire({
-        title: `Are you sure to send email to ${dataName}?`,
-        showDenyButton: false,
-        showCancelButton: true,
-        confirmButtonText: "Send",
-        denyButtonText: `Don't save`,
-      }).then(async (result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          $(".loading").removeClass("d-none");
-          try {
-            let response = await fetch("api/sendMail.cfm", {
-              method: "POST",
-              body: formSend,
-            });
-
-            let data = await response.json();
-
-            if (data.error) {
-              Swal.fire({
-                icon: "error",
-                text: "Se ha producido un error al enviar",
-              });
-            } else {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "The Email has been sent",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-
-              let divId = document.getElementById(`${data.idStudent}`);
-              let btnSendUser = document.getElementById(`btn${data.idStudent}`);
-
-              btnSendUser.classList.remove("btn-warning");
-              btnSendUser.classList.add("btn-danger");
-              btnSendUser.innerText = "ReSend";
-
-              divId.innerHTML = data.dateSend;
-              $(".loading").addClass("d-none");
-            }
-          } catch (error) {
-            Swal.fire({
-              icon: "error",
-              text: "Se ha producido un error al enviar",
-            });
-          }
-        }
-      });
-    }
-  });
-}
-
-function sendAll() {
-  let btnAll = document.getElementById("btnAll");
-
-  btnAll.addEventListener("click", (e) => {
     Swal.fire({
-      title: `Are you sure to send an email to all parents who have not completed the form?`,
-      showDenyButton: false,
+      title: `¿Esta seguro de eliminar ${nombre}?`,
+      showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Send",
-      denyButtonText: `Don't send`,
+      showConfirmButton: false,
+      confirmButtonText: "Save",
+      denyButtonText: `Eliminar`,
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        $(".loading").removeClass("d-none");
+      if (result.isDenied) {
+        let datos = new FormData();
+        datos.append("id", dataId);
         try {
-          let response = await fetch("api/sendMailsStudent.cfm", {
+          let response = await fetch("productos/apiEliminar", {
             method: "POST",
+            body: datos,
           });
 
           let data = await response.json();
 
-          if (data.error) {
-            Swal.fire({
-              icon: "error",
-              text: "Se ha producido un error al enviar",
-            });
-          } else {
+          if (!data.error) {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "The Email has been sent",
+              title: data.message,
               showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
-            }).then(() => {
-              // Esta función se ejecutará después de que termine el temporizador
-              // Puedes colocar aquí la función que deseas ejecutar
-              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: data.message,
             });
           }
+
+          dataTableProducto.draw();
         } catch (error) {
-          Swal.fire({
-            icon: "error",
-            text: "Se ha producido un error al enviar",
-          });
+          console.log(error);
         }
       }
     });
-
-    $(".loading").addClass("d-none");
   });
 }
+
+

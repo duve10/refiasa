@@ -7,9 +7,9 @@ include "../app/views/includes/header.php";
 
 <body>
     <div class='wrapper'>
-        <?php include "../app/views/includes/sidebar.php";?>
+        <?php include "../app/views/includes/sidebar.php"; ?>
         <div class='main'>
-            <?php include "../app/views/includes/navBar.php";?>
+            <?php include "../app/views/includes/navBar.php"; ?>
             <main class='content'>
                 <div class='container-fluid p-0'>
                     <div class="row mb-2 mb-xl-3">
@@ -18,9 +18,10 @@ include "../app/views/includes/header.php";
                         </div>
 
                         <div class="col-auto ms-auto text-end mt-n1">
-                            <a class="btn btn-primary btnColorGeneral" href="incidentForm.cfm">
+                            <button id="addServicio" type="button" class="btn btn-primary btnColorGeneral" data-bs-toggle="modal" data-bs-target="#crearServicio">
                                 + Agregar Servicio
-                            </a>
+                            </button>
+
                         </div>
                     </div>
 
@@ -29,7 +30,18 @@ include "../app/views/includes/header.php";
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                       
+                                        <div class="col-md-4">
+                                            <label for="filtroCita" class="fw-bold">Tipo Servicio:</label>
+                                            <div class="mt-1">
+                                                <select id="filtroCita" name="filtroCita" class="form-select">
+                                                    <option value="">Selecciona Tipo</option>
+                                                    
+                                                    <option value="0">No Citas</option>
+                                                    <option value="1">Para Citas</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -41,6 +53,7 @@ include "../app/views/includes/header.php";
                                     <table id="tableServicios" class="table table-bordered table-hover w-100">
                                         <thead class="tableHead">
                                             <tr class="rounded-top">
+                                                <th>Fotos</th>
                                                 <th>Servicio</th>
                                                 <th>Descripcion</th>
                                                 <th>Precio</th>
@@ -62,6 +75,11 @@ include "../app/views/includes/header.php";
             </main>
         </div>
     </div>
+
+    <!----  MODAL PARA CREAR SERVICIO ---->
+    <?php
+    include "../app/views/servicios/modalCrear.php";
+    ?>
     <div class="loading d-none">Loading&#8230;</div>
     <script src="js/app.js"></script>
     <script src="js/servicios/servicios.js"></script>

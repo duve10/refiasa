@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
   iniDate();
-  /*getExcel();
-    sendMail();
-    sendAll();*/
 });
 
 function iniDate() {
@@ -34,68 +31,6 @@ function iniDate() {
   });
 }
 
-function getExcel() {
-  let btnExcel = document.getElementById("btnExcel");
-
-  btnExcel.addEventListener("click", async (e) => {
-    let yearGroup = $("#yearGroup").val();
-
-    let sortedCol = $("#tableReport").dataTable().fnSettings().aaSorting[0][0];
-    let sortedDir = $("#tableReport").dataTable().fnSettings().aaSorting[0][1];
-
-    let formExcel = new FormData();
-    formExcel.append("yearGroup", yearGroup);
-
-    formExcel.append("sortedCol", sortedCol);
-    formExcel.append("sortedDir", sortedDir);
-
-    try {
-      let response = await fetch("api/getExcelClinical.cfm", {
-        method: "POST",
-        body: formExcel,
-      });
-
-      let blob = await response.blob();
-
-      if (!response.ok) {
-        throw new Error("Error al obtener el archivo Excel");
-      }
-
-      // Crea un enlace (link) para descargar el archivo Excel
-      let url = window.URL.createObjectURL(blob);
-      let a = document.createElement("a");
-
-      a.href = url;
-      a.download = "clinical_Report_student.xlsx";
-      document.body.appendChild(a);
-
-      // Simula un clic en el enlace para iniciar la descarga del archivo
-      a.click();
-
-      // Elimina el enlace del documento después de la descarga
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-
-      // Muestra un mensaje de éxito al usuario
-      Swal.fire({
-        title: "Success",
-        text: "Se ha descargado el archivo Excel correctamente",
-        icon: "success",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ok",
-      });
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        text: "Se ha producido un error al obtener el archivo Excel",
-      });
-    }
-  });
-}
-
 function getDataTable() {
   let tableReport = $("#tableCitas")
     .DataTable({
@@ -123,7 +58,7 @@ function getDataTable() {
         { data: "hora", className: "text-start fw-bold", orderable: false },
         { data: "mascota", className: "text-start", orderable: false },
         { data: "especie", className: "text-start", orderable: false },
-        { data: "descripcion", className: "text-start", orderable: false },
+        { data: "atencion", className: "text-center", orderable: false },
         { data: "nombreCliente", className: "text-start", orderable: false },
         { data: "estadocita", className: "text-center", orderable: false },
         { data: "acciones", className: "text-center", orderable: false },
@@ -134,127 +69,201 @@ function getDataTable() {
     })
     .on("xhr.dt", function (e, settings, json, xhr) {
       $(".loading").addClass("d-none");
+    })
+    .on("init.dt", function (e, settings, json) {
+      modalServicioTable(tableReport);
     });
 
-  $("#registered").change(function () {
-    tableReport.draw();
-  });
+  eliminarCita(tableReport);
 }
 
-function sendMail() {
-  let tableSend = document.getElementById("tableReport");
+function eliminarCita(dataTableCita) {
+  $("#tableCitas tbody").on("click", ".deleteCita", function () {
+    // Aquí manejas la lógica para eliminar el elemento deseado
+    let dataId = $(this).data("id");
+    let nombreCliente = $(this).data("nombre");
 
-  tableSend.addEventListener("click", (e) => {
-    let btnHtml = e.target;
-    if (btnHtml.tagName == "BUTTON") {
-      let dataId = btnHtml.getAttribute("data-id");
-      let dataName = btnHtml.getAttribute("data-name");
-      let formSend = new FormData();
-      formSend.append("dataId", dataId);
-
-      Swal.fire({
-        title: `Are you sure to send email to ${dataName}?`,
-        showDenyButton: false,
-        showCancelButton: true,
-        confirmButtonText: "Send",
-        denyButtonText: `Don't save`,
-      }).then(async (result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          $(".loading").removeClass("d-none");
-          try {
-            let response = await fetch("api/sendMail.cfm", {
-              method: "POST",
-              body: formSend,
-            });
-
-            let data = await response.json();
-
-            if (data.error) {
-              Swal.fire({
-                icon: "error",
-                text: "Se ha producido un error al enviar",
-              });
-            } else {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "The Email has been sent",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-
-              let divId = document.getElementById(`${data.idStudent}`);
-              let btnSendUser = document.getElementById(`btn${data.idStudent}`);
-
-              btnSendUser.classList.remove("btn-warning");
-              btnSendUser.classList.add("btn-danger");
-              btnSendUser.innerText = "ReSend";
-
-              divId.innerHTML = data.dateSend;
-              $(".loading").addClass("d-none");
-            }
-          } catch (error) {
-            Swal.fire({
-              icon: "error",
-              text: "Se ha producido un error al enviar",
-            });
-          }
-        }
-      });
-    }
-  });
-}
-
-function sendAll() {
-  let btnAll = document.getElementById("btnAll");
-
-  btnAll.addEventListener("click", (e) => {
     Swal.fire({
-      title: `Are you sure to send an email to all parents who have not completed the form?`,
-      showDenyButton: false,
+      title: `¿Esta seguro cita de ${nombreCliente}?`,
+      showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Send",
-      denyButtonText: `Don't send`,
+      showConfirmButton: false,
+      confirmButtonText: "Save",
+      denyButtonText: `Eliminar`,
     }).then(async (result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        $(".loading").removeClass("d-none");
+      if (result.isDenied) {
+        let datos = new FormData();
+        datos.append("id", dataId);
         try {
-          let response = await fetch("api/sendMailsStudent.cfm", {
+          let response = await fetch("citas/apiEliminar", {
             method: "POST",
+            body: datos,
           });
 
           let data = await response.json();
 
-          if (data.error) {
-            Swal.fire({
-              icon: "error",
-              text: "Se ha producido un error al enviar",
-            });
-          } else {
+          if (!data.error) {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "The Email has been sent",
+              title: data.message,
               showConfirmButton: false,
               timer: 1500,
               timerProgressBar: true,
-            }).then(() => {
-              // Esta función se ejecutará después de que termine el temporizador
-              // Puedes colocar aquí la función que deseas ejecutar
-              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              text: data.message,
             });
           }
+
+          dataTableCita.draw();
         } catch (error) {
-          Swal.fire({
-            icon: "error",
-            text: "Se ha producido un error al enviar",
-          });
+          console.log(error);
         }
       }
     });
+  });
+}
 
-    $(".loading").addClass("d-none");
+function modalServicioTable(tableData) {
+  $(".modalServicio").on("click", async function () {
+    let dataId = $(this).data("id");
+    let nombreCliente = $(this).data("nombre");
+    let id_mascota = $(this).data("idmascota");
+
+    let response = await fetch("../citas/getServiciosCita?id=" + dataId, {
+      method: "POST",
+    });
+
+    let data = await response.json();
+
+
+    Swal.fire({
+      title: "Registrar Atencion de la cita de " + nombreCliente,
+      showDenyButton: false,
+      html: `
+         <div class="mb-3 text-start">
+            <form class = "formAtencion">
+              <label for="veterinario" class="col-md-3 col-xl-2 col-form-label fw-bold">Servicios</label>
+               <div class="w-100">
+                  <select class="form-control id_servicio" multiple name="id_servicio[]" id="id_servicio">
+                     ${data.data
+                    .map(
+                        (servicio) =>
+                          `<option value="${
+                            servicio.id_servicio
+                          }" ${
+                            servicio.selected !=
+                            null
+                              ? "selected"
+                              : ""
+                          }>${
+                            servicio.nombre
+                          }</option>`
+                      )
+                      .join("")}
+                  </select>
+              </div>
+              <label for="veterinario" class="col-md-3 col-xl-2 col-form-label fw-bold">Veterinario</label>
+              <div class="w-100">
+                  <input type="hidden" class="form-control" value="${id_mascota}" id="id_mascota" name="id_mascota">
+                  <input type="hidden" class="form-control" value="${dataId}" id="id_cita" name="id_cita">
+                  <input type="hidden" class="form-control" value="2" id="id_estadocita" name="id_estadocita">
+                  <select class="form-control veterinario" name="veterinario" id="veterinario"></select>
+              </div>
+              <label for="descripcion" class="col-md-3 col-xl-2 col-form-label fw-bold">Descripcion</label>
+              <textarea class="form-control validate" placeholder="Escribe una descripcion" id="descripcion" name="descripcion" rows="3"></textarea>
+            </form>
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Guardar",
+      didOpen: () => {
+        selectVeterinario();
+      },
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        mostrarLoading();
+        let formAtencion = document.querySelector(".formAtencion");
+
+        const formData = new FormData(formAtencion);
+
+        try {
+          let response = await fetch("../atenciones/apiRegistrar", {
+            method: "POST",
+            body: formData,
+          });
+
+          let data = await response.json();
+
+          if (!data.error) {
+            const formDataCita = new FormData();
+            formDataCita.append('id', dataId);
+            formDataCita.append('id_estadocita', 2);
+
+            let responseCita = await fetch('../citas/apiUpdateEstadoCita',{
+              method: "POST",
+              body: formDataCita,
+            });
+
+            let dataCita = await responseCita.json()
+
+            if (!dataCita.error) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: data.message,
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+              }).then(() => {
+                ocultarLoading();
+  
+                tableData.draw();
+              });
+              
+            }
+
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  });
+}
+
+function selectVeterinario() {
+  $("#veterinario").select2({
+    ajax: {
+      url: "../usuarios/apiGetVetSelect",
+      dataType: "json",
+      type: "GET",
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data,
+        };
+      },
+      cache: true,
+    },
+    allowClear: true,
+    minimumInputLength: 3,
+    dropdownParent: $("#veterinario").parent(),
+    placeholder: "Escribe Nombre o documento de Veterinario",
+  });
+  $("#id_servicio").select2({
+    placeholder: "Seleccionar Servicios",
+    allowClear: true,
+    dropdownParent: $(".formAtencion").parent(),
   });
 }

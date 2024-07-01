@@ -30,7 +30,7 @@ include "../app/views/includes/header.php";
                                             <div class="mb-3 row">
                                                 <label for="fecha" class="col-md-3 col-xl-2 col-form-label fw-bold">Fecha <span class="text-danger">*</span></label>
                                                 <div class="col-md-6 col-xl-4">
-                                                    <input type="text" class="form-control" name="fecha" id="fecha" value="<?= date("d-m-Y H:i A")  ?>">
+                                                    <input type="text" class="form-control" name="fecha" id="fecha" value="<?= date("d-m-Y H:i")  ?>">
                                                 </div>
 
                                             </div>

@@ -32,9 +32,13 @@ $router->add('/perfiles/apiGetPerfiles', 'PerfilController@apiGetPerfiles');
 
 $router->add('/servicios', 'ServicioController@index');
 $router->add('/servicios/apiGetServicios', 'ServicioController@apiGetServicios');
+$router->add('/servicios/apiRegistrar', 'ServicioController@apiRegistrar');
+$router->add('/servicios/apiEliminar', 'ServicioController@apiEliminar');
 
 $router->add('/productos', 'ProductoController@index');
 $router->add('/productos/apiGetProductos', 'ProductoController@apiGetProductos');
+$router->add('/productos/apiRegistrar', 'ProductoController@apiRegistrar');
+$router->add('/productos/apiEliminar', 'ProductoController@apiEliminar');
 
 $router->add('/mascotas', 'MascotaController@index');
 $router->add('/mascotas/apiGetMascotas', 'MascotaController@apiGetMascotas');
@@ -49,6 +53,9 @@ $router->add('/citas/registro', 'CitaController@registro');
 $router->add('/citas/apiGetCitas', 'CitaController@apiGetCitas');
 $router->add('/citas/apiRegistrar', 'CitaController@apiRegistrar');
 $router->add('/citas/getApiListaHorasPorFecha', 'CitaController@getApiListaHorasPorFecha');
+$router->add('/citas/apiEliminar', 'CitaController@apiEliminar');
+$router->add('/citas/getServiciosCita', 'CitaController@getServiciosCita');
+$router->add('/citas/apiUpdateEstadoCita', 'CitaController@apiUpdateEstadoCita');
 
 $router->add('/calendario', 'CalendarioController@index');
 $router->add('/calendario/apiGetCitasAtenciones', 'CalendarioController@apiGetCitasAtenciones');
@@ -59,6 +66,8 @@ $router->add('/atenciones/apiGetAtenciones', 'AtencionController@apiGetAtencione
 $router->add('/atenciones/apiGetTodayAtenciones', 'AtencionController@apiGetTodayAtenciones');
 $router->add('/atenciones/registro', 'AtencionController@registro');
 $router->add('/atenciones/apiRegistrar', 'AtencionController@apiRegistrar');
+$router->add('/atenciones/apiActualizarRT', 'AtencionController@apiActualizarRT');
+$router->add('/atenciones/apiEliminar', 'AtencionController@apiEliminar');
 
 $router->add('/products', 'HomeController@products');
 $router->add('/logout', 'AuthController@logout');

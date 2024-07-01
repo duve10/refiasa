@@ -262,6 +262,7 @@ class Cita
                         t1.fecha,
                         t2.nombre as mascota,
                         t2.edad,
+                        t2.id as id_mascota,
                         t3.nombre as cliente,
                         t3.apellido_paterno,
                         t3.apellido_materno,
@@ -270,6 +271,7 @@ class Cita
                         t4.username,
                         t5.nombre as especie,
                         t6.hora,
+                        t8.id AS id_estadocita,
                         t8.nombre AS estadocita,
                         t8.clasecolor AS estadocitacolor,
                         t9.nombre as tipocita,
@@ -396,5 +398,38 @@ class Cita
             echo "Error al obtener las citas por fecha: " . $e->getMessage();
             return [];
         }
+    }
+
+    public static function eliminar($id, $userDelete)
+    {
+        $db = Database::getConnection();
+
+        $sql = 'UPDATE cita set estado = 0,updated_at = NOW(),actualizado_por=:userDelete WHERE id = :id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':userDelete', $userDelete, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
+    }
+
+    public static function updateEstado($id,$id_estadocita, $userUpdate)
+    {
+        $db = Database::getConnection();
+
+        $sql = 'UPDATE cita set id_estadocita = :id_estadocita,updated_at = NOW(),actualizado_por=:userUpdate WHERE id = :id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':userUpdate', $userUpdate, PDO::PARAM_INT);
+        $stmt->bindParam(':id_estadocita', $id_estadocita, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
     }
 }

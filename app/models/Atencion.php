@@ -442,6 +442,7 @@ class Atencion {
 
 
                     t2.nombre as mascota,
+                    t2.id as id_mascota,
                 
                     t2.edad,
 
@@ -483,7 +484,7 @@ class Atencion {
                     FROM altura
                 ) t10 ON t2.id = t10.id_mascota AND t10.rn = 1
 
-                WHERE 1=1 AND t1.estado in (1,2)";
+                WHERE 1=1 AND t1.estado in (1,2) AND t1.id_estadoatencion in (1,2)";
   
 
         /*if (!empty($filters['name'])) {
@@ -544,6 +545,50 @@ class Atencion {
             echo "Error al guardar la atencion: " . $e->getMessage();
             return false;
         }
+    }
+
+    public function actualizarRT() {
+        try {
+            $db = Database::getConnection();
+            $sql = " UPDATE atencion SET descripcion = :descripcion, observaciones = :observaciones, diagnosticos = :diagnosticos, tratamiento = :tratamiento,id_estadoatencion = :id_estadoatencion, actualizado_por = :actualizado_por, updated_at = NOW()
+                    WHERE id = :id_atencion
+                    ";
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':descripcion', $this->descripcion);
+            $stmt->bindValue(':observaciones', $this->observaciones);
+            $stmt->bindValue(':diagnosticos', $this->diagnosticos);
+            $stmt->bindValue(':tratamiento', $this->tratamiento);
+            $stmt->bindValue(':actualizado_por', $this->actualizado_por);
+            $stmt->bindValue(':id_estadoatencion', $this->id_estadoatencion);
+            $stmt->bindValue(':id_atencion', $this->id);
+   
+
+            $result = $stmt->execute();
+
+            // Cerrar la conexión después de utilizarla
+            Database::closeConnection();
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error al guardar la atencion: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function eliminar($id, $userDelete)
+    {
+        $db = Database::getConnection();
+
+        $sql = 'UPDATE atencion set estado = 0,updated_at = NOW(),actualizado_por=:userDelete WHERE id = :id';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':userDelete', $userDelete, PDO::PARAM_INT);
+
+        $result = $stmt->execute();
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $result;
     }
 
 }

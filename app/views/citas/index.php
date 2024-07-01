@@ -83,7 +83,7 @@ include "../app/views/includes/header.php";
                                                 <th>Hora</th>
                                                 <th>Mascota</th>
                                                 <th>Especie</th>
-                                                <th>Descripcion</th>
+                                                <th>Ir a Atencion</th>
                                                 <th>Cliente</th>
                                                 <th>Estado</th>
                                                 <th class="text-center">Acciones</th>
