@@ -10,7 +10,7 @@
 				
 					<div class="mb-3 row">
 	
-						<label for="usuario" class="col-md-2 col-xl-2 col-form-label fw-bold">Nombre <span class="text-danger">*</span></label>
+						<label for="usuario" class="col-md-2 col-xl-2 col-form-label fw-bold">Usuario <span class="text-danger">*</span></label>
 						<div class="col-md-4 col-xl-4">
 							<input type="text" class="form-control" name="usuario" id="usuario" placeholder="Nombre Usuario">
 						</div>
@@ -68,7 +68,7 @@
 					<div class="mb-3 row">
 	
 						<label for="id_perfil" class="col-md-2 col-xl-2 col-form-label fw-bold">Perfil <span class="text-danger">*</span></label>
-						<div class="col-md-4 col-xl-4">
+						<div class="col-md-10 col-xl-10">
 							<select class="form-select form-control especie" name="id_perfil" id="id_perfil">
 								<option value="1">Administrador</option>
 								<option value="3">Veterinario</option>
@@ -76,7 +76,9 @@
 								<option value="4">Inventario</option>
 							</select>
 						</div>
+					</div>
 
+					<div class="mb-3 row">
 						<label for="photo" class="col-md-2 col-xl-2 col-form-label fw-bold">Foto <span class="text-danger">*</span></label>
 						<div class="col-md-10 col-xl-10">
 							<input class="form-control" type="file" id="photo" name="photo">

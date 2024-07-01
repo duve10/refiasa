@@ -3,6 +3,8 @@ require_once '../app/config/Database.php';
 
 class Usuario {
 
+    private $id;
+
     public static function getAll($filters) {
         $db = Database::getConnection();
         $sql = 'SELECT 
