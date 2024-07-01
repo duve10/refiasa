@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-06-2024 a las 14:02:50
+-- Tiempo de generación: 01-07-2024 a las 03:37:48
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 7.3.31
 
@@ -75,7 +75,8 @@ INSERT INTO `altura` (`id`, `id_mascota`, `altura`, `creado_por`, `created_at`) 
 (33, 38, '2.20', 2, '2024-06-22 00:28:18'),
 (34, 39, '1.20', 2, '2024-06-22 00:40:39'),
 (35, 40, '1.20', 2, '2024-06-22 02:27:00'),
-(36, 41, '2.20', 2, '2024-06-22 02:27:41');
+(36, 41, '2.20', 2, '2024-06-22 02:27:41'),
+(37, 42, '20.00', 2, '2024-06-30 20:38:50');
 
 -- --------------------------------------------------------
 
@@ -106,17 +107,33 @@ CREATE TABLE `atencion` (
 --
 
 INSERT INTO `atencion` (`id`, `id_cita`, `id_mascota`, `descripcion`, `observaciones`, `diagnosticos`, `tratamiento`, `fecha`, `creado_por`, `actualizado_por`, `created_at`, `updated_at`, `estado`, `id_estadoatencion`, `veterinario`) VALUES
-(1, 2, 1, 'Consulta de seguimiento', 'Control de evolución post-tratamiento\r\n', 'Gastroenteritis leve.', 'Antibióticos prescritos por 5 días y dieta blanda recomendada.', '2024-06-21 15:30:00', 2, NULL, '2024-06-13 00:58:31', '2024-06-21 22:33:46', 1, 2, 3),
-(4, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 17:29:00', 2, NULL, '2024-06-21 22:38:36', '2024-06-21 22:38:36', 1, 1, 4),
-(5, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 17:53:00', 2, NULL, '2024-06-21 22:53:57', '2024-06-21 22:53:57', 1, 1, 4),
-(6, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 18:05:00', 2, NULL, '2024-06-21 23:05:31', '2024-06-21 23:05:31', 1, 1, 3),
-(7, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 18:09:00', 2, NULL, '2024-06-21 23:09:57', '2024-06-21 23:09:57', 1, 1, 4),
-(8, NULL, 37, 'test', 'test', 'test', 'test', '2024-06-21 18:11:00', 2, NULL, '2024-06-21 23:13:10', '2024-06-21 23:13:10', 1, 1, 3),
-(9, NULL, 39, 'test', 'test', 'test', 'test', '2024-06-21 20:16:00', 2, NULL, '2024-06-22 01:16:39', '2024-06-22 01:16:39', 1, 1, 4),
-(10, NULL, 37, 'test', 'test', 'tess', 'test', '2024-06-22 13:17:00', 2, NULL, '2024-06-22 01:17:38', '2024-06-22 01:19:44', 1, 2, 4),
-(11, NULL, 1, 'test', 'test', 'test', '', '2024-06-22 20:18:00', 2, NULL, '2024-06-22 01:18:24', '2024-06-22 01:19:46', 1, 2, 4),
-(12, NULL, 37, 'TEST', 'TEST', 'TEST', 'TEST', '2024-06-27 13:00:00', 2, NULL, '2024-06-24 04:22:34', '2024-06-24 04:24:50', 1, 2, 3),
-(13, NULL, 37, 'TEST', 'TEST', '', '', '2024-06-23 12:02:00', 2, NULL, '2024-06-24 04:23:27', '2024-06-24 04:24:53', 1, 2, 3);
+(1, 2, 1, 'Consulta de seguimiento', 'Control de evolución post-tratamiento\r\n', 'Gastroenteritis leve.', 'Antibióticos prescritos por 5 días y dieta blanda recomendada.', '2024-06-21 15:30:00', 2, 2, '2024-06-13 00:58:31', '2024-06-30 21:07:28', 0, 2, 3),
+(4, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 17:29:00', 2, 2, '2024-06-21 22:38:36', '2024-06-30 21:07:31', 0, 1, 4),
+(5, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 17:53:00', 2, 2, '2024-06-21 22:53:57', '2024-06-30 21:07:33', 0, 1, 4),
+(6, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 18:05:00', 2, 2, '2024-06-21 23:05:31', '2024-06-30 21:07:36', 0, 1, 3),
+(7, NULL, 1, 'test', 'test', 'test', 'test', '2024-06-21 18:09:00', 2, 2, '2024-06-21 23:09:57', '2024-06-30 21:07:38', 0, 1, 4),
+(8, NULL, 37, 'test', 'test', 'test', 'test', '2024-06-21 18:11:00', 2, 2, '2024-06-21 23:13:10', '2024-06-30 21:07:40', 0, 1, 3),
+(9, NULL, 39, 'test', 'test', 'test', 'test', '2024-06-21 20:16:00', 2, 2, '2024-06-22 01:16:39', '2024-06-30 21:07:42', 0, 1, 4),
+(10, NULL, 37, 'test', 'test', 'tess', 'test', '2024-06-22 13:17:00', 2, 2, '2024-06-22 01:17:38', '2024-06-30 21:07:44', 0, 2, 4),
+(11, NULL, 1, 'test', 'test', 'test', '', '2024-06-22 20:18:00', 2, 2, '2024-06-22 01:18:24', '2024-06-30 21:07:47', 0, 2, 4),
+(12, NULL, 37, 'TEST', 'TEST', 'TEST', 'TEST', '2024-06-27 13:00:00', 2, 2, '2024-06-24 04:22:34', '2024-06-30 21:07:52', 0, 2, 3),
+(13, NULL, 37, 'TEST', 'TEST', '', '', '2024-06-23 12:02:00', 2, 2, '2024-06-24 04:23:27', '2024-06-30 21:07:49', 0, 2, 3),
+(14, NULL, 3, 'test', 'test', '', '', '2024-06-27 16:38:00', 2, 2, '2024-06-26 21:38:23', '2024-06-30 21:07:54', 0, 2, 3),
+(15, NULL, 2, 'test', 'test', 'test', '', '2024-06-27 17:09:00', 2, 2, '2024-06-26 22:09:26', '2024-06-30 21:07:56', 0, 2, 4),
+(16, NULL, 37, 'test', 'test', 'test', 'test', '2024-06-26 17:14:00', 2, 2, '2024-06-26 22:14:44', '2024-06-30 21:07:51', 0, 2, 3),
+(17, NULL, 5, 'test', 'tedt', '', '', '2024-06-27 17:14:00', 2, 2, '2024-06-26 22:15:12', '2024-06-30 21:08:00', 0, 2, 4),
+(18, NULL, 3, 'test DOCTOR', 'testDOCTOR', 'testDOCTOR', 'DOCTOR', '2024-06-30 12:46:00', 2, 2, '2024-06-30 17:50:06', '2024-06-30 21:08:02', 0, 3, 3),
+(19, NULL, 3, 'test DOCTOR', 'tetest DOCTOR', 'test DOCTOR', 'test DOCTOR', '2024-06-30 13:24:00', 2, 2, '2024-06-30 17:57:08', '2024-06-30 21:08:14', 0, 3, 3),
+(20, NULL, 3, 'test', 'est', '', '', '2024-06-30 15:36:00', 2, 2, '2024-06-30 20:36:20', '2024-06-30 21:08:16', 0, 2, 3),
+(21, NULL, 3, 'test', 'test', '', '', '2024-06-30 18:05:00', 2, 2, '2024-06-30 23:06:01', '2024-07-01 01:36:27', 0, 2, 3),
+(22, NULL, 3, 'test desde cita', '', '', '', '2024-06-30 20:11:00', 2, 2, '2024-07-01 01:11:17', '2024-07-01 01:14:54', 0, 2, 4),
+(23, NULL, 3, 'trest desde cita', '', '', '', '2024-06-30 20:12:00', 2, 2, '2024-07-01 01:12:28', '2024-07-01 01:14:56', 0, 2, 4),
+(24, NULL, 3, 'test desde cita', '', '', '', '2024-06-30 20:15:00', 2, 2, '2024-07-01 01:15:11', '2024-07-01 01:36:34', 0, 2, 3),
+(25, NULL, 3, '123123', '', '', '', '2024-06-30 20:19:00', 2, 2, '2024-07-01 01:19:14', '2024-07-01 01:36:31', 0, 2, 3),
+(26, NULL, 3, 'tet', '', '', '', '2024-06-30 20:19:00', 2, 2, '2024-07-01 01:19:55', '2024-07-01 01:36:29', 0, 2, 3),
+(27, NULL, 3, 'dsadas', '', '', '', '2024-06-30 20:21:00', 2, 2, '2024-07-01 01:21:25', '2024-07-01 01:36:33', 0, 2, 3),
+(28, NULL, 3, 'test desde cita', '', '', '', '2024-06-30 20:29:00', 2, 2, '2024-07-01 01:29:12', '2024-07-01 01:36:36', 0, 2, 3),
+(29, NULL, 3, 'test desde cita', '', '', '', '2024-06-30 20:29:00', 2, 2, '2024-07-01 01:29:44', '2024-07-01 01:36:33', 0, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -159,7 +176,25 @@ INSERT INTO `atencion_servicio` (`id_atencion`, `id_servicio`, `descripcion`) VA
 (10, 3, NULL),
 (11, 2, NULL),
 (12, 2, NULL),
-(13, 2, NULL);
+(13, 2, NULL),
+(14, 2, NULL),
+(15, 2, NULL),
+(16, 2, NULL),
+(17, 3, NULL),
+(18, 2, NULL),
+(19, 3, NULL),
+(20, 2, NULL),
+(20, 4, NULL),
+(21, 1, NULL),
+(21, 3, NULL),
+(26, 1, NULL),
+(26, 4, NULL),
+(27, 1, NULL),
+(27, 4, NULL),
+(28, 1, NULL),
+(28, 4, NULL),
+(29, 1, NULL),
+(29, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -188,22 +223,24 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`id`, `id_mascota`, `creado_por`, `id_hora`, `fecha`, `descripcion`, `created_at`, `updated_at`, `estado`, `actualizado_por`, `id_estadocita`, `comentario`, `id_tipocita`) VALUES
-(2, 1, 2, 3, '2024-06-13', 'Cita para vacunación anual y revisión de salud', '2024-06-12 20:02:31', '2024-06-14 01:17:33', 1, NULL, 1, '', 1),
-(3, 2, 2, 4, '2024-06-13', 'Cita para vacunación anual y revisión de salud', '2024-06-12 20:03:40', '2024-06-14 01:17:37', 1, NULL, 1, '', 1),
-(9, 2, 2, 23, '2024-06-15', 'TEST', '2024-06-14 23:57:52', '2024-06-14 23:57:52', 1, NULL, 1, 'TEST', 1),
-(10, 2, 2, 3, '2024-06-15', 'test', '2024-06-15 00:10:06', '2024-06-15 00:10:06', 1, NULL, 1, 'tesst', 1),
-(11, 2, 2, 13, '2024-06-25', 'TEST', '2024-06-15 01:20:03', '2024-06-15 01:20:03', 1, NULL, 1, 'TEST', 1),
-(12, 1, 2, 3, '2024-06-15', 'TEST', '2024-06-15 01:37:45', '2024-06-15 01:37:45', 1, NULL, 1, 'TEST', 2),
-(13, 1, 2, 23, '2024-06-15', 'TEST', '2024-06-15 01:43:29', '2024-06-15 01:43:29', 1, NULL, 1, 'TEST', 2),
-(14, 1, 2, 13, '2024-06-25', 'TEST', '2024-06-15 01:45:30', '2024-06-15 01:45:30', 1, NULL, 1, 'TEST', 2),
-(15, 5, 2, 15, '2024-06-21', 'test', '2024-06-15 02:19:33', '2024-06-15 02:19:33', 1, NULL, 1, 'test', 1),
-(16, 5, 2, 19, '2024-06-28', 'TEST', '2024-06-15 02:20:24', '2024-06-15 02:20:24', 1, NULL, 1, 'TEST', 1),
-(17, 5, 2, 17, '2024-07-20', 'TEST', '2024-06-15 02:20:51', '2024-06-15 02:20:51', 1, NULL, 1, 'TEST', 1),
-(18, 5, 2, 15, '2024-06-19', 'TEST', '2024-06-16 19:27:10', '2024-06-16 19:27:10', 1, NULL, 1, 'TEST', 1),
-(19, 1, 2, 5, '2024-06-21', 'test', '2024-06-21 23:22:19', '2024-06-21 23:22:19', 1, NULL, 1, 'test', 1),
-(20, 1, 2, 3, '2024-06-22', 'TEST', '2024-06-22 02:22:24', '2024-06-22 02:22:24', 1, NULL, 1, 'TEST', 1),
-(21, 1, 2, 3, '2024-06-22', 'TEST', '2024-06-22 02:23:19', '2024-06-22 02:23:19', 1, NULL, 1, 'TEST', 2),
-(22, 40, 2, 13, '2024-06-22', 'rest', '2024-06-22 02:42:22', '2024-06-22 02:42:22', 1, NULL, 1, 'rest', 1);
+(2, 1, 2, 3, '2024-06-13', 'Cita para vacunación anual y revisión de salud', '2024-06-12 20:02:31', '2024-06-30 20:53:11', 0, 2, 1, '', 1),
+(3, 2, 2, 4, '2024-06-13', 'Cita para vacunación anual y revisión de salud', '2024-06-12 20:03:40', '2024-06-30 20:53:20', 0, 2, 1, '', 1),
+(9, 2, 2, 23, '2024-06-15', 'TEST', '2024-06-14 23:57:52', '2024-06-30 20:53:31', 0, 2, 1, 'TEST', 1),
+(10, 2, 2, 3, '2024-06-15', 'test', '2024-06-15 00:10:06', '2024-06-30 20:53:35', 0, 2, 1, 'tesst', 1),
+(11, 2, 2, 13, '2024-06-25', 'TEST', '2024-06-15 01:20:03', '2024-06-30 21:08:28', 0, 2, 1, 'TEST', 1),
+(12, 1, 2, 3, '2024-06-15', 'TEST', '2024-06-15 01:37:45', '2024-06-30 20:53:26', 0, 2, 1, 'TEST', 2),
+(13, 1, 2, 23, '2024-06-15', 'TEST', '2024-06-15 01:43:29', '2024-06-30 20:53:33', 0, 2, 1, 'TEST', 2),
+(14, 1, 2, 13, '2024-06-25', 'TEST', '2024-06-15 01:45:30', '2024-06-30 21:08:30', 0, 2, 1, 'TEST', 2),
+(15, 5, 2, 15, '2024-06-21', 'test', '2024-06-15 02:19:33', '2024-06-30 20:53:40', 0, 2, 1, 'test', 1),
+(16, 5, 2, 19, '2024-06-28', 'TEST', '2024-06-15 02:20:24', '2024-06-30 21:08:24', 0, 2, 1, 'TEST', 1),
+(17, 5, 2, 17, '2024-07-20', 'TEST', '2024-06-15 02:20:51', '2024-06-30 21:08:22', 0, 2, 1, 'TEST', 1),
+(18, 5, 2, 15, '2024-06-19', 'TEST', '2024-06-16 19:27:10', '2024-06-30 20:53:28', 0, 2, 1, 'TEST', 1),
+(19, 1, 2, 5, '2024-06-21', 'test', '2024-06-21 23:22:19', '2024-06-30 20:53:38', 0, 2, 1, 'test', 1),
+(20, 1, 2, 3, '2024-06-22', 'TEST', '2024-06-22 02:22:24', '2024-06-30 20:53:44', 0, 2, 1, 'TEST', 1),
+(21, 1, 2, 3, '2024-06-22', 'TEST', '2024-06-22 02:23:19', '2024-06-30 20:53:42', 0, 2, 1, 'TEST', 2),
+(22, 40, 2, 13, '2024-06-22', 'rest', '2024-06-22 02:42:22', '2024-06-30 20:53:45', 0, 2, 1, 'rest', 1),
+(23, 3, 2, 1, '2024-07-01', 'test', '2024-06-30 23:29:41', '2024-07-01 01:36:45', 0, 2, 2, 'test', 1),
+(24, 3, 2, 13, '2024-06-30', 'test asdas dasd asdas', '2024-07-01 00:50:16', '2024-07-01 01:36:47', 0, 2, 1, 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -238,7 +275,10 @@ INSERT INTO `cita_servicio` (`id_cita`, `id_servicio`) VALUES
 (19, 2),
 (20, 2),
 (21, 3),
-(22, 2);
+(22, 2),
+(23, 1),
+(23, 4),
+(24, 1);
 
 -- --------------------------------------------------------
 
@@ -407,7 +447,7 @@ INSERT INTO `mascota` (`id`, `nombre`, `edad`, `id_cliente`, `creado_por`, `actu
 (4, 'Luna', 2, 6, 2, NULL, '2024-06-12 17:18:40', '2024-06-22 00:38:23', 1, '2020-05-06', 'F', 4, '', '66761aa1babc1.png'),
 (5, 'Toby', 7, 3, 2, NULL, '2024-06-12 17:18:40', '2024-06-22 00:38:23', 1, '2020-05-06', 'M', 5, '', '66761aa1babc1.png'),
 (6, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:44:18', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
-(7, 'Test mascota', NULL, 7, 2, NULL, '2024-06-18 22:45:24', '2024-06-22 00:38:23', 1, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
+(7, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:45:24', '2024-06-30 22:28:50', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (8, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:46:19', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (9, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:46:30', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (10, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:46:39', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
@@ -415,7 +455,7 @@ INSERT INTO `mascota` (`id`, `nombre`, `edad`, `id_cliente`, `creado_por`, `actu
 (12, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:50:48', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (13, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:51:05', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (14, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:52:56', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
-(15, 'Test mascota', NULL, 7, 2, NULL, '2024-06-18 22:53:26', '2024-06-22 00:38:23', 1, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
+(15, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:53:26', '2024-06-30 21:08:54', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (16, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:57:19', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (17, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:58:12', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (18, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 22:59:47', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
@@ -428,7 +468,7 @@ INSERT INTO `mascota` (`id`, `nombre`, `edad`, `id_cliente`, `creado_por`, `actu
 (25, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 23:02:53', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (26, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 23:03:00', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (27, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 23:03:05', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
-(28, 'Test mascota', NULL, 7, 2, NULL, '2024-06-18 23:03:25', '2024-06-22 00:38:23', 1, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
+(28, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 23:03:25', '2024-06-30 21:08:52', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (29, 'Test mascota', NULL, 7, 2, 2, '2024-06-18 23:03:49', '2024-06-22 00:38:23', 0, '2024-06-04', 'M', 3, 'saada', '66761aa1babc1.png'),
 (30, 'Test mascota', NULL, 3, 2, 2, '2024-06-18 23:05:51', '2024-06-22 00:38:23', 0, '2024-06-18', 'M', 4, '', '66761aa1babc1.png'),
 (31, 'test', NULL, 7, 2, 2, '2024-06-18 23:08:17', '2024-06-22 00:38:23', 0, '2024-06-18', 'M', 3, 'test', '66761aa1babc1.png'),
@@ -437,11 +477,12 @@ INSERT INTO `mascota` (`id`, `nombre`, `edad`, `id_cliente`, `creado_por`, `actu
 (34, 'Test mascota', NULL, 3, 2, 2, '2024-06-18 23:22:43', '2024-06-22 00:38:23', 0, '2024-06-18', 'M', 1, '', '66761aa1babc1.png'),
 (35, 'hola', NULL, 3, 2, 2, '2024-06-19 00:05:08', '2024-06-22 00:38:23', 0, '2024-06-18', 'F', 1, 'test', '66761aa1babc1.png'),
 (36, 'Test mascota', NULL, 3, 2, 2, '2024-06-19 00:07:09', '2024-06-22 00:38:23', 0, '2024-06-18', 'M', 3, '', '66761aa1babc1.png'),
-(37, 'misu 2', NULL, 4, 2, NULL, '2024-06-21 23:09:28', '2024-06-22 00:38:23', 1, '2024-05-29', 'F', 2, '', '66761aa1babc1.png'),
-(38, 'hola', NULL, 4, 2, NULL, '2024-06-22 00:28:17', '2024-06-22 00:28:17', 1, '2024-05-28', 'F', 1, 'test', '66761aa1babc1.png'),
-(39, 'Test mascota', NULL, 7, 2, NULL, '2024-06-22 00:40:39', '2024-06-22 00:40:39', 1, '2024-05-02', 'M', 4, '', '66761d877d7cd.jpg'),
-(40, 'MASCOTA 1', NULL, 6, 2, NULL, '2024-06-22 02:26:59', '2024-06-22 02:26:59', 1, '2024-06-06', 'M', 1, '', ''),
-(41, 'MASCOTA 1', NULL, 3, 2, NULL, '2024-06-22 02:27:40', '2024-06-22 02:27:40', 1, '2024-06-21', 'M', 1, 'TEST', '');
+(37, 'misu 2', NULL, 4, 2, 2, '2024-06-21 23:09:28', '2024-06-30 21:08:50', 0, '2024-05-29', 'F', 2, '', '66761aa1babc1.png'),
+(38, 'hola', NULL, 4, 2, 2, '2024-06-22 00:28:17', '2024-06-30 21:08:48', 0, '2024-05-28', 'F', 1, 'test', '66761aa1babc1.png'),
+(39, 'Test mascota', NULL, 7, 2, 2, '2024-06-22 00:40:39', '2024-06-30 21:08:46', 0, '2024-05-02', 'M', 4, '', '66761d877d7cd.jpg'),
+(40, 'MASCOTA 1', NULL, 6, 2, 2, '2024-06-22 02:26:59', '2024-06-30 21:08:44', 0, '2024-06-06', 'M', 1, '', ''),
+(41, 'MASCOTA 1', NULL, 3, 2, 2, '2024-06-22 02:27:40', '2024-06-30 21:08:41', 0, '2024-06-21', 'M', 1, 'TEST', ''),
+(42, 'MASCOTA TEST', NULL, 5, 2, 2, '2024-06-30 20:38:50', '2024-06-30 21:08:40', 0, '2024-06-05', 'M', 1, '', 'general.jpg');
 
 -- --------------------------------------------------------
 
@@ -523,7 +564,8 @@ INSERT INTO `peso` (`id`, `id_mascota`, `peso`, `creado_por`, `created_at`) VALU
 (37, 38, '50.00', 2, '2024-06-22 00:28:17'),
 (38, 39, '50.00', 2, '2024-06-22 00:40:39'),
 (39, 40, '999.99', 2, '2024-06-22 02:27:00'),
-(40, 41, '50.00', 2, '2024-06-22 02:27:41');
+(40, 41, '50.00', 2, '2024-06-22 02:27:41'),
+(41, 42, '50.00', 2, '2024-06-30 20:38:50');
 
 -- --------------------------------------------------------
 
@@ -541,8 +583,18 @@ CREATE TABLE `producto` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `creado_por` int(11) DEFAULT NULL,
   `actualizado_por` int(11) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL
+  `estado` int(11) DEFAULT NULL,
+  `foto` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `created_at`, `updated_at`, `creado_por`, `actualizado_por`, `estado`, `foto`) VALUES
+(2, 'PRODUCTO 1', 'TEST', '12.20', 4, '2024-06-30 22:58:45', '2024-06-30 23:04:13', 2, 2, 0, 'producto.jpg'),
+(3, 'Producto 2', 'tse', '20.20', 4, '2024-06-30 23:00:51', '2024-06-30 23:23:05', 2, 2, 0, '6681e3a3e0a36.jpg'),
+(4, 'Porducto 1', 'Porducto 1', '12.20', 4, '2024-06-30 23:23:38', '2024-06-30 23:23:38', 2, NULL, 1, '6681e8fa38efe.png');
 
 -- --------------------------------------------------------
 
@@ -583,19 +635,24 @@ CREATE TABLE `servicio` (
   `creado_por` int(11) DEFAULT NULL,
   `actualizado_por` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `citas` int(11) NOT NULL DEFAULT 0,
+  `foto` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `servicio`
 --
 
-INSERT INTO `servicio` (`id`, `nombre`, `descripcion`, `precio`, `estado`, `creado_por`, `actualizado_por`, `created_at`, `updated_at`) VALUES
-(1, 'Baño', 'Baño y cuidado básico de la mascota', '30.00', 1, 2, NULL, '2024-06-12 19:50:56', '2024-06-12 19:50:56'),
-(2, 'Consulta', 'Consulta veterinaria para revisión de salud de la mascota', '50.00', 1, 2, NULL, '2024-06-12 19:50:56', '2024-06-12 19:50:56'),
-(3, 'Vacunación', 'Vacunación contra enfermedades comunes en mascotas', '40.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-12 19:50:57'),
-(4, 'Corte de uñas', 'Corte de uñas para prevenir problemas de salud', '20.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-12 19:50:57'),
-(5, 'Desparasitación', 'Tratamiento para eliminar parásitos internos y externos', '35.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-12 19:50:57');
+INSERT INTO `servicio` (`id`, `nombre`, `descripcion`, `precio`, `estado`, `creado_por`, `actualizado_por`, `created_at`, `updated_at`, `citas`, `foto`) VALUES
+(1, 'Baño', 'Baño y cuidado básico de la mascota', '30.00', 1, 2, NULL, '2024-06-12 19:50:56', '2024-06-30 21:44:43', 1, 'servicio.jpg'),
+(2, 'Consulta', 'Consulta veterinaria para revisión de salud de la mascota', '50.00', 1, 2, NULL, '2024-06-12 19:50:56', '2024-06-30 21:44:48', 0, 'servicio.jpg'),
+(3, 'Vacunación', 'Vacunación contra enfermedades comunes en mascotas', '40.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-30 21:44:49', 0, 'servicio.jpg'),
+(4, 'Corte de uñas', 'Corte de uñas para prevenir problemas de salud', '20.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-30 21:44:51', 1, 'servicio.jpg'),
+(5, 'Desparasitación', 'Tratamiento para eliminar parásitos internos y externos', '35.00', 1, 2, NULL, '2024-06-12 19:50:57', '2024-06-30 21:44:52', 0, 'servicio.jpg'),
+(7, 'SERVICIO 1', 'TEST', '12.20', 0, 2, 2, '2024-06-30 22:24:10', '2024-06-30 22:29:09', 1, '6681db0aedab7.jpg'),
+(8, 'PARA CITA', 'TEST', '12.00', 0, 2, 2, '2024-06-30 22:29:29', '2024-06-30 22:29:58', 1, 'servicio.jpg'),
+(9, 'NO CITA', 'TEST', '10.00', 0, 2, 2, '2024-06-30 22:29:38', '2024-06-30 22:30:00', 0, 'servicio.jpg');
 
 -- --------------------------------------------------------
 
@@ -844,13 +901,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `altura`
 --
 ALTER TABLE `altura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `atencion`
 --
 ALTER TABLE `atencion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `atencion_producto`
@@ -862,7 +919,7 @@ ALTER TABLE `atencion_producto`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -898,7 +955,7 @@ ALTER TABLE `lista_horas`
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `perfil`
@@ -910,13 +967,13 @@ ALTER TABLE `perfil`
 -- AUTO_INCREMENT de la tabla `peso`
 --
 ALTER TABLE `peso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `raza`
@@ -928,7 +985,7 @@ ALTER TABLE `raza`
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cita`
