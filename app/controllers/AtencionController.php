@@ -121,7 +121,7 @@ class AtencionController
             $estado = 1;
             $servicios = $_POST['id_servicio'] ?? [];
             $id_estadoatencion = $_POST['id_estadoatencion'] ?? 2;
-            $veterinario = trim($_POST['veterinario']);
+            $veterinario = isset($_POST['veterinario'])?$_POST['veterinario']:'';
 
 
             if (!$veterinario || !$id_mascota || !$descripcion || empty($servicios)) {
