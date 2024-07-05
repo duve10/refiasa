@@ -411,11 +411,19 @@ class Atencion {
 
         $sql .= " AND t1.fecha between :start and :end";
 
+        if ($filters['viewVet']) {
+            $sql .= " AND t7.id = :idVet";
+        }
+
+
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':start', $filters['start']);
         $stmt->bindValue(':end', $filters['end']);
-
+        
+        if ($filters['viewVet']) {
+            $stmt->bindValue(':idVet', $filters['idVet']);
+        }
         $stmt->execute();
     
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -497,12 +505,22 @@ class Atencion {
             $params[':email'] = '%' . $filters['email'] . '%';
         }*/
 
-        $sql .= " AND t1.fecha between :start and :end ORDER BY t1.fecha ASC";
+        $sql .= " AND t1.fecha between :start and :end";
+
+        if ($filters['viewVet']) {
+            $sql .= " AND t7.id = :idVet";
+        }
+
+        $sql .= " ORDER BY t1.fecha ASC";
 
         
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':start', $filters['start']);
         $stmt->bindValue(':end', $filters['end']);
+        
+        if ($filters['viewVet']) {
+            $stmt->bindValue(':idVet', $filters['idVet']);
+        }
 
         $stmt->execute();
     

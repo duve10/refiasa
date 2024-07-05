@@ -78,14 +78,15 @@ class UsuarioController {
 
             $usuario = trim($_POST['usuario']) ?? null;
             $contrasena = trim($_POST['contrasena'])??'';
+            $password = password_hash($contrasena, PASSWORD_BCRYPT); 
             $name = trim($_POST['name']);
             $lastname = trim($_POST['lastname']);
+            $creado_por = $_SESSION['user_id'];
             $phone = trim($_POST['phone']);
             $mail = trim($_POST['mail']);
             $type_doc = trim($_POST['type_doc']);
             $document = trim($_POST['document']);
             $id_perfil = trim($_POST['id_perfil']);
-            $mail = trim($_POST['mail']);
             $estado = 1;
             $imagen = $_FILES['foto'] ?? null;
             $pathFoto = 'general.png';
@@ -107,16 +108,14 @@ class UsuarioController {
                 $pathFoto = $uploadResult['filePath'];
             }
 
-      
+     
+            $usuario = new Usuario(null, $usuario, $password, $estado, $name, $lastname, $phone, $mail, $document, $type_doc, $id_perfil, $pathFoto, $creado_por, null );
 
-            $servicio = new Servicio(null, $nombre, $descripcion, $precio, $citas, $creado_por,NULL, $estado, $pathFoto);
+            if ($usuario->guardar()) {
 
-            if ($servicio->guardar()) {
-
-              
 
                 $response['error'] = false;
-                $response['message'] = 'Servicio registrado correctamente.';
+                $response['message'] = 'Usuario registrado correctamente.';
             } else {
                 $response['message'] = 'Error al registrar Servicio.';
             }

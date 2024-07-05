@@ -1,8 +1,10 @@
 <?php
 // app/middleware/SessionMiddleware.php
 
-class SessionMiddleware {
-    public static function handle() {
+class SessionMiddleware
+{
+    public static function handle()
+    {
 
         if (session_status() === PHP_SESSION_NONE && !self::isLoginPage()) {
             session_start();
@@ -18,8 +20,8 @@ class SessionMiddleware {
             $userProfileId = $_SESSION['user_profile_id'];
             $requestUri = str_replace('/refiasa/public', '', $_SERVER['REQUEST_URI']);
 
-             // Definir los módulos y rutas accesibles para cada perfil
-             $accessibleModules = [
+            // Definir los módulos y rutas accesibles para cada perfil
+            $accessibleModules = [
                 1 => ['/' => true], // Perfil 1: Acceso a todo
                 2 => [
                     '/dashboard' => true, // Perfil 2: Acceso al módulo clientes y sus rutas
@@ -31,9 +33,57 @@ class SessionMiddleware {
                     '/atenciones/apiActualizarRT' => true,
                     '/atenciones/apiEliminar' => true,
                     '/calendario' => true,
+                ],
+                3 => [
+                    '/dashboard' => true, // Perfil 2: Acceso al módulo clientes y sus rutas
+                    '/logout' => true,
+                    '/citas' => true,
+                    '/citas/registro' => true,
+                    '/citas/registro' => true,
+                    '/citas/apiGetCitas' => true,
+                    '/citas/apiRegistrar' => true,
+                    '/citas/getApiListaHorasPorFecha' => true,
+                    '/citas/apiEliminar' => true,
+                    '/citas/getServiciosCita' => true,
+                    '/citas/apiUpdateEstadoCita' => true,
+
+
+                    '/atenciones' => true,
+                    '/atenciones/apiGetAtenciones' => true,
+                    '/atenciones/apiGetTodayAtenciones' => true,
+                    '/atenciones/apiRegistrar' => true,
+                    '/atenciones/apiActualizarRT' => true,
+                    '/atenciones/apiEliminar' => true,
+
+                    '/usuarios/apiGetVetSelect' => true,
+
+                    '/calendario' => true,
+                    '/calendario/apiGetCitasAtenciones' => true,
+
+                    '/clientes' => true,
+                    '/clientes/apiGetClientes' => true,
+                    '/clientes/apiGetClientesSelect' => true,
+
+                    '/mascotas' => true,
+                    '/mascotas/apiGetMascotas' => true,
+                    '/mascotas/apiGetMascotasByCliente' => true,
+                    '/mascotas/apiRegistrar' => true,
+                    '/mascotas/apiEliminar' => true,
+
+                    '/servicios' => true,
+                    '/servicios/apiGetServicios' => true,
+                    '/servicios/apiRegistrar' => true,
+                    '/servicios/apiEliminar' => true,
+
+                    '/productos' => true,
+                    '/productos/apiGetProductos' => true,
+                    '/productos/apiRegistrar' => true,
+                    '/productos/apiEliminar' => true,
+
+                    '/razas/apiGetRaza' => true,
                 ]
-                    // Verificar si el perfil tiene acceso al módulo actual
-                   
+                // Verificar si el perfil tiene acceso al módulo actual
+
             ];
 
             $hasAccess = false;
@@ -52,7 +102,8 @@ class SessionMiddleware {
         }
     }
 
-    private static function isLoginPage() {
+    private static function isLoginPage()
+    {
         $currentPage = $_SERVER['REQUEST_URI'];
         return strpos($currentPage, '/login') !== false;
     }

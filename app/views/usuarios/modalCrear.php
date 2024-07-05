@@ -71,8 +71,8 @@
 						<div class="col-md-10 col-xl-10">
 							<select class="form-select form-control especie" name="id_perfil" id="id_perfil">
 								<option value="1">Administrador</option>
-								<option value="3">Veterinario</option>
-								<option value="2">Recepcionista</option>
+								<option value="2">Veterinario</option>
+								<option value="3">Recepcionista</option>
 								<option value="4">Inventario</option>
 							</select>
 						</div>

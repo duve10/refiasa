@@ -44,12 +44,16 @@
                     <span class="align-middle">Atenciones</span>
                 </a>
                 <ul id="s27" class="sidebar-dropdown list-unstyled collapse <?= $active == '6' || $active == '7' || $active == '12' ? 'show': '' ?>" data-bs-parent="#sidebar">
+                    
+                    <?php if(in_array($_SESSION['user_profile_id'],[1,2])) : ?>
                     <li class='sidebar-item <?= $active == '12'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones/rtatenciones">
                             <!---<i class="align-middle" data-feather="#icon#"></i>--->
                             <span class="align-middle">RT Atenciones</span>
                         </a>
                     </li>
+                    <?php endif; ?>
+
                     <?php if(in_array($_SESSION['user_profile_id'],[1,3])) : ?>
                     <li class='sidebar-item <?= $active == '6'? 'active': '' ?>'>
                         <a class="sidebar-link" href="/atenciones">

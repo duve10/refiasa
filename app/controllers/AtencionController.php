@@ -216,12 +216,22 @@ class AtencionController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $fecha = $_GET['fecha'];
+            
+            $viewVet = false;
+            $idVet = $_SESSION['user_id'];
+            if ($_SESSION['user_profile_id'] == 2) {
+                $viewVet = true;
+            }
+
             $filters = [
                 'start' => convertirFechaBd($fecha) . ' 00:00:00',
-                'end' => convertirFechaBd($fecha) . ' 23:59:59'
+                'end' => convertirFechaBd($fecha) . ' 23:59:59',
+                'viewVet' => $viewVet,
+                'idVet' => $idVet,
             ];
 
-
+            
+            
 
             $atenciones = Atencion::getAllAttencionesByDateAll($filters);
             $productos = Producto::getAllProductos();

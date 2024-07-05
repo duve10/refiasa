@@ -24,6 +24,7 @@ $router->add('/clientes/apiGetClientesSelect', 'ClienteController@apiGetClientes
 
 $router->add('/usuarios', 'UsuarioController@index');
 $router->add('/usuarios/apiGetUsuarios', 'UsuarioController@apiGetUsuarios');
+$router->add('/usuarios/apiRegistrar', 'UsuarioController@apiRegistrar');
 $router->add('/usuarios/apiEliminar', 'UsuarioController@apiEliminar');
 $router->add('/usuarios/apiGetVetSelect', 'UsuarioController@apiGetVetSelect');
 

@@ -17,11 +17,28 @@ class CalendarioController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $start = $_GET['start'];
             $end = $_GET['end'];
+
+            $viewVet = false;
+            $idVet = $_SESSION['user_id'];
+            if ($_SESSION['user_profile_id'] == 2) {
+                $viewVet = true;
+            }
+
+
             $filters = [
                 'start' => $start ?? null,
                 'end' => $end ?? null,
+                'viewVet' => $viewVet ?? null,
+                'idVet' => $idVet ?? null,
             ];
-            $citas = Cita::getAllCitasByDate($filters);
+            
+            
+            $citas = [];
+            
+            if (!$viewVet) {
+                $citas = Cita::getAllCitasByDate($filters);
+            }
+
             $atenciones = Atencion::getAllAttencionesByDate($filters);
 
             $eventos = array_merge($citas, $atenciones);
