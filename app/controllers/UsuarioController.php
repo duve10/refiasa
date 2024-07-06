@@ -30,6 +30,9 @@ class UsuarioController {
                 if ($usuario['status'] == 0) {
                     $statusTag = '<span class="badge bg-danger rounded-pill">inactivo</span>';
                 }
+
+            
+
                 $data[] = [
                     'id' => $usuario['id'],
                     'username' => $usuario['username'],

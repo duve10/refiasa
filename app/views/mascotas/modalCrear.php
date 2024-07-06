@@ -24,12 +24,12 @@
 					<div class="mb-3 row">
 						<label for="peso" class="col-md-2 col-xl-2 col-form-label fw-bold">Peso (Kg) <span class="text-danger">*</span></label>
 						<div class="col-md-4 col-xl-4">
-							<input type="text" class="form-control" name="peso" id="peso" placeholder="Peso">
+							<input type="text" class="form-control" step="0.01" min="0" name="peso" id="peso" placeholder="Peso">
 						</div>
 	
 						<label for="altura" class="col-md-2 col-xl-2 col-form-label fw-bold">Altura (m) <span class="text-danger">*</span></label>
 						<div class="col-md-4 col-xl-4">
-							<input type="text" class="form-control" name="altura" id="altura" placeholder="Altura">
+							<input type="text" class="form-control" step="0.01" min="0" name="altura" id="altura" placeholder="Altura">
 						</div>
 					</div>
 	

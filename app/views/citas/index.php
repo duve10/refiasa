@@ -65,7 +65,7 @@ include "../app/views/includes/header.php";
                                     <div class="row">
                                         <div class="col-12">
                                             <label class="fw-bold d-block">&nbsp;</label>
-                                            <button type="button" class="btn btn-primary btnColorGeneral drawTable">Buscar</button>
+                                            <button type="button" class="btn btn-primary btnColorGeneral drawTable" id="btnBuscar">Buscar</button>
                                         </div>
                                     </div>
                                 </div>

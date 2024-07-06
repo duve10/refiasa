@@ -24,7 +24,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end">
             
-                <a class="dropdown-item passwordChange" href="#">Cambiar Contraseña</a>
+                <a class="dropdown-item passwordChange d-none" href="#">Cambiar Contraseña</a>
                 <a class="dropdown-item" href="/logout">Cerrar Session</a>
             </div>
         </li>

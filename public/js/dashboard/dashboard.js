@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getCalendar();
-  graficoBarra();
+  main();
+
 });
 
 function getCalendar() {
@@ -34,86 +35,111 @@ function getCalendar() {
 }
 
 
-function graficoBarra() {
-    var options = {
-        series: [{
-        name: 'Inflation',
-        data: [12, 20, 25, 50, 32, 36, 32, 23, 14, 8, 52, 2]
-      }],
-        chart: {
-        height: 350,
-        type: 'bar',
+// Función para configurar las opciones iniciales del gráfico
+function getChartOptions() {
+  return {
+    series: [{
+      name: 'Inflation',
+      data: [] // Datos vacíos inicialmente
+    }],
+    chart: {
+      height: 350,
+      type: 'bar',
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: 'top',
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#304758"]
+      }
+    },
+    xaxis: {
+      categories: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+      position: 'top',
+      axisBorder: {
+        show: false
       },
-      plotOptions: {
-        bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: 'top', // top, center, bottom
-          },
+      axisTicks: {
+        show: false
+      },
+      crosshairs: {
+        fill: {
+          type: 'gradient',
+          gradient: {
+            colorFrom: '#D8E3F0',
+            colorTo: '#BED1E6',
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5,
+          }
         }
       },
-      dataLabels: {
+      tooltip: {
         enabled: true,
-        
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ["#304758"]
-        }
+      }
+    },
+    yaxis: {
+      axisBorder: {
+        show: false
       },
-      
-      xaxis: {
-        categories: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-        position: 'top',
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        crosshairs: {
-          fill: {
-            type: 'gradient',
-            gradient: {
-              colorFrom: '#D8E3F0',
-              colorTo: '#BED1E6',
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            }
-          }
-        },
-        tooltip: {
-          enabled: true,
-        }
+      axisTicks: {
+        show: false,
       },
-      yaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val) {
-            return val + "%";
-          }
-        }
-      
-      },
-      title: {
-        text: 'Atenciones por mes',
-        floating: true,
-        offsetY: 330,
-        align: 'center',
-        style: {
-          color: '#444'
+      labels: {
+        show: false,
+        formatter: function (val) {
+          return val + "%";
         }
       }
-      };
+    },
+    title: {
+      text: 'Atenciones por mes',
+      floating: true,
+      offsetY: 330,
+      align: 'center',
+      style: {
+        color: '#444'
+      }
+    }
+  };
+}
 
-      var chart = new ApexCharts(document.querySelector("#chart"), options);
-      chart.render();
-    
+// Función para inicializar el gráfico
+function initializeChart(options) {
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+  return chart;
+}
+
+// Función para obtener datos de la API y actualizar el gráfico
+function fetchDataAndUpdateChart(chart) {
+  fetch('atenciones/apiMes')
+    .then(response => response.json())
+    .then(data => {
+      // Asumiendo que la respuesta de la API tiene un formato como este:
+      // { "series": [12, 20, 25, 50, 32, 36, 32, 23, 14, 8, 52, 2] }
+
+      // Actualiza los datos del gráfico
+      chart.updateSeries([{
+        name: 'Inflation',
+        data: data.series // Actualiza con los datos recibidos
+      }]);
+    })
+    .catch(error => console.error('Error al obtener los datos:', error));
+}
+
+// Función principal para ejecutar todo el flujo
+function main() {
+  const options = getChartOptions();
+  const chart = initializeChart(options);
+  fetchDataAndUpdateChart(chart);
 }

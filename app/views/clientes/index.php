@@ -46,6 +46,7 @@ include "../app/views/includes/header.php";
                                                 <th>Tipo Doc.</th>
                                                 <th>Num. Doc.</th>
                                                 <th>Celular</th>
+                                                <th>URL</th>
                                                 <th>Usuario Creador</th>
                                                 <th class="text-center">Acciones</th>
                                             </tr>

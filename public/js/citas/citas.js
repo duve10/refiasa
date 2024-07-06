@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 function iniDate() {
   // Instancia de Flatpickr para el campo "Desde"
-  const fpDesde = flatpickr(".fecha_desde", {
+  const fpDesde = flatpickr("#fecha_desde", {
     enableTime: false,
     dateFormat: "d-m-Y",
     time_24hr: true,
@@ -18,7 +18,7 @@ function iniDate() {
   });
 
   // Instancia de Flatpickr para el campo "Hasta"
-  const fpHasta = flatpickr(".fecha_hasta", {
+  const fpHasta = flatpickr("#fecha_hasta", {
     enableTime: false,
     dateFormat: "d-m-Y",
     time_24hr: true,
@@ -46,10 +46,10 @@ function getDataTable() {
         url: "citas/apiGetCitas",
         type: "POST",
         data: function (data) {
-          /*let yearGroup = $("#yearGroup").val();
-            let registered = $("#registered").val();
-            data.yearGroup = yearGroup;
-            data.registered = registered;*/
+          let fecha_desde = $("#fecha_desde").val();
+          let fecha_hasta = $("#fecha_hasta").val();
+          data.fecha_desde = fecha_desde;
+          data.fecha_hasta = fecha_hasta;
         },
       },
       columns: [
@@ -75,6 +75,15 @@ function getDataTable() {
     });
 
   eliminarCita(tableReport);
+  buscar(tableReport)
+}
+
+function buscar(datatableReport) {
+  let btnBuscar = document.getElementById('btnBuscar')
+  
+  btnBuscar.addEventListener('click', e => {
+    datatableReport.draw();
+  })
 }
 
 function eliminarCita(dataTableCita) {

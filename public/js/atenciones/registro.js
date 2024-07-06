@@ -174,7 +174,7 @@ async function getMascotas(idCliente) {
 
       let htmlMascotas = "";
       if (mascotas.length == 0) {
-        htmlMascotas = `<a class="btn btn-primary btnColorGeneral" href="/mascotas/registro">
+        htmlMascotas = `<a class="btn btn-primary btnColorGeneral" href="/mascotas">
                                   + Agregar Mascota
                               </a>`;
       } else {

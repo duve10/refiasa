@@ -12,7 +12,7 @@
 	
 						<label for="nombre" class="col-md-2 col-xl-2 col-form-label fw-bold">Nombre <span class="text-danger">*</span></label>
 						<div class="col-md-10 col-xl-10">
-							<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Cliente">
+							<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Producto">
 						</div>
 					</div>
 

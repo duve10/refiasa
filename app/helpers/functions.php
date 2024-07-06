@@ -36,6 +36,19 @@ function verificarSesion() {
     }
 }
 
+function encrypt($plaintext, $key, $iv) {
+    $cipher = "aes-256-cbc";
+    $ciphertext = openssl_encrypt($plaintext, $cipher, $key, 0, $iv);
+    return base64_encode($ciphertext);
+}
+
+function decrypt($ciphertext, $key, $iv) {
+    $cipher = "aes-256-cbc";
+    $ciphertext = base64_decode($ciphertext);
+    $plaintext = openssl_decrypt($ciphertext, $cipher, $key, 0, $iv);
+    return $plaintext;
+}
+
 
 function handleFileUpload($file, $uploadDir) {
     // Verificar si se subió el archivo y no hubo errores

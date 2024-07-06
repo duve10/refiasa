@@ -301,6 +301,7 @@ class Atencion {
         $db = Database::getConnection();
         $sql = 'SELECT 
                     t1.id,
+                    t1.id_estadoatencion,
                     t1.descripcion,
                     t1.fecha,
                     t1.observaciones,
@@ -336,7 +337,7 @@ class Atencion {
                 LEFT JOIN especie t5 on t5.id = t8.id_especie
                 LEFT JOIN estadoatencion t6 on t6.id = t1.id_estadoatencion
                 LEFT JOIN user t7 on t7.id = t1.veterinario
-                WHERE 1=1 AND t1.estado = 1';
+                WHERE 1=1 AND t1.estado = 1 and DATE(t1.fecha) between :fecha_desde and :fecha_hasta';
   
 
         /*if (!empty($filters['name'])) {
@@ -355,6 +356,8 @@ class Atencion {
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':limit', $filters['length'], PDO::PARAM_INT);
         $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
+        $stmt->bindValue(':fecha_desde', $filters['fecha_desde']);
+        $stmt->bindValue(':fecha_hasta', $filters['fecha_hasta']);
 
         $stmt->execute();
 
@@ -607,6 +610,73 @@ class Atencion {
         Database::closeConnection();
 
         return $result;
+    }
+
+    public static function getServicioProducto($id)
+    {
+        $db = Database::getConnection();
+
+    
+        $sql = "SELECT t2.id,t2.nombre,t2.precio,t2.foto,'servicio' as tipo FROM atencion_servicio t1
+                left join servicio t2 on t2.id = t1.id_servicio
+                where t1.id_atencion = :id
+                union
+
+                SELECT t2.id,t2.nombre,t2.precio,t2.foto,'producto' as tipo FROM atencion_producto t1
+                left join producto t2 on t2.id = t1.id_producto
+                where t1.id_atencion = :id";
+
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $productServicio = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $productServicio;
+    }
+
+    public static function getPorMes()
+    {
+        $db = Database::getConnection();
+
+    
+        $sql = "
+                WITH RECURSIVE Months AS (
+                    SELECT '2024-01' AS mes 
+                    UNION ALL
+                    SELECT DATE_FORMAT(DATE_ADD(CONCAT(mes, '-01'), INTERVAL 1 MONTH), '%Y-%m') AS mes
+                    FROM Months
+                    WHERE mes < '2024-12' 
+                )
+                SELECT 
+                    m.mes,
+                    IFNULL(COUNT(a.id), 0) AS total_atenciones
+                FROM 
+                    Months m
+                LEFT JOIN 
+                    atencion a ON DATE_FORMAT(a.fecha, '%Y-%m') = m.mes and a.estado = 1
+                GROUP BY 
+                    m.mes
+                ORDER BY 
+                    m.mes;
+                    ";
+
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        $atenciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Cerrar la conexión después de utilizarla
+        Database::closeConnection();
+
+        return $atenciones;
     }
 
 }

@@ -1,6 +1,26 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
+  iniDate()
 });
+
+function iniDate() {
+  // Instancia de Flatpickr para el campo "Desde"
+  const fpDesde = flatpickr("#fecha_desde", {
+    enableTime: false,
+    dateFormat: "d-m-Y",
+    time_24hr: true,
+    disableMobile: true,
+   
+  });
+
+  // Instancia de Flatpickr para el campo "Hasta"
+  const fpHasta = flatpickr("#fecha_hasta", {
+    enableTime: false,
+    dateFormat: "d-m-Y",
+    time_24hr: true,
+    disableMobile: true,
+  });
+}
 
 function getDataTable() {
   let tableReport = $("#tableAtenciones")
@@ -17,10 +37,10 @@ function getDataTable() {
         url: "atenciones/apiGetAtenciones",
         type: "POST",
         data: function (data) {
-          /*let yearGroup = $("#yearGroup").val();
-            let registered = $("#registered").val();
-            data.yearGroup = yearGroup;
-            data.registered = registered;*/
+          let fecha_desde = $("#fecha_desde").val();
+          let fecha_hasta = $("#fecha_hasta").val();
+          data.fecha_desde = fecha_desde;
+          data.fecha_hasta = fecha_hasta;
         },
       },
       columns: [
@@ -45,12 +65,20 @@ function getDataTable() {
     tableReport.draw();
   });
 
-  eliminarAtencion(tableReport)
+  eliminarAtencion(tableReport);
+  viewAtt(tableReport);
+  buscar(tableReport)
+}
+function buscar(datatableReport) {
+  let btnBuscar = document.getElementById('btnBuscar')
+  
+  btnBuscar.addEventListener('click', e => {
+    datatableReport.draw();
+  })
 }
 
 function eliminarAtencion(dataTableAtencion) {
   $("#tableAtenciones tbody").on("click", ".deleteAtencion", function () {
-    console.log(111);
     // Aquí manejas la lógica para eliminar el elemento deseado
     let dataId = $(this).data("id");
     let nombreCliente = $(this).data("nombre");
@@ -97,5 +125,58 @@ function eliminarAtencion(dataTableAtencion) {
         }
       }
     });
+  });
+}
+
+function viewAtt(dataTableAtt) {
+  $("#tableAtenciones tbody").on("click", ".viewAtt", async function () {
+    let dataId = $(this).data("id");
+
+    try {
+      let response = await fetch("atenciones/getServicioProducto?id=" + dataId);
+
+      let data = await response.json();
+
+      let total = 0;
+      let htmlAll = ``;
+      data.forEach((el) => {
+        total = total + parseFloat(el.precio);
+        htmlAll =
+          htmlAll +
+          `
+        <div class='col-12'>
+          <div class='row mb-2 borderList'>
+            <div class='col-md-3'>
+              <img src="${el.foto}" class="avatar img-fluid rounded me-1" alt="name">
+            </div>
+            <div class='col-md-6 d-flex align-items-center justify-content-center'>
+              <p class='m-0'><strong>Nombre:</strong>${el.nombre}</p>
+            </div>
+            <div class='col-md-3 d-flex align-items-center justify-content-center'>
+              <p class='m-0'><strong>Precio:</strong>${el.precio}</p>
+            </div>
+          </div>
+        </div>
+        `;
+      });
+
+      htmlAll =
+        htmlAll +
+        `
+        <div class=col-12>
+          <p><strong>Total:</strong>${total}</p>
+        </div>
+      `;
+
+      Swal.fire({
+        title: "Lista de Productos / Servicios",
+        showDenyButton: false,
+        html: htmlAll,
+        width: "80%",
+        showCancelButton: false,
+        confirmButtonText: "Salir",
+        denyButtonText: `Don't save`,
+      });
+    } catch (error) {}
   });
 }

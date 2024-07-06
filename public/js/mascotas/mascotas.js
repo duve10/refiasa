@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
   initFecha();
   getRazas();
   manejarCierreModal();
+  permitirSoloNumerosConDosDecimales('altura');
+  permitirSoloNumerosConDosDecimales('peso');
   /*getExcel();
     sendMail();
     sendAll();*/
@@ -240,4 +242,30 @@ function buscarEspecie(dataTableMascota) {
   filtroEspecie.addEventListener("change", (e) => {
     dataTableMascota.draw();
   });
+}
+
+
+function permitirSoloNumerosConDosDecimales(inputId) {
+  const input = document.querySelector(`#${inputId}`);
+
+  if (!input) {
+      console.error(`No se encontró un input con el id: ${inputId}`);
+      return;
+  }
+
+  function validarDecimal(event) {
+      const valor = event.target.value;
+
+      // Expresión regular para números con hasta dos decimales
+      const regex = /^[0-9]*\.?[0-9]{0,2}$/;
+
+      // Verifica si el valor cumple con la expresión regular
+      if (!regex.test(valor)) {
+          // Si no cumple, elimina el último carácter introducido
+          event.target.value = valor.slice(0, -1);
+      }
+  }
+
+  // Agrega el evento 'input' al campo de entrada para llamar a la función de validación
+  input.addEventListener('input', validarDecimal);
 }

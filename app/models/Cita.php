@@ -285,7 +285,7 @@ class Cita
                     LEFT JOIN lista_horas t6 on t6.id = t1.id_hora
                     LEFT JOIN estadocita t8 on t8.id = t1.id_estadocita
                     LEFT JOIN tipo_Cita t9 on t9.id = t1.id_tipocita
-                    WHERE 1=1 AND t1.estado = 1 ';
+                    WHERE 1=1 AND t1.estado = 1 and DATE(t1.fecha) between :fecha_desde and :fecha_hasta';
 
             $sql .= " ORDER BY t1.fecha DESC, t6.hora DESC";
             $sql .= " LIMIT :limit OFFSET :offset";
@@ -293,6 +293,8 @@ class Cita
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':limit', $filters['length'], PDO::PARAM_INT);
             $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
+            $stmt->bindValue(':fecha_desde', $filters['fecha_desde']);
+            $stmt->bindValue(':fecha_hasta', $filters['fecha_hasta']);
 
             $stmt->execute();
 

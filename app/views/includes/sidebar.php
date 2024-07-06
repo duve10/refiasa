@@ -125,7 +125,7 @@
                     <span class='align-middle'>Productos</span>
                 </a>
             </li>
-            <li class='sidebar-item'>
+            <li class='sidebar-item d-none'>
                 <a class='sidebar-link'>
                     <i class='align-middle' data-feather='heart'></i>
                     <span class='align-middle'>Vacunas</span>
@@ -136,13 +136,13 @@
 
             <?php if(in_array($_SESSION['user_profile_id'],[1])) : ?>
             <li class="sidebar-header">Reportes</li>
-            <li class='sidebar-item'>
-                <a class='sidebar-link'>
+            <li class='sidebar-item <?= $active == '14'? 'active': '' ?>'>
+                <a class='sidebar-link'href="/reportes">
                     <i class='align-middle' data-feather='users'></i>
-                    <span class='align-middle'>Reporte de Usuarios</span>
+                    <span class='align-middle'>Reportes</span>
                 </a>
             </li>
-            <li class='sidebar-item'>
+            <li class='sidebar-item d-none'>
                 <a data-bs-target="#s28" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
                     <i class="align-middle" data-feather="folder"></i>
                     <span class="align-middle">Reportes</span>

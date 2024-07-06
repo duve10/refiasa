@@ -38,7 +38,9 @@ class AtencionController
                 'length' => $_POST['length'] ?? '10',
                 'indexColumn' => $_POST['indexColumn'] ?? '',
                 'orderName' => $_POST['orderName'] ?? '',
-                'columnName' => $_POST['columnName'] ?? ''
+                'columnName' => $_POST['columnName'] ?? '',
+                'fecha_desde' => convertirFechaBd($_POST['fecha_desde']) ?? '',
+                'fecha_hasta' => convertirFechaBd($_POST['fecha_hasta']) ?? ''
 
             ];
 
@@ -48,6 +50,15 @@ class AtencionController
             $data = [];
             foreach ($atenciones as $atencion) {
                 $clienteName = $atencion['cliente'] . " " . $atencion['apellido_paterno'];
+
+                $id_estadoatencion = $atencion['id_estadoatencion'];
+                $btnView = '';
+                if ($id_estadoatencion == '3') {
+                    $btnView = '  <a data-id="' . $atencion['id'] . '"  class="text-info viewAtt" href="#">
+                        <i class="align-middle me-2 fas fa-fw fa-eye"></i>
+                    </a>';
+                }
+
                 $data[] = [
                     'id' => $atencion['id'],
                     'descripcion' => $atencion['descripcion'],
@@ -65,8 +76,9 @@ class AtencionController
                     'especie' => $atencion['especie'],
                     'veterinario' => $atencion['veterinarionombre'] . " " . $atencion['veterinarioapellido'],
                     'estadoatencion' => '<span class="badge ' . $atencion['estadoatencioncolor'] . ' text-dark">' . $atencion['estadoatencion'] . '</span>',
-                    'acciones' => '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                    <a data-nombre = "'.$clienteName .'" data-id = "'.$atencion['id'] .'" class="text-danger ms-3 deleteAtencion"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>',
+                    'acciones' => $btnView . '<a class="text-warning" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 align-middle"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
+                    <a data-nombre = "' . $clienteName . '" data-id = "' . $atencion['id'] . '" class="text-danger deleteAtencion ms-1"  href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash align-middle"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></a>
+                   ',
                 ];
             }
 
@@ -101,9 +113,8 @@ class AtencionController
             $fechaSet =  $_POST['fecha'] ?? '';
             if ($fechaSet != '') {
                 $dateTime = DateTime::createFromFormat('d-m-Y H:i', $_POST['fecha']);
-    
+
                 $fecha_hora_mysql = $dateTime->format('Y-m-d H:i');
-                
             } else {
                 $fecha_hora_mysql = date('Y-m-d H:i');
             }
@@ -121,7 +132,7 @@ class AtencionController
             $estado = 1;
             $servicios = $_POST['id_servicio'] ?? [];
             $id_estadoatencion = $_POST['id_estadoatencion'] ?? 2;
-            $veterinario = isset($_POST['veterinario'])?$_POST['veterinario']:'';
+            $veterinario = isset($_POST['veterinario']) ? $_POST['veterinario'] : '';
 
 
             if (!$veterinario || !$id_mascota || !$descripcion || empty($servicios)) {
@@ -138,7 +149,7 @@ class AtencionController
                 foreach ($servicios as $id_servicio) {
                     AtencionServicio::asignarServicioAAtencion($atencion->getId(), $id_servicio);
                 }
-              
+
 
                 $response['error'] = false;
                 $response['message'] = 'Atencion registrada correctamente.';
@@ -187,9 +198,9 @@ class AtencionController
                 return;
             }
 
-          
 
-            $atencion = new Atencion($id_atencion, $id_cita , $id_mascota, $descripcion, $observaciones, $diagnosticos, $tratamiento, NULL, NULL, $actualizado_por, $estado, $id_estadoatencion, NULL);
+
+            $atencion = new Atencion($id_atencion, $id_cita, $id_mascota, $descripcion, $observaciones, $diagnosticos, $tratamiento, NULL, NULL, $actualizado_por, $estado, $id_estadoatencion, NULL);
 
 
             if ($atencion->actualizarRT()) {
@@ -216,7 +227,7 @@ class AtencionController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             $fecha = $_GET['fecha'];
-            
+
             $viewVet = false;
             $idVet = $_SESSION['user_id'];
             if ($_SESSION['user_profile_id'] == 2) {
@@ -230,8 +241,8 @@ class AtencionController
                 'idVet' => $idVet,
             ];
 
-            
-            
+
+
 
             $atenciones = Atencion::getAllAttencionesByDateAll($filters);
             $productos = Producto::getAllProductos();
@@ -304,7 +315,8 @@ class AtencionController
         }
     }
 
-    public function apiEliminar() {
+    public function apiEliminar()
+    {
         header('Content-Type: application/json');
 
         $response = [
@@ -317,7 +329,7 @@ class AtencionController
             $actualizado_por = $_SESSION['user_id'];
             $id_atencion = $_POST['id'];
 
-            $eliminar = Atencion::eliminar($id_atencion,$actualizado_por);
+            $eliminar = Atencion::eliminar($id_atencion, $actualizado_por);
 
             if ($eliminar) {
                 $response['message'] = 'Eliminado Correctamente';
@@ -325,11 +337,61 @@ class AtencionController
             } else {
                 $response['message'] = 'No se Elimino Error!';
             }
-            
         }
 
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
         return;
+    }
 
+    public function getServicioProducto()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $idAtt = $_GET['id'];
+            $dataArray = [];
+            $datos  = Atencion::getServicioProducto($idAtt);
+
+            foreach ($datos as $dato) {
+
+                $data['id'] = $dato['id'];
+                $data['nombre'] = $dato['nombre'];
+                $data['precio'] = $dato['precio'];
+                $data['tipo'] = $dato['tipo'];
+                $rutaP = 'img/productos/';
+                $rutaS = 'img/servicios/';
+                if ($dato['tipo'] == 'producto') {
+                    $data['foto'] = $rutaP. $dato['foto'];
+                } else {
+                    $data['foto'] = $rutaS. $dato['foto'];
+                }
+                
+
+                array_push($dataArray, $data);
+            }
+
+            echo json_encode($dataArray, JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    public function apiMes()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+
+            $atenciones = Atencion::getPorMes();
+            $data = [];
+            foreach ($atenciones as $atencion) {
+                $data[] =  $atencion['total_atenciones'] ;
+            }
+
+            $response = [
+                "series" => $data
+             ] ;
+
+            header('Content-Type: application/json');
+            echo json_encode($response, JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(405);
+            echo "405 Method Not Allowed";
+        }
     }
 }

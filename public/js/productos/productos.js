@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
+  inputPrecio("precio");
+  inputPrecio("stock");
 });
 
 function guardarProducto(dataTableProducto) {
@@ -96,12 +98,9 @@ function getDataTable() {
     tableReport.draw();
   });
 
-  
   guardarProducto(tableReport);
   eliminarProducto(tableReport);
-
 }
-
 
 function eliminarProducto(dataTableProducto) {
   $("#tableProductos tbody").on("click", ".deleteProducto", function () {
@@ -154,4 +153,9 @@ function eliminarProducto(dataTableProducto) {
   });
 }
 
-
+function inputPrecio(idInput) {
+  document.getElementById(idInput).addEventListener("input", function (e) {
+    // Elimina cualquier carácter no numérico
+    this.value = this.value.replace(/[^0-9]/g, "");
+  });
+}

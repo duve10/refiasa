@@ -10,7 +10,7 @@ class SessionMiddleware
             session_start();
         }
 
-        if (!isset($_SESSION['user_id']) && !self::isLoginPage()) {
+        if (!isset($_SESSION['user_id']) && !self::isLoginPage() && !self::isPublicRoute()) {
             header("Location: " . BASE_URL . "/login");
             exit();
         }
@@ -32,6 +32,7 @@ class SessionMiddleware
                     '/atenciones/apiRegistrar' => true,
                     '/atenciones/apiActualizarRT' => true,
                     '/atenciones/apiEliminar' => true,
+                    '/atenciones/apiMes' => true,
                     '/calendario' => true,
                 ],
                 3 => [
@@ -54,6 +55,8 @@ class SessionMiddleware
                     '/atenciones/apiRegistrar' => true,
                     '/atenciones/apiActualizarRT' => true,
                     '/atenciones/apiEliminar' => true,
+                    '/atenciones/getServicioProducto' => true,
+                    '/atenciones/apiMes' => true,
 
                     '/usuarios/apiGetVetSelect' => true,
 
@@ -63,6 +66,7 @@ class SessionMiddleware
                     '/clientes' => true,
                     '/clientes/apiGetClientes' => true,
                     '/clientes/apiGetClientesSelect' => true,
+                    '/clientes/apiRegistrar' => true,
 
                     '/mascotas' => true,
                     '/mascotas/apiGetMascotas' => true,
@@ -106,5 +110,16 @@ class SessionMiddleware
     {
         $currentPage = $_SERVER['REQUEST_URI'];
         return strpos($currentPage, '/login') !== false;
+    }
+
+    private static function isPublicRoute()
+    {   
+        $currentPage = str_replace('/refiasa/public', '', $_SERVER['REQUEST_URI']);
+        $publicRoutes = ['/mimascota'];
+
+        // Separar la ruta de los parámetros de consulta
+        $path = parse_url($currentPage, PHP_URL_PATH);
+        
+        return in_array($path, $publicRoutes);
     }
 }

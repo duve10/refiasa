@@ -15,12 +15,14 @@ $router = new Router();
 $router->add('/', 'HomeController@index');
 $router->add('/login', 'AuthController@login');
 $router->add('/login', 'AuthController@login');
+$router->add('/mimascota', 'MiMascotaController@index');
 
 $router->add('/dashboard', 'HomeController@dashboard');
 
 $router->add('/clientes', 'ClienteController@index');
 $router->add('/clientes/apiGetClientes', 'ClienteController@apiGetClientes');
 $router->add('/clientes/apiGetClientesSelect', 'ClienteController@apiGetClientesSelect');
+$router->add('/clientes/apiRegistrar', 'ClienteController@apiRegistrar');
 
 $router->add('/usuarios', 'UsuarioController@index');
 $router->add('/usuarios/apiGetUsuarios', 'UsuarioController@apiGetUsuarios');
@@ -30,6 +32,8 @@ $router->add('/usuarios/apiGetVetSelect', 'UsuarioController@apiGetVetSelect');
 
 $router->add('/perfiles', 'PerfilController@index');
 $router->add('/perfiles/apiGetPerfiles', 'PerfilController@apiGetPerfiles');
+
+$router->add('/reportes', 'ReportesController@index');
 
 $router->add('/servicios', 'ServicioController@index');
 $router->add('/servicios/apiGetServicios', 'ServicioController@apiGetServicios');
@@ -69,6 +73,8 @@ $router->add('/atenciones/registro', 'AtencionController@registro');
 $router->add('/atenciones/apiRegistrar', 'AtencionController@apiRegistrar');
 $router->add('/atenciones/apiActualizarRT', 'AtencionController@apiActualizarRT');
 $router->add('/atenciones/apiEliminar', 'AtencionController@apiEliminar');
+$router->add('/atenciones/getServicioProducto', 'AtencionController@getServicioProducto');
+$router->add('/atenciones/apiMes', 'AtencionController@apiMes');
 
 $router->add('/products', 'HomeController@products');
 $router->add('/logout', 'AuthController@logout');
