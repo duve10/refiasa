@@ -29,6 +29,8 @@ class CitaController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
+                
+                'id_cliente' => $_POST['id_cliente'] ?? '',
                 'drawn' => $_POST['drawn'] ?? '',
                 'start' => $_POST['start'] ?? '0',
                 'length' => $_POST['length'] ?? '10',
@@ -58,6 +60,7 @@ class CitaController
                 $data[] = [
                     'id' => $cita['id'],
                     'descripcion' => $cita['descripcion'],
+                    'estadocitaId' => $cita['id_estadocita'],
                     'atencion' => $htmlEstadoCita,
                     'fecha' => convertirFechaHtml($cita['fecha']),
                     'mascota' => $cita['mascota'],
@@ -109,7 +112,7 @@ class CitaController
             $descripcion = trim($_POST['descripcion']);
             $servicios = $_POST['id_servicio'] ?? [];
             $estado = 1;
-            $id_estadocita = $_POST['id_estadocita'] ?? 1;
+            $id_estadocita = /**$_POST['id_estadocita'] ?? */1;
             $comentario = trim($_POST['comentario']);
 
             $verificarTipo = Horas::verificarHoraOcupada($fecha, $id_hora);

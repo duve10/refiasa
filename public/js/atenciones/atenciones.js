@@ -1,7 +1,34 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
-  iniDate()
+  iniDate();
+  selectCliente();
 });
+
+function selectCliente() {
+  $("#id_cliente").select2({
+    ajax: {
+      url: "../clientes/apiGetClientesSelect",
+      dataType: "json",
+      type: "GET",
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data,
+        };
+      },
+      cache: true,
+    },
+    allowClear: true,
+    minimumInputLength: 3,
+    dropdownParent: $("#id_cliente").parent(),
+    placeholder: "Escribe Nombre o documento de cliente",
+  });
+}
 
 function iniDate() {
   // Instancia de Flatpickr para el campo "Desde"
@@ -10,7 +37,6 @@ function iniDate() {
     dateFormat: "d-m-Y",
     time_24hr: true,
     disableMobile: true,
-   
   });
 
   // Instancia de Flatpickr para el campo "Hasta"
@@ -39,8 +65,10 @@ function getDataTable() {
         data: function (data) {
           let fecha_desde = $("#fecha_desde").val();
           let fecha_hasta = $("#fecha_hasta").val();
+          let id_cliente = $("#id_cliente").val();
           data.fecha_desde = fecha_desde;
           data.fecha_hasta = fecha_hasta;
+          data.id_cliente = id_cliente;
         },
       },
       columns: [
@@ -67,14 +95,14 @@ function getDataTable() {
 
   eliminarAtencion(tableReport);
   viewAtt(tableReport);
-  buscar(tableReport)
+  buscar(tableReport);
 }
 function buscar(datatableReport) {
-  let btnBuscar = document.getElementById('btnBuscar')
-  
-  btnBuscar.addEventListener('click', e => {
+  let btnBuscar = document.getElementById("btnBuscar");
+
+  btnBuscar.addEventListener("click", (e) => {
     datatableReport.draw();
-  })
+  });
 }
 
 function eliminarAtencion(dataTableAtencion) {

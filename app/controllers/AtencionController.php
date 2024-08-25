@@ -33,6 +33,7 @@ class AtencionController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $filters = [
+                'id_cliente' => $_POST['id_cliente'] ?? '',
                 'drawn' => $_POST['drawn'] ?? '',
                 'start' => $_POST['start'] ?? '0',
                 'length' => $_POST['length'] ?? '10',

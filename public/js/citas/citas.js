@@ -1,7 +1,34 @@
 document.addEventListener("DOMContentLoaded", (e) => {
   getDataTable();
   iniDate();
+  selectCliente();
 });
+
+function selectCliente() {
+  $("#id_cliente").select2({
+    ajax: {
+      url: "../clientes/apiGetClientesSelect",
+      dataType: "json",
+      type: "GET",
+      delay: 250,
+      data: function (params) {
+        return {
+          q: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data,
+        };
+      },
+      cache: true,
+    },
+    allowClear: true,
+    minimumInputLength: 3,
+    dropdownParent: $("#id_cliente").parent(),
+    placeholder: "Escribe Nombre o documento de cliente",
+  });
+}
 
 function iniDate() {
   // Instancia de Flatpickr para el campo "Desde"
@@ -48,8 +75,10 @@ function getDataTable() {
         data: function (data) {
           let fecha_desde = $("#fecha_desde").val();
           let fecha_hasta = $("#fecha_hasta").val();
+          let id_cliente = $("#id_cliente").val();
           data.fecha_desde = fecha_desde;
           data.fecha_hasta = fecha_hasta;
+          data.id_cliente = id_cliente;
         },
       },
       columns: [
@@ -72,18 +101,20 @@ function getDataTable() {
     })
     .on("init.dt", function (e, settings, json) {
       modalServicioTable(tableReport);
-    });
+    }).on('draw.dt', function() {
+      modalServicioTable(tableReport);
+  });
 
   eliminarCita(tableReport);
-  buscar(tableReport)
+  buscar(tableReport);
 }
 
 function buscar(datatableReport) {
-  let btnBuscar = document.getElementById('btnBuscar')
-  
-  btnBuscar.addEventListener('click', e => {
+  let btnBuscar = document.getElementById("btnBuscar");
+
+  btnBuscar.addEventListener("click", (e) => {
     datatableReport.draw();
-  })
+  });
 }
 
 function eliminarCita(dataTableCita) {
@@ -149,7 +180,6 @@ function modalServicioTable(tableData) {
 
     let data = await response.json();
 
-
     Swal.fire({
       title: "Registrar Atencion de la cita de " + nombreCliente,
       showDenyButton: false,
@@ -160,20 +190,13 @@ function modalServicioTable(tableData) {
                <div class="w-100">
                   <select class="form-control id_servicio" multiple name="id_servicio[]" id="id_servicio">
                      ${data.data
-                    .map(
-                        (servicio) =>
-                          `<option value="${
-                            servicio.id_servicio
-                          }" ${
-                            servicio.selected !=
-                            null
-                              ? "selected"
-                              : ""
-                          }>${
-                            servicio.nombre
-                          }</option>`
-                      )
-                      .join("")}
+                       .map(
+                         (servicio) =>
+                           `<option value="${servicio.id_servicio}" ${
+                             servicio.selected != null ? "selected" : ""
+                           }>${servicio.nombre}</option>`
+                       )
+                       .join("")}
                   </select>
               </div>
               <label for="veterinario" class="col-md-3 col-xl-2 col-form-label fw-bold">Veterinario</label>
@@ -211,15 +234,15 @@ function modalServicioTable(tableData) {
 
           if (!data.error) {
             const formDataCita = new FormData();
-            formDataCita.append('id', dataId);
-            formDataCita.append('id_estadocita', 2);
+            formDataCita.append("id", dataId);
+            formDataCita.append("id_estadocita", 2);
 
-            let responseCita = await fetch('../citas/apiUpdateEstadoCita',{
+            let responseCita = await fetch("../citas/apiUpdateEstadoCita", {
               method: "POST",
               body: formDataCita,
             });
 
-            let dataCita = await responseCita.json()
+            let dataCita = await responseCita.json();
 
             if (!dataCita.error) {
               Swal.fire({
@@ -231,12 +254,10 @@ function modalServicioTable(tableData) {
                 timerProgressBar: true,
               }).then(() => {
                 ocultarLoading();
-  
+
                 tableData.draw();
               });
-              
             }
-
           }
         } catch (error) {
           console.log(error);

@@ -350,6 +350,10 @@ class Atencion {
             $params[':email'] = '%' . $filters['email'] . '%';
         }*/
 
+        if ($filters['id_cliente'] != '') {
+            $sql .= " AND t3.id = :id_cliente";
+        }
+
         $sql .= " ORDER BY t1.fecha desc LIMIT :limit OFFSET :offset";
 
         
@@ -358,6 +362,9 @@ class Atencion {
         $stmt->bindValue(':offset', $filters['start'], PDO::PARAM_INT);
         $stmt->bindValue(':fecha_desde', $filters['fecha_desde']);
         $stmt->bindValue(':fecha_hasta', $filters['fecha_hasta']);
+        if ($filters['id_cliente'] != '') {
+            $stmt->bindValue(':id_cliente', $filters['id_cliente']);
+        }
 
         $stmt->execute();
 

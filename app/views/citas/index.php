@@ -59,6 +59,11 @@ include "../app/views/includes/header.php";
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6 mb-2">
+                                                <label for="cliente" class="fw-bold">Cliente:</label>
+                                                <select class="form-control id_cliente" name="id_cliente" id="id_cliente"></select>
+                                            </div>
+
 
                                         </div>
                                     </div>
